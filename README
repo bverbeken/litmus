@@ -1,0 +1,28 @@
+play-testutils is a very simple library that allows for more expressive testing when using Play!framework.
+
+For example: 
+
+<pre>
+@Test
+public void testThatIndexPageWorks() {
+	assertThat(GET("/"))
+		.isOk()
+		.isHtml()	
+		.isUtf8();
+
+}
+</pre>
+
+instead of 
+
+<pre>
+@Test
+public void testThatIndexPageWorks() {
+    Response response = GET("/");
+    assertIsOk(response);
+    assertContentType("text/html", response);
+    assertCharset(play.Play.defaultWebEncoding, response);
+}
+</pre>
+
+
