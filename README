@@ -2,7 +2,6 @@ play-testutils is a very simple library that allows for more expressive testing 
 
 For example: 
 
-<pre>
 @Test
 public void testThatIndexPageWorks() {
 	assertThat(GET("/"))
@@ -11,11 +10,9 @@ public void testThatIndexPageWorks() {
 		.isUtf8();
 
 }
-</pre>
 
 instead of 
 
-<pre>
 @Test
 public void testThatIndexPageWorks() {
     Response response = GET("/");
@@ -23,6 +20,5 @@ public void testThatIndexPageWorks() {
     assertContentType("text/html", response);
     assertCharset(play.Play.defaultWebEncoding, response);
 }
-</pre>
 
 
