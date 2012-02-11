@@ -1,8 +1,10 @@
 package testutil.functional;
 
-import org.junit.Before;
 import play.mvc.Http;
 import play.test.FunctionalTest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractFunctionalTest extends FunctionalTest {
 	
@@ -10,9 +12,15 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 		return new FunctionalAssert(response);
 	}
 
-    @Before
-    public void logoutBeforeTest() {
+    public void logout() {
         GET("/logout");
     }
 
+	protected FunctionalAssert login(String username, String password){
+		Map<String, String> loginUserParams = new HashMap<String, String>();
+		loginUserParams.put("username", username);
+		loginUserParams.put("password", password);
+		return new FunctionalAssert(POST("/login", loginUserParams));
+	}
+	
 }
