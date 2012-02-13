@@ -8,19 +8,19 @@ import java.util.Map;
 
 public abstract class AbstractFunctionalTest extends FunctionalTest {
 	
-	protected FunctionalAssert assertThat(Http.Response response){
-		return new FunctionalAssert(response);
+	protected ResponseAssert assertThat(Http.Response response){
+		return new ResponseAssert(response);
 	}
 
     public void logout() {
         GET("/logout");
     }
 
-	protected FunctionalAssert login(String username, String password){
+	protected ResponseAssert login(String username, String password){
 		Map<String, String> loginUserParams = new HashMap<String, String>();
 		loginUserParams.put("username", username);
 		loginUserParams.put("password", password);
-		return new FunctionalAssert(POST("/login", loginUserParams));
+		return new ResponseAssert(POST("/login", loginUserParams));
 	}
 	
 }

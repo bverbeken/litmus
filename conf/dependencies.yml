@@ -2,3 +2,4 @@ self: play -> play-testutils 0.1
 
 require:
     - play
+	- org.easytesting           -> fest-assert     1.4
