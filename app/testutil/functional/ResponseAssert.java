@@ -1,22 +1,20 @@
 package testutil.functional;
 
+import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 import play.mvc.Http;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.StringContains.containsString;
 import static play.mvc.Http.Response;
 import static play.mvc.Http.StatusCode.*;
 
 public class ResponseAssert extends GenericAssert<ResponseAssert, Http.Response> {
 
-	public ResponseAssert(Response actual) {
+	ResponseAssert(Response actual) {
 		super(ResponseAssert.class, actual);
 	}
 
 	public ResponseAssert isStatus(int httpStatusCode) {
-		assertThat("Wrong http status code ", actual.status, equalTo(httpStatusCode));
+		Assertions.assertThat(actual.status).isEqualTo(httpStatusCode);
 		return this;
 	}
 
@@ -37,13 +35,13 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Http.Response>
 	}
 
 	private ResponseAssert hasHeader(String headerName, String headerValue) {
-		assertThat("Wrong header value for [" + headerName + "]", actual.getHeader(headerName), equalTo(headerValue));
+		Assertions.assertThat(actual.getHeader(headerName)).isEqualTo(headerValue);
 		return this;
 	}
 
 
 	public ResponseAssert hasContentType(String contentType) {
-		assertThat("Wrong contentType", actual.contentType, containsString(contentType));
+		Assertions.assertThat(actual.contentType).containsIgnoringCase(contentType);
 		return this;
 	}
 
@@ -52,7 +50,7 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Http.Response>
 	}
 
 	public ResponseAssert isEncoded(String encoding) {
-		assertThat("Wrong encoding", actual.encoding, equalTo(encoding));
+		Assertions.assertThat(actual.encoding).isEqualToIgnoringCase(encoding);
 		return this;
 	}
 
