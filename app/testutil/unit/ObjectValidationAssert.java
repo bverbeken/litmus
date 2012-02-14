@@ -8,27 +8,27 @@ import static java.lang.String.format;
 import static org.junit.Assert.assertTrue;
 import static testutil.ReflectionUtil.set;
 
-public class ValidationAssert extends GenericAssert<ValidationAssert, Object> {
+public class ObjectValidationAssert extends GenericAssert<ObjectValidationAssert, Object> {
 
 
 	public static final String REQUIRED = "validation.required";
 
-	public ValidationAssert(Object object) {
-		super(ValidationAssert.class, object);
+	public ObjectValidationAssert(Object object) {
+		super(ObjectValidationAssert.class, object);
 	}
 
 
-	public ValidationAssert hasRequiredError(String fieldName) {
+	public ObjectValidationAssert hasRequiredError(String fieldName) {
 		return hasError(REQUIRED, fieldName);
 	}
 
-	public ValidationAssert with(String fieldName, Object value) {
+	public ObjectValidationAssert with(String fieldName, Object value) {
 		set(actual, fieldName, value);
 		return this;
 	}
 
 
-	public ValidationAssert hasError(String error, String fieldName) {
+	public ObjectValidationAssert hasError(String error, String fieldName) {
 		List<String> errorsOnField = Validator.getErrorsForField(actual, fieldName);
 		assertTrue(
 				makeErrorMessage(fieldName, error, errorsOnField),
