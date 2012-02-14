@@ -11,12 +11,8 @@ import static testutil.unit.Validator.isValid;
 public abstract class AbstractValidationTest<T> extends UnitTest {
 
 
-	protected ObjectValidationAssert assertThat(Object object) {
-		return new ObjectValidationAssert(object);
-	}
-
-	protected FieldValidationAssert<T> assertThat(String fieldName) {
-		return new FieldValidationAssert<T>(valid(), fieldName);
+	protected ValidationAssert<T> assertThat(String fieldName) {
+		return new ValidationAssert<T>(valid(), fieldName);
 	}
 
 	@Before

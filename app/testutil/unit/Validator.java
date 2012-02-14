@@ -2,11 +2,11 @@ package testutil.unit;
 
 import play.data.validation.Error;
 import play.data.validation.Validation;
-import testutil.ReflectionUtil;
 
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static testutil.ReflectionUtil.get;
 
 class Validator {
 
@@ -35,7 +35,7 @@ class Validator {
 	}
 
 	private static String getErrorKey(Error error) {
-		return ReflectionUtil.get("message", error);
+		return get("message", error);
 	}
 
 }
