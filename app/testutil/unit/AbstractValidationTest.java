@@ -6,17 +6,17 @@ import org.junit.Test;
 import play.data.validation.Validation;
 import play.test.UnitTest;
 
+import static testutil.unit.Validator.isValid;
+
 public abstract class AbstractValidationTest<T> extends UnitTest {
 
-	protected T valid;
 
-	protected static ValidationAssert assertThat(Object object) {
+	protected ValidationAssert assertThat(Object object) {
 		return new ValidationAssert(object);
 	}
 
-	@Before
-	public void initValidatingObject() {
-		valid = createValidObject();
+	protected FieldValidationAssert<T> assertThat(String fieldName) {
+		return new FieldValidationAssert<T>(valid(), fieldName);
 	}
 
 	@Before
@@ -26,10 +26,10 @@ public abstract class AbstractValidationTest<T> extends UnitTest {
 
 	@Test
 	public void validObjectShouldValidate() {
-		Assertions.assertThat(Validation.current().valid(valid).ok).isTrue();
+		Assertions.assertThat(isValid(valid())).isTrue();
 	}
 
 
-	protected abstract T createValidObject();
+	protected abstract T valid();
 
 }
