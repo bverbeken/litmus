@@ -4,8 +4,10 @@ import play.data.validation.Error;
 import play.data.validation.Validation;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static play.data.validation.Validation.ValidationResult;
 import static testutil.ReflectionUtil.get;
 
 class Validator {
@@ -19,7 +21,8 @@ class Validator {
 		return getErrorMessagesForField(fieldName);
 	}
 
-	private static Validation.ValidationResult validate(Object actual) {
+	private static ValidationResult validate(Object actual) {
+		Validation.clear();
 		return Validation.current().valid(actual);
 	}
 
@@ -38,4 +41,7 @@ class Validator {
 		return get("message", error);
 	}
 
+	public static Map<String, List<Error>> getAllErrors() {
+		return Validation.current().errorsMap();
+	}
 }

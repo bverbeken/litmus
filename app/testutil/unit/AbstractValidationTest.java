@@ -1,9 +1,7 @@
 package testutil.unit;
 
 import org.fest.assertions.Assertions;
-import org.junit.Before;
 import org.junit.Test;
-import play.data.validation.Validation;
 import play.test.UnitTest;
 
 import static testutil.unit.Validator.isValid;
@@ -15,14 +13,13 @@ public abstract class AbstractValidationTest<T> extends UnitTest {
 		return new ValidationAssert<T>(valid(), fieldName);
 	}
 
-	@Before
-	public void clearErrors() {
-		Validation.clear();
-	}
 
 	@Test
 	public void validObjectShouldValidate() {
-		Assertions.assertThat(isValid(valid())).isTrue();
+		T valid = valid();
+		Assertions.assertThat(isValid(valid))
+				.as("Expected object of type " + valid.getClass().getCanonicalName() + " to be valid, but it was invalid because: " + Validator.getAllErrors())
+				.isTrue();
 	}
 
 
