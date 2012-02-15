@@ -57,4 +57,6 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Http.Response>
 	public ResponseAssert isUtf8() {
 		return isEncoded("utf-8");
 	}
+
+
 }

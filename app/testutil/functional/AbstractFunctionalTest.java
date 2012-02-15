@@ -3,9 +3,6 @@ package testutil.functional;
 import play.mvc.Http;
 import play.test.FunctionalTest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class AbstractFunctionalTest extends FunctionalTest {
 	
 	protected ResponseAssert assertThat(Http.Response response){
@@ -16,11 +13,13 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
         GET("/logout");
     }
 
-	protected ResponseAssert login(String username, String password){
-		Map<String, String> loginUserParams = new HashMap<String, String>();
-		loginUserParams.put("username", username);
-		loginUserParams.put("password", password);
-		return new ResponseAssert(POST("/login", loginUserParams));
+	protected Http.Response login(String username, String password){
+		return new RequestBuilder()
+				.withUrl("/login")
+				.withParam("username", username)
+				.withParam("password", password)
+				.post();
+
 	}
 	
 }
