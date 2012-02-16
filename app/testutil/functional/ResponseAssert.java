@@ -4,6 +4,9 @@ import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 import play.mvc.Http;
 
+import java.io.UnsupportedEncodingException;
+
+import static java.lang.String.format;
 import static play.mvc.Http.Response;
 import static play.mvc.Http.StatusCode.*;
 
@@ -58,5 +61,26 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Http.Response>
 		return isEncoded("utf-8");
 	}
 
+
+	// TODO move everything below this line to a separate HtmlRepsonseAssert (subclass of ResponseAssert)
+	public ResponseAssert headHasMetaTag(String name, String content) {
+		// TODO: use HtmlUsnit here? Or some html parser at least..
+		Assertions.assertThat(readContent()).contains(format("<meta name=\"%s\" content=\"%s\">", name, content));
+		return this;
+	}
+
+
+	public ResponseAssert contains(String expected) {
+		Assertions.assertThat(readContent()).contains(expected);
+		return this;
+	}
+
+	private String readContent() {
+		try {
+			return new String(actual.out.toByteArray(), actual.encoding);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }
