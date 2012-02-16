@@ -63,7 +63,7 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Http.Response>
 
 
 	// TODO move everything below this line to a separate HtmlRepsonseAssert (subclass of ResponseAssert)
-	public ResponseAssert headHasMetaTag(String name, String content) {
+	public ResponseAssert hasMetaTag(String name, String content) {
 		// TODO: use HtmlUsnit here? Or some html parser at least..
 		Assertions.assertThat(readContent()).contains(format("<meta name=\"%s\" content=\"%s\">", name, content));
 		return this;
