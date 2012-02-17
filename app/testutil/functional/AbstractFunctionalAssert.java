@@ -21,7 +21,6 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		this.response = response;
 	}
 
-	@SuppressWarnings("unchecked")
 	public SelfType isStatus(int httpStatusCode) {
 		Assertions.assertThat(response.status).isEqualTo(httpStatusCode);
 		return (SelfType) this;
