@@ -1,21 +1,22 @@
 package testutil.functional;
 
 import play.test.FunctionalTest;
+import testutil.PlayAssertions;
+import testutil.functional.html.HtmlPage;
+import testutil.functional.html.HtmlPageAssert;
 import testutil.util.RequestBuilder;
 
 import static play.mvc.Http.Response;
-import static testutil.util.ResponseContentTypeUtil.isHtml;
 
 public abstract class AbstractFunctionalTest extends FunctionalTest {
 
 	protected ResponseAssert assertThat(Response response) {
-		if (isHtml(response)) {
-			return new HtmlResponseAssert(response);
-		} else {
-			return new ResponseAssert(response);
-		}
+		return PlayAssertions.assertThat(response);
 	}
 
+	protected HtmlPageAssert assertThat(HtmlPage htmlPage) {
+		return PlayAssertions.assertThat(htmlPage);
+	}
 
 	public void logout() {
 		GET("/logout");
@@ -28,6 +29,10 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 				.withParam("password", password)
 				.post();
 
+	}
+
+	protected HtmlPage getHtml(String url) {
+		return new HtmlPage(GET(url));
 	}
 
 }
