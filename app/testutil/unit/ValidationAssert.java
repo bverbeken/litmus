@@ -6,7 +6,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertTrue;
-import static testutil.ReflectionUtil.set;
+import static testutil.util.ReflectionUtil.set;
 import static testutil.unit.ValidationMessages.MIN_SIZE;
 import static testutil.unit.ValidationMessages.REQUIRED;
 import static testutil.unit.Validator.getErrorsForField;

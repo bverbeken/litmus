@@ -1,12 +1,12 @@
-package testutil;
+package testutil.util;
 
 import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unchecked")
 public class ReflectionUtil {
 
-	@SuppressWarnings("unchecked")
 	public static <T> T get(String fieldName, Object object) {
 		try {
 			Field field = findFieldInTheHierarchy(object.getClass(), fieldName);

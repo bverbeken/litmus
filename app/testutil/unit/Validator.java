@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static play.data.validation.Validation.ValidationResult;
-import static testutil.ReflectionUtil.get;
+import static testutil.util.ReflectionUtil.get;
 
 class Validator {
 
