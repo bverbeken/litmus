@@ -1,5 +1,7 @@
 play-testutils is a very simple library that allows for more expressive testing when using Play!framework.
 
+Warning: this is a work in progress. The api is very very likely to change ;) 
+
 For example: 
 
 @Test
