@@ -4,6 +4,7 @@ import play.test.FunctionalTest;
 import testutil.PlayAssertions;
 import testutil.functional.html.HtmlPage;
 import testutil.functional.html.HtmlPageAssert;
+import testutil.functional.response.ResponseAssert;
 import testutil.util.RequestBuilder;
 
 import static play.mvc.Http.Response;
