@@ -29,4 +29,9 @@ public class HtmlPage {
 	public Element findById(String id) {
 		return doc.getElementById(id);
 	}
+
+
+	public String getTitle() {
+		return doc.title();
+	}
 }
