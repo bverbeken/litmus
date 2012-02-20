@@ -1,23 +1,27 @@
 package testutil.functional;
 
 import org.fest.assertions.Assertions;
+import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
 import play.test.FunctionalTest;
+import testutil.PlayAssertions;
 import testutil.functional.html.*;
+import testutil.functional.html.tags.AbstractHtmlList;
 import testutil.functional.response.ResponseAssert;
 import testutil.util.RequestBuilder;
 
+import java.util.Collection;
+
 import static play.mvc.Http.Response;
 
-public abstract class AbstractFunctionalTest extends FunctionalTest {	
+public abstract class AbstractFunctionalTest extends FunctionalTest {
 
 	public void logout() {
 		GET("/logout");
 	}
 
 	protected Response login(String username, String password) {
-		return new RequestBuilder()
-				.withUrl("/login")
+		return new RequestBuilder("/login")
 				.withParam("username", username)
 				.withParam("password", password)
 				.post();
@@ -28,21 +32,28 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	}
 
 	protected ResponseAssert assertThat(Response response) {
-		return new ResponseAssert(response);
+		return PlayAssertions.assertThat(response);
 	}
 
-	protected HtmlPageAssert assertThat(HtmlPage htmlPage) {
-		return new HtmlPageAssert(htmlPage);
+	protected HtmlPageAssert assertThat(HtmlPage page) {
+		return PlayAssertions.assertThat(page);
 	}
 
-	protected HtmlElementAssert assertThat(HtmlElement tag){
-		return new HtmlElementAssert(tag);
+	protected HtmlTagAssert assertThat(AbstractHtmlTag tag) {
+		return PlayAssertions.assertThat(tag);
 	}
 
-	protected StringAssert assertThat(String string){
+	protected HtmlListAssert assertThat(AbstractHtmlList list) {
+		return PlayAssertions.assertThat(list);
+	}
+
+	protected StringAssert assertThat(String string) {
 		return Assertions.assertThat(string);
 	}
 
+	protected CollectionAssert assertThat(Collection<?> c) {
+		return Assertions.assertThat(c);
+	}
 
 
 }
