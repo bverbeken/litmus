@@ -1,10 +1,8 @@
-package testutil.unit;
+package testutil.unit.validation;
 
 import org.fest.assertions.Assertions;
 import org.junit.Test;
 import play.test.UnitTest;
-
-import static testutil.unit.Validator.isValid;
 
 public abstract class AbstractValidationTest<T> extends UnitTest {
 
@@ -17,7 +15,7 @@ public abstract class AbstractValidationTest<T> extends UnitTest {
 	@Test
 	public void validObjectShouldValidate() {
 		T valid = valid();
-		Assertions.assertThat(isValid(valid))
+		Assertions.assertThat(Validator.isValid(valid))
 				.as("Expected object of type " + valid.getClass().getCanonicalName() + " to be valid, but it was invalid because: " + Validator.getAllErrors())
 				.isTrue();
 	}

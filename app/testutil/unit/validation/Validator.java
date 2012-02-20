@@ -1,4 +1,4 @@
-package testutil.unit;
+package testutil.unit.validation;
 
 import play.data.validation.Error;
 import play.data.validation.Validation;

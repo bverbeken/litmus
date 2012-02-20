@@ -1,10 +1,12 @@
 package testutil;
 
 import org.fest.assertions.Assertions;
+import org.jsoup.nodes.Element;
 import play.mvc.Http;
-import testutil.functional.response.ResponseAssert;
+import testutil.functional.html.HtmlElementAssert;
 import testutil.functional.html.HtmlPage;
 import testutil.functional.html.HtmlPageAssert;
+import testutil.functional.response.ResponseAssert;
 
 public class PlayAssertions extends Assertions {
 
@@ -16,4 +18,7 @@ public class PlayAssertions extends Assertions {
 		return new HtmlPageAssert(htmlPage);
 	}
 
+	public static HtmlElementAssert assertThat(Element element) {
+		return new HtmlElementAssert(element);
+	}
 }

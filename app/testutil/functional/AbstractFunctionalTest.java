@@ -1,7 +1,9 @@
 package testutil.functional;
 
+import org.jsoup.nodes.Element;
 import play.test.FunctionalTest;
 import testutil.PlayAssertions;
+import testutil.functional.html.HtmlElementAssert;
 import testutil.functional.html.HtmlPage;
 import testutil.functional.html.HtmlPageAssert;
 import testutil.functional.response.ResponseAssert;
@@ -18,6 +20,11 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	protected HtmlPageAssert assertThat(HtmlPage htmlPage) {
 		return PlayAssertions.assertThat(htmlPage);
 	}
+	
+	protected HtmlElementAssert assertThat(Element element){
+		return PlayAssertions.assertThat(element);
+	}
+
 
 	public void logout() {
 		GET("/logout");

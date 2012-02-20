@@ -1,4 +1,4 @@
-package testutil.unit;
+package testutil.unit.validation;
 
 public class ValidationMessages {
 	

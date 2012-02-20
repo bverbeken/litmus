@@ -1,4 +1,4 @@
-package testutil.unit;
+package testutil.unit.validation;
 
 import org.fest.assertions.Assertions;
 
@@ -7,9 +7,6 @@ import java.util.List;
 import static java.lang.String.format;
 import static org.junit.Assert.assertTrue;
 import static testutil.util.ReflectionUtil.set;
-import static testutil.unit.ValidationMessages.MIN_SIZE;
-import static testutil.unit.ValidationMessages.REQUIRED;
-import static testutil.unit.Validator.getErrorsForField;
 
 
 public class ValidationAssert<T> {
@@ -37,23 +34,23 @@ public class ValidationAssert<T> {
 	}
 
 	public ValidationAssert<T> isInvalidBecauseRequired() {
-		return isInvalidBecause(REQUIRED);
+		return isInvalidBecause(ValidationMessages.REQUIRED);
 	}
 
 
 	public ValidationAssert<T> isInvalidBecauseTooShort() {
-		return isInvalidBecause(MIN_SIZE);
+		return isInvalidBecause(ValidationMessages.MIN_SIZE);
 	}
 
 	public ValidationAssert<T> isInvalid(){
-		Assertions.assertThat(getErrorsForField(valid, fieldName))
+		Assertions.assertThat(Validator.getErrorsForField(valid, fieldName))
 				.as("expected validation error for field '" + fieldName + "' but it was valid.")
 				.isNotEmpty();
 		return this;
 	}
 	
 	public ValidationAssert<T> isValid(){
-		List<String> errorsForField = getErrorsForField(valid, fieldName);
+		List<String> errorsForField = Validator.getErrorsForField(valid, fieldName);
 		Assertions.assertThat(errorsForField)
 				.as("expected to be valid, but errors found: " + errorsForField)
 				.isEmpty();
@@ -61,7 +58,7 @@ public class ValidationAssert<T> {
 	}
 
 	public ValidationAssert<T> isInvalidBecause(String error) {
-		List<String> errorsOnField = getErrorsForField(valid, fieldName);
+		List<String> errorsOnField = Validator.getErrorsForField(valid, fieldName);
 		assertTrue(
 				makeErrorMessage(fieldName, error, errorsOnField),
 				errorsOnField.contains(error));
