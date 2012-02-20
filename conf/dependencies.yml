@@ -2,4 +2,6 @@ self: play -> play-testutils 0.1
 
 require:
     - play
-	- org.easytesting           -> fest-assert     1.4
+    - org.easytesting           -> fest-assert     1.4
+    - org.jsoup                 -> jsoup           1.6.1
+

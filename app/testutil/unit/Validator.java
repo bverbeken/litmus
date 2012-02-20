@@ -3,10 +3,10 @@ package testutil.unit;
 import play.data.validation.Error;
 import play.data.validation.Validation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static play.data.validation.Validation.ValidationResult;
 import static testutil.util.ReflectionUtil.get;
 
@@ -27,7 +27,7 @@ class Validator {
 	}
 
 	private static List<String> getErrorMessagesForField(String field) {
-		List<String> result = newArrayList();
+		List<String> result = new ArrayList<String>();
 		List<play.data.validation.Error> errors = Validation.current().errorsMap().get("." + field);
 		if (errors != null && !errors.isEmpty()) {
 			for (Error error : errors) {

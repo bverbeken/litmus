@@ -1,15 +1,14 @@
 package testutil.functional;
 
-import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 import testutil.functional.html.HtmlPage;
 import testutil.functional.html.HtmlPageAssert;
-import testutil.util.ResponseContentTypeUtil;
+import testutil.functional.response.ResponseContentTypeUtil;
 
-import java.io.UnsupportedEncodingException;
-
+import static org.fest.assertions.Assertions.assertThat;
 import static play.mvc.Http.Response;
 import static play.mvc.Http.StatusCode.*;
+import static testutil.functional.response.ResponseContentReader.readContent;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType>{
@@ -22,7 +21,7 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType isStatus(int httpStatusCode) {
-		Assertions.assertThat(response.status).isEqualTo(httpStatusCode);
+		assertThat(response.status).isEqualTo(httpStatusCode);
 		return (SelfType) this;
 	}
 
@@ -45,12 +44,12 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType hasHeader(String headerName, String headerValue) {
-		Assertions.assertThat(response.getHeader(headerName)).isEqualTo(headerValue);
+		assertThat(response.getHeader(headerName)).isEqualTo(headerValue);
 		return (SelfType) this;
 	}
 
 	public SelfType hasContentType(String expected) {
-		Assertions.assertThat(ResponseContentTypeUtil.hasContentType(response, expected))
+		assertThat(ResponseContentTypeUtil.hasContentType(response, expected))
 				.as("Expected content type '" + expected + "' but was '" + response.contentType + "'")
 				.isTrue();
 		return (SelfType) this;
@@ -62,7 +61,7 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType isEncoded(String encoding) {
-		Assertions.assertThat(response.encoding).isEqualToIgnoringCase(encoding);
+		assertThat(response.encoding).isEqualToIgnoringCase(encoding);
 		return (SelfType) this;
 	}
 
@@ -71,17 +70,11 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType contentContains(String expected) {
-		Assertions.assertThat(readContent()).contains(expected);
+		assertThat(readContent(response)).contains(expected);
 		return (SelfType) this;
 	}
 
-	protected String readContent() {
-		try {
-			return new String(response.out.toByteArray(), response.encoding);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+
 
 
 

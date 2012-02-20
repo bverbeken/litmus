@@ -2,15 +2,15 @@ package testutil.util;
 
 import play.mvc.Http;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static play.test.FunctionalTest.POST;
 
 public class RequestBuilder {
 
 	private String url;
-	private Map<String, String> params = newHashMap();
+	private Map<String, String> params = new HashMap<String, String>();
 
 	public RequestBuilder withUrl(String url) {
 		this.url = url;

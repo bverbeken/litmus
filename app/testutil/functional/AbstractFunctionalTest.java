@@ -29,7 +29,6 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 				.withParam("username", username)
 				.withParam("password", password)
 				.post();
-
 	}
 
 	protected HtmlPage getHtml(String url) {
