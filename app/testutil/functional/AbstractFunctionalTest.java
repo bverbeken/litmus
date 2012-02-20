@@ -1,12 +1,9 @@
 package testutil.functional;
 
+import org.fest.assertions.Assertions;
 import org.fest.assertions.StringAssert;
-import org.jsoup.nodes.Element;
 import play.test.FunctionalTest;
-import testutil.PlayAssertions;
-import testutil.functional.html.HtmlElementAssert;
-import testutil.functional.html.HtmlPage;
-import testutil.functional.html.HtmlPageAssert;
+import testutil.functional.html.*;
 import testutil.functional.response.ResponseAssert;
 import testutil.util.RequestBuilder;
 
@@ -31,19 +28,19 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	}
 
 	protected ResponseAssert assertThat(Response response) {
-		return PlayAssertions.assertThat(response);
+		return new ResponseAssert(response);
 	}
 
 	protected HtmlPageAssert assertThat(HtmlPage htmlPage) {
-		return PlayAssertions.assertThat(htmlPage);
+		return new HtmlPageAssert(htmlPage);
 	}
 
-	protected HtmlElementAssert assertThat(Element element){
-		return PlayAssertions.assertThat(element);
+	protected HtmlElementAssert assertThat(HtmlElement tag){
+		return new HtmlElementAssert(tag);
 	}
 
 	protected StringAssert assertThat(String string){
-		return PlayAssertions.assertThat(string);
+		return Assertions.assertThat(string);
 	}
 
 

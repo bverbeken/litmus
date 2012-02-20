@@ -1,8 +1,6 @@
 package testutil.functional;
 
 import org.fest.assertions.GenericAssert;
-import testutil.functional.html.HtmlPage;
-import testutil.functional.html.HtmlPageAssert;
 import testutil.functional.response.ResponseContentTypeUtil;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -55,9 +53,8 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		return (SelfType) this;
 	}
 
-	public HtmlPageAssert isHtml() {
-		hasContentType("text/html");
-		return new HtmlPageAssert(new HtmlPage(response));
+	public SelfType isHtml() {
+		return hasContentType("text/html");
 	}
 
 	public SelfType isEncoded(String encoding) {

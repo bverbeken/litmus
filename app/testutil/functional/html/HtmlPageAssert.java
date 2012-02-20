@@ -13,4 +13,9 @@ public class HtmlPageAssert extends AbstractFunctionalAssert<HtmlPageAssert, Htm
 		Assertions.assertThat(actual.getMeta(name)).isEqualTo(content);
 		return this; 
 	}
+
+	public HtmlPageAssert hasTitle(String title) {
+		Assertions.assertThat(actual.getTitle()).isEqualTo(title);
+		return this;
+	}
 }
