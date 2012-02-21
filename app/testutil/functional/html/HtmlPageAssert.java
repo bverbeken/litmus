@@ -9,11 +9,6 @@ public class HtmlPageAssert extends AbstractFunctionalAssert<HtmlPageAssert, Htm
 		super(HtmlPageAssert.class, htmlPage, htmlPage.getResponse());
 	}
 
-	public HtmlPageAssert hasMeta(String name, String content) {
-		Assertions.assertThat(actual.getMeta(name)).isEqualTo(content);
-		return this; 
-	}
-
 	public HtmlPageAssert hasTitle(String title) {
 		Assertions.assertThat(actual.getTitle()).isEqualTo(title);
 		return this;

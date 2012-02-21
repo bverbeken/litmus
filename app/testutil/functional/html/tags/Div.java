@@ -8,9 +8,5 @@ public class Div extends AbstractHtmlTag {
 		super(element);
 	}
 
-	@Override
-	public String getTagName() {
-		return "div";
-	}
 
 }

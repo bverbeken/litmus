@@ -31,7 +31,7 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	}
 
 	protected HtmlPage getHtml(String url) {
-		return new HtmlPage(GET(url));
+		return new HtmlPage(url);
 	}
 
 	protected ResponseAssert assertThat(Response response) {

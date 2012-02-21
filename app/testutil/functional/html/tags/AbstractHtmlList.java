@@ -11,10 +11,10 @@ import static com.google.common.collect.Lists.transform;
 
 public abstract class AbstractHtmlList extends AbstractHtmlTag {
 
+
 	public AbstractHtmlList(Element element) {
 		super(element);
 	}
-
 
 	public List<String> getTextFromItems() {
 		return transform(element.children(), new Function<Element, String>() {
@@ -24,17 +24,17 @@ public abstract class AbstractHtmlList extends AbstractHtmlTag {
 		});
 	}
 
-	public List<LI> getItems() {
-		return transform(element.children(), new Function<Element, LI>() {
-			public LI apply(Element element) {
-				return new LI(element);
+	public List<ListItem> getItems() {
+		return transform(element.children(), new Function<Element, ListItem>() {
+			public ListItem apply(Element element) {
+				return new ListItem(element);
 			}
 		});
 	}
 
-	public LI getItemByVisibleText(final String text) {
-		return find(getItems(), new Predicate<LI>() {
-			public boolean apply(LI li) {
+	public ListItem getItemByVisibleText(final String text) {
+		return find(getItems(), new Predicate<ListItem>() {
+			public boolean apply(ListItem li) {
 				return li.getText().equals(text);
 			}
 		});

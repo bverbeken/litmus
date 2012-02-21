@@ -15,24 +15,28 @@ public class HtmlTagAssert<S extends HtmlTagAssert, T extends AbstractHtmlTag> e
 		super(clazz, tag);
 	}
 
-	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> containsText(String text) {
+	public HtmlTagAssert<S, T> containsText(String text) {
 		Assertions.assertThat(actual.getText()).contains(text);
 		return this;
 	}
 
-	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> containsTextIgnoringCase(String text) {
+	public HtmlTagAssert<S, T> containsTextIgnoringCase(String text) {
 		Assertions.assertThat(actual.getText()).containsIgnoringCase(text);
 		return this;
 	}
 
-	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> hasText(String text) {
-		Assertions.assertThat(actual.getText()).isEqualTo(text);
+	public HtmlTagAssert<S, T> hasText(String text) {
+		Assertions.assertThat(actual.getText()).as("wrong text").isEqualTo(text);
 		return this;
 	}
 
-	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> hasTextIgnoringCase(String text) {
-		Assertions.assertThat(actual.getText()).isEqualToIgnoringCase(text);
+	public HtmlTagAssert<S, T> hasTextIgnoringCase(String text) {
+		Assertions.assertThat(actual.getText()).as("wrong text").isEqualToIgnoringCase(text);
 		return this;
 	}
 
+	public HtmlTagAssert<S, T> hasId(String id) {
+		Assertions.assertThat(actual.getId()).as("wrong id").isEqualTo(id);
+		return this;
+	}
 }

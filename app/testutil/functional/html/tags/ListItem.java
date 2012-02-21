@@ -2,9 +2,9 @@ package testutil.functional.html.tags;
 
 import org.jsoup.nodes.Element;
 
-public class Footer extends AbstractHtmlTag {
+public class ListItem extends AbstractHtmlTag {
 
-	public Footer(Element element) {
+	public ListItem(Element element) {
 		super(element);
 	}
 

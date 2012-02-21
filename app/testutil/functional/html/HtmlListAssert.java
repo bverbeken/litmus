@@ -14,17 +14,6 @@ public class HtmlListAssert extends HtmlTagAssert<HtmlListAssert, AbstractHtmlLi
 		return this;
 	}
 
-	public HtmlListAssert isUnordered() {
-		Assertions.assertThat(actual.getTagName()).isEqualToIgnoringCase("ul");
-		return this;
-	}
-
-
-	public HtmlListAssert isOrdered() {
-		Assertions.assertThat(actual.getTagName()).isEqualToIgnoringCase("ol");
-		return this;
-	}
-
 	public HtmlListAssert hasSize(int size) {
 		Assertions.assertThat(actual.getItems()).hasSize(size);
 		return this;
