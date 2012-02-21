@@ -2,6 +2,7 @@ package testutil.functional.html;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import testutil.functional.html.exception.ElementNotFoundException;
 import testutil.util.RequestBuilder;
 
 import static org.jsoup.Jsoup.parse;
@@ -18,7 +19,15 @@ public class HtmlPage {
 	public HtmlPage(Response response) {
 		this.response = response;
 		assertThat(response).isOk().isHtml();
-		this.doc = parse(readContent(response), configuration.getProperty("application.baseUrl"));
+		initDocument(response);
+	}
+
+	private void initDocument(Response response) {
+		if (configuration.getProperty("application.baseUrl") == null) {
+			throw new IllegalStateException("Please specify the application.baseUrl property in your application.conf!");
+		} else {
+			this.doc = parse(readContent(response), configuration.getProperty("application.baseUrl"));
+		}
 	}
 
 	protected Response getResponse() {
@@ -37,7 +46,7 @@ public class HtmlPage {
 	protected Element findById(String id) {
 		Element element = doc.getElementById(id);
 		if (element == null) {
-			throw new IllegalArgumentException("Unable to find element by id '" + id + "'");
+			throw new ElementNotFoundException("Unable to find element by id '" + id + "'");
 		}
 		return element;
 	}

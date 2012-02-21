@@ -13,4 +13,5 @@ public class HtmlAnchorAssert extends HtmlTagAssert<HtmlAnchorAssert, Anchor>{
 	public void hasHref(String to) {
 		Assertions.assertThat(actual.getHref()).isEqualTo(to);
 	}
+
 }

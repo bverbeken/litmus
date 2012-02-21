@@ -20,5 +20,19 @@ public class HtmlTagAssert<S extends HtmlTagAssert, T extends AbstractHtmlTag> e
 		return this;
 	}
 
+	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> containsTextIgnoringCase(String text) {
+		Assertions.assertThat(actual.getText()).containsIgnoringCase(text);
+		return this;
+	}
+
+	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> hasText(String text) {
+		Assertions.assertThat(actual.getText()).isEqualTo(text);
+		return this;
+	}
+
+	public HtmlTagAssert<? extends HtmlTagAssert, ? extends AbstractHtmlTag> hasTextIgnoringCase(String text) {
+		Assertions.assertThat(actual.getText()).isEqualToIgnoringCase(text);
+		return this;
+	}
 
 }
