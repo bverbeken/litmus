@@ -47,5 +47,5 @@ public class HtmlPage {
 		return new RequestBuilder(url).get();
 	}
 
-	// TODO override other Http methods from FunctionalTest here (GET, PUT, POST, DELETE)
+	// TODO add other Http methods from FunctionalTest here (GET, PUT, POST, DELETE)
 }

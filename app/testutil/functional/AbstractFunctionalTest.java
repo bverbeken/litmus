@@ -7,6 +7,8 @@ import play.test.FunctionalTest;
 import testutil.PlayAssertions;
 import testutil.functional.html.*;
 import testutil.functional.html.tags.AbstractHtmlList;
+import testutil.functional.html.tags.AbstractHtmlTag;
+import testutil.functional.html.tags.Anchor;
 import testutil.functional.response.ResponseAssert;
 import testutil.util.RequestBuilder;
 
@@ -41,6 +43,10 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 
 	protected HtmlTagAssert assertThat(AbstractHtmlTag tag) {
 		return PlayAssertions.assertThat(tag);
+	}
+
+	protected HtmlAnchorAssert assertThat(Anchor anchor) {
+		return PlayAssertions.assertThat(anchor);
 	}
 
 	protected HtmlListAssert assertThat(AbstractHtmlList list) {

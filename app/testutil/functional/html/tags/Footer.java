@@ -1,7 +1,6 @@
 package testutil.functional.html.tags;
 
 import org.jsoup.nodes.Element;
-import testutil.functional.html.AbstractHtmlTag;
 
 public class Footer extends AbstractHtmlTag {
 
@@ -10,7 +9,7 @@ public class Footer extends AbstractHtmlTag {
 	}
 
 	@Override
-	protected String getTagName() {
+	public String getTagName() {
 		return "footer";
 	}
 

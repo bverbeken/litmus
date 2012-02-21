@@ -9,7 +9,7 @@ public class OL extends AbstractHtmlList {
 	}
 
 	@Override
-	protected String getTagName() {
+	public String getTagName() {
 		return "ol";
 	}
 }
