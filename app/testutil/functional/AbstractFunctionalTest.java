@@ -1,6 +1,7 @@
 package testutil.functional;
 
 import org.fest.assertions.Assertions;
+import org.fest.assertions.BooleanAssert;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
 import play.test.FunctionalTest;
@@ -59,6 +60,10 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 
 	protected CollectionAssert assertThat(Collection<?> c) {
 		return Assertions.assertThat(c);
+	}
+	
+	protected BooleanAssert assertThat(boolean b){
+		return Assertions.assertThat(b);
 	}
 
 
