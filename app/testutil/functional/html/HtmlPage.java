@@ -1,9 +1,11 @@
 package testutil.functional.html;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import testutil.functional.html.exception.CannotInitializePageException;
 import testutil.functional.html.exception.ElementNotFoundException;
+import testutil.functional.html.tags.AbstractHtmlTag;
 
 import static org.jsoup.Jsoup.parse;
 import static play.Play.configuration;
@@ -18,17 +20,17 @@ public abstract class HtmlPage {
 	private Document doc;
 
 	public HtmlPage(String url) {
-		initAndVerifyResponse(url);
+		this(GET(url));
+	}
+
+	public HtmlPage(Response response) {
+		initResponse(response);
 		initDocument(response);
 	}
 
-	private void initAndVerifyResponse(String url) {
-		try {
-			this.response = GET(url);
-			assertThat(response).isOk().isHtml();
-		} catch (Exception e) {
-			throw new CannotInitializePageException("Could not initialize page. Did you provide the correct url ('" + url + "'), and is it declared in your routes file?", e);
-		}
+	private void initResponse(Response response) {
+		this.response = response;
+		assertThat(response).isOk().isHtml();
 	}
 
 	private void initDocument(Response response) {
@@ -54,5 +56,10 @@ public abstract class HtmlPage {
 			throw new ElementNotFoundException("Unable to find element by id '" + id + "'");
 		}
 		return element;
+	}
+
+
+	public AbstractHtmlTag find(String selector) {
+		throw new NotImplementedException();
 	}
 }

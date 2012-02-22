@@ -2,6 +2,7 @@ package testutil;
 
 import org.fest.assertions.Assertions;
 import play.mvc.Http;
+import testutil.functional.cookie.CookieAssert;
 import testutil.functional.html.*;
 import testutil.functional.html.tags.AbstractHtmlList;
 import testutil.functional.html.tags.AbstractHtmlTag;
@@ -12,6 +13,10 @@ public class PlayAssertions extends Assertions {
 
 	public static ResponseAssert assertThat(Http.Response response) {
 		return new ResponseAssert(response);
+	}
+	
+	public static CookieAssert assertThat(Http.Cookie cookie){
+		return new CookieAssert(cookie);
 	}
 
 	public static HtmlPageAssert assertThat(HtmlPage htmlPage) {

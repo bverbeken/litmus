@@ -4,8 +4,10 @@ import org.fest.assertions.Assertions;
 import org.fest.assertions.BooleanAssert;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
+import play.mvc.Http;
 import play.test.FunctionalTest;
 import testutil.PlayAssertions;
+import testutil.functional.cookie.CookieAssert;
 import testutil.functional.html.*;
 import testutil.functional.html.tags.AbstractHtmlList;
 import testutil.functional.html.tags.AbstractHtmlTag;
@@ -32,6 +34,10 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 
 	protected ResponseAssert assertThat(Response response) {
 		return PlayAssertions.assertThat(response);
+	}
+	
+	protected CookieAssert assertThat(Http.Cookie cookie){
+		return PlayAssertions.assertThat(cookie);
 	}
 
 	protected HtmlPageAssert assertThat(HtmlPage page) {
