@@ -2,9 +2,8 @@ package testutil.functional.html.tags;
 
 import org.jsoup.nodes.Element;
 import play.mvc.Http;
-import testutil.util.RequestBuilder;
+import testutil.util.Request;
 
-import static java.lang.String.format;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 public class Anchor extends AbstractHtmlTag {
@@ -20,9 +19,9 @@ public class Anchor extends AbstractHtmlTag {
 	public Http.Response followHref() {
 		String href = getHref();
 		if (isBlank(href)) {
-			throw new IllegalStateException(format("Anchor with id '%s' has no href attribute. Please provide one or override its click method", getId()));
+			throw new IllegalStateException("Anchor has no href attribute. Please provide one or override its click method");
 		} else {
-			return new RequestBuilder(href).get();
+			return new Request(href).get();
 		}
 	}
 

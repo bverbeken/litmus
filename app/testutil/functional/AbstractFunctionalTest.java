@@ -11,7 +11,7 @@ import testutil.functional.html.tags.AbstractHtmlList;
 import testutil.functional.html.tags.AbstractHtmlTag;
 import testutil.functional.html.tags.Anchor;
 import testutil.functional.response.ResponseAssert;
-import testutil.util.RequestBuilder;
+import testutil.util.Request;
 
 import java.util.Collection;
 
@@ -24,14 +24,10 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	}
 
 	protected Response login(String username, String password) {
-		return new RequestBuilder("/login")
+		return new Request("/login")
 				.withParam("username", username)
 				.withParam("password", password)
 				.post();
-	}
-
-	protected HtmlPage getHtml(String url) {
-		return new HtmlPage(url);
 	}
 
 	protected ResponseAssert assertThat(Response response) {

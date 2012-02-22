@@ -8,16 +8,16 @@ import java.util.Map;
 import static play.test.FunctionalTest.GET;
 import static play.test.FunctionalTest.POST;
 
-public class RequestBuilder {
+public class Request {
 
 	private String url;
 	private Map<String, String> params = new HashMap<String, String>();
 
-	public RequestBuilder(String url) {
+	public Request(String url) {
 		this.url = url;
 	}
 
-	public RequestBuilder withParam(String name, String value) {
+	public Request withParam(String name, String value) {
 		this.params.put(name, value);
 		return this;
 	}
@@ -29,4 +29,5 @@ public class RequestBuilder {
 	public Http.Response get() {
 		return GET(url);
 	}
+
 }

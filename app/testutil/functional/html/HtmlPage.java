@@ -12,7 +12,7 @@ import static play.test.FunctionalTest.GET;
 import static testutil.PlayAssertions.assertThat;
 import static testutil.functional.response.ResponseContentReader.readContent;
 
-public class HtmlPage {
+public abstract class HtmlPage {
 
 	private Response response;
 	private Document doc;
