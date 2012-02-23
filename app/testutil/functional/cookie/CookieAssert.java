@@ -9,7 +9,7 @@ public class CookieAssert extends GenericAssert<CookieAssert, Cookie> {
 
 	public CookieAssert(Cookie actual) {
 		super(CookieAssert.class, actual);
-		if (actual == null){
+		if (actual == null) {
 			throw new CookieNotFoundException("Cookie not found in response");
 		}
 	}
@@ -28,19 +28,19 @@ public class CookieAssert extends GenericAssert<CookieAssert, Cookie> {
 	public CookieAssert isSecure() {
 		Assertions.assertThat(actual.secure).isTrue();
 		return this;
-	}                    
+	}
 
 	public CookieAssert isInsecure() {
 		Assertions.assertThat(actual.secure).isFalse();
 		return this;
 	}
-	
-	public CookieAssert hasValue(String value){
+
+	public CookieAssert hasValue(String value) {
 		Assertions.assertThat(actual.value).isEqualTo(value);
-		return this; 
+		return this;
 	}
-	
-	public CookieAssert hasMaxAge(Integer maxAge){
+
+	public CookieAssert hasMaxAge(Integer maxAge) {
 		Assertions.assertThat(actual.maxAge).isEqualTo(maxAge);
 		return this;
 	}

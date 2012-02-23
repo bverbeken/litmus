@@ -1,4 +1,4 @@
-package testutil.util;
+package testutil.functional;
 
 import play.mvc.Http;
 

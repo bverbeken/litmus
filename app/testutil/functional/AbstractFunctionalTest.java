@@ -13,7 +13,6 @@ import testutil.functional.html.tags.AbstractHtmlList;
 import testutil.functional.html.tags.AbstractHtmlTag;
 import testutil.functional.html.tags.Anchor;
 import testutil.functional.response.ResponseAssert;
-import testutil.util.Request;
 
 import java.util.Collection;
 
@@ -35,8 +34,8 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	protected ResponseAssert assertThat(Response response) {
 		return PlayAssertions.assertThat(response);
 	}
-	
-	protected CookieAssert assertThat(Http.Cookie cookie){
+
+	protected CookieAssert assertThat(Http.Cookie cookie) {
 		return PlayAssertions.assertThat(cookie);
 	}
 
@@ -63,8 +62,8 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 	protected CollectionAssert assertThat(Collection<?> c) {
 		return Assertions.assertThat(c);
 	}
-	
-	protected BooleanAssert assertThat(boolean b){
+
+	protected BooleanAssert assertThat(boolean b) {
 		return Assertions.assertThat(b);
 	}
 

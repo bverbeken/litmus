@@ -2,7 +2,7 @@ package testutil.functional.html.tags;
 
 import org.jsoup.nodes.Element;
 import play.mvc.Http;
-import testutil.util.Request;
+import testutil.functional.Request;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 
