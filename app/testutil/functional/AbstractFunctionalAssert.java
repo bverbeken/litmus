@@ -97,7 +97,7 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 
 	public SelfType hasCookie(String cookieName) {
 		Http.Cookie cookie = response.cookies.get(cookieName);
-		Assertions.assertThat(cookie).isNotNull();
+		Assertions.assertThat(cookie).describedAs(String.format("cookie [%s] not found", cookieName)).isNotNull();
 		return (SelfType) this;
 	}
 
