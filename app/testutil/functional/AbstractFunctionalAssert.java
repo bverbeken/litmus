@@ -1,8 +1,14 @@
 package testutil.functional;
 
 import org.fest.assertions.GenericAssert;
+import play.Play;
+import testutil.PlayAssertions;
 import testutil.functional.response.ResponseContentTypeUtil;
 
+import java.io.UnsupportedEncodingException;
+
+import static java.lang.String.format;
+import static java.net.URLEncoder.encode;
 import static org.fest.assertions.Assertions.assertThat;
 import static play.mvc.Http.Response;
 import static play.mvc.Http.StatusCode.*;
@@ -68,6 +74,22 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 
 	public SelfType contentContains(String expected) {
 		assertThat(readContent(response)).contains(expected);
+		return (SelfType) this;
+	}
+
+	private static final String FLASH_COOKIE_NAME = Play.configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
+
+
+	private String buildFlashCookie(String key, String value) {
+		try {
+			return encode(format("\u0000%s:%s\u0000", key, value), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public SelfType hasFlashVariable(String name, String bar) {
+		PlayAssertions.assertThat(response.cookies.get(FLASH_COOKIE_NAME).value).contains(buildFlashCookie(name, bar));
 		return (SelfType) this;
 	}
 

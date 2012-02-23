@@ -11,5 +11,4 @@ public class ResponseAssert extends AbstractFunctionalAssert<ResponseAssert, Res
 		super(ResponseAssert.class, actual, actual);
 	}
 
-
 }
