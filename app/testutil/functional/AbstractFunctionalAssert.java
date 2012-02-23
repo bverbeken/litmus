@@ -1,7 +1,9 @@
 package testutil.functional;
 
+import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 import play.Play;
+import play.mvc.Http;
 import testutil.PlayAssertions;
 import testutil.functional.response.ResponseContentTypeUtil;
 
@@ -15,7 +17,7 @@ import static play.mvc.Http.StatusCode.*;
 import static testutil.functional.response.ResponseContentReader.readContent;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType>{
+public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType> {
 
 	private Response response;
 
@@ -93,8 +95,16 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		return (SelfType) this;
 	}
 
+	public SelfType hasCookie(String cookieName) {
+		Http.Cookie cookie = response.cookies.get(cookieName);
+		Assertions.assertThat(cookie).isNotNull();
+		return (SelfType) this;
+	}
 
-
+	public SelfType hasNoCookie(String cookieName) {
+		Assertions.assertThat(response.cookies.get(cookieName)).isNull();
+		return (SelfType) this;
+	}
 
 
 }
