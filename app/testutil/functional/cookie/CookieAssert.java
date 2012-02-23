@@ -24,7 +24,6 @@ public class CookieAssert extends GenericAssert<CookieAssert, Cookie> {
 		return this;
 	}
 
-
 	public CookieAssert isSecure() {
 		Assertions.assertThat(actual.secure).isTrue();
 		return this;
