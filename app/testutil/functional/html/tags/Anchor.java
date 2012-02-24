@@ -1,8 +1,8 @@
 package testutil.functional.html.tags;
 
 import org.jsoup.nodes.Element;
-import play.mvc.Http;
 import testutil.functional.Request;
+import testutil.functional.Response;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 
@@ -16,7 +16,7 @@ public class Anchor extends AbstractHtmlTag {
 		return element.attr("href");
 	}
 
-	public Http.Response followHref() {
+	public Response followHref() {
 		String href = getHref();
 		if (isBlank(href)) {
 			throw new IllegalStateException("Anchor has no href attribute. Please provide one or override its click method");

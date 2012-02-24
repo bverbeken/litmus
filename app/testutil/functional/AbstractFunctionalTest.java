@@ -16,20 +16,7 @@ import testutil.functional.response.ResponseAssert;
 
 import java.util.Collection;
 
-import static play.mvc.Http.Response;
-
 public abstract class AbstractFunctionalTest extends FunctionalTest {
-
-	public void logout() {
-		GET("/logout");
-	}
-
-	protected Response login(String username, String password) {
-		return new Request("/login")
-				.withParam("username", username)
-				.withParam("password", password)
-				.post();
-	}
 
 	protected ResponseAssert assertThat(Response response) {
 		return PlayAssertions.assertThat(response);
@@ -67,5 +54,8 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 		return Assertions.assertThat(b);
 	}
 
+	public static Response get(Object url) {
+		return new Response(GET(newRequest(), url));
+	}
 
 }

@@ -3,16 +3,15 @@ package testutil.functional.html;
 import org.apache.commons.lang.NotImplementedException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import testutil.functional.Response;
 import testutil.functional.html.exception.CannotInitializePageException;
 import testutil.functional.html.exception.ElementNotFoundException;
 import testutil.functional.html.tags.AbstractHtmlTag;
 
 import static org.jsoup.Jsoup.parse;
 import static play.Play.configuration;
-import static play.mvc.Http.Response;
-import static play.test.FunctionalTest.GET;
 import static testutil.PlayAssertions.assertThat;
-import static testutil.functional.response.ResponseContentReader.readContent;
+import static testutil.functional.AbstractFunctionalTest.get;
 
 public abstract class HtmlPage {
 
@@ -20,7 +19,7 @@ public abstract class HtmlPage {
 	private Document doc;
 
 	public HtmlPage(String url) {
-		this(GET(url));
+		this(get(url));
 	}
 
 	public HtmlPage(Response response) {
@@ -38,7 +37,7 @@ public abstract class HtmlPage {
 		if (baseUrl == null) {
 			throw new CannotInitializePageException("Please specify the application.baseUrl property in your application.conf!");
 		} else {
-			this.doc = parse(readContent(response), baseUrl);
+			this.doc = parse(response.getContent(), baseUrl);
 		}
 	}
 
@@ -59,6 +58,7 @@ public abstract class HtmlPage {
 	}
 
 
+	// TODO
 	public AbstractHtmlTag find(String selector) {
 		throw new NotImplementedException();
 	}

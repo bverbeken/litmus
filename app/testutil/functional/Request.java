@@ -1,7 +1,5 @@
 package testutil.functional;
 
-import play.mvc.Http;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +20,12 @@ public class Request {
 		return this;
 	}
 
-	public Http.Response post() {
-		return POST(url, params);
+	public Response post() {
+		return new Response(POST(url, params));
 	}
 
-	public Http.Response get() {
-		return GET(url);
+	public Response get() {
+		return new Response(GET(url));
 	}
 
 }

@@ -1,14 +1,15 @@
 package testutil.functional.response;
 
-import static play.mvc.Http.Response;
 
-@SuppressWarnings("ConstantConditions")
+import testutil.functional.Response;
+
 public class ResponseContentTypeUtil {
 
+	// TODO: move this method to Response
 	public static boolean hasContentType(Response response, String contentType) {
-		if (response.contentType == null) {
+		if (response.getContentType() == null) {
 			return false;
 		}
-		return response.contentType.startsWith(contentType);
+		return response.getContentType().startsWith(contentType);
 	}
 }

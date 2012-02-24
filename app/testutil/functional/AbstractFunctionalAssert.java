@@ -12,9 +12,7 @@ import java.io.UnsupportedEncodingException;
 import static java.lang.String.format;
 import static java.net.URLEncoder.encode;
 import static org.fest.assertions.Assertions.assertThat;
-import static play.mvc.Http.Response;
 import static play.mvc.Http.StatusCode.*;
-import static testutil.functional.response.ResponseContentReader.readContent;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType> {
@@ -27,7 +25,7 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType isStatus(int httpStatusCode) {
-		assertThat(response.status).isEqualTo(httpStatusCode);
+		assertThat(response.getStatus()).isEqualTo(httpStatusCode);
 		return (SelfType) this;
 	}
 
@@ -56,7 +54,7 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 
 	public SelfType hasContentType(String expected) {
 		assertThat(ResponseContentTypeUtil.hasContentType(response, expected))
-				.as("Expected content type '" + expected + "' but was '" + response.contentType + "'")
+				.as("Expected content type '" + expected + "' but was '" + response.getContentType() + "'")
 				.isTrue();
 		return (SelfType) this;
 	}
@@ -66,7 +64,7 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType isEncoded(String encoding) {
-		assertThat(response.encoding).isEqualToIgnoringCase(encoding);
+		assertThat(response.getEncoding()).isEqualToIgnoringCase(encoding);
 		return (SelfType) this;
 	}
 
@@ -75,13 +73,14 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType contentContains(String expected) {
-		assertThat(readContent(response)).contains(expected);
+		assertThat(response.getContent()).contains(expected);
 		return (SelfType) this;
 	}
 
+	// TODO move this to Response
 	private static final String FLASH_COOKIE_NAME = Play.configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
 
-
+	// TODO move this to Response
 	private String buildFlashCookie(String key, String value) {
 		try {
 			return encode(format("\u0000%s:%s\u0000", key, value), "utf-8");
@@ -91,18 +90,18 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType hasFlashVariable(String name, String bar) {
-		PlayAssertions.assertThat(response.cookies.get(FLASH_COOKIE_NAME).value).contains(buildFlashCookie(name, bar));
+		PlayAssertions.assertThat(response.getCookieValue(FLASH_COOKIE_NAME)).contains(buildFlashCookie(name, bar));
 		return (SelfType) this;
 	}
 
 	public SelfType hasCookie(String cookieName) {
-		Http.Cookie cookie = response.cookies.get(cookieName);
+		Http.Cookie cookie = response.getCookie(cookieName);
 		Assertions.assertThat(cookie).describedAs(String.format("cookie [%s] not found", cookieName)).isNotNull();
 		return (SelfType) this;
 	}
 
 	public SelfType hasNoCookie(String cookieName) {
-		Assertions.assertThat(response.cookies.get(cookieName)).isNull();
+		Assertions.assertThat(response.getCookie(cookieName)).isNull();
 		return (SelfType) this;
 	}
 
