@@ -54,4 +54,14 @@ public class ReflectionUtil {
 				"Class '" + clazz.getCanonicalName() + "' nor its superclasses have a declared field called '" + field + "'",
 				hasField(clazz, field));
 	}
+
+	public static <T> T getStaticFieldValue(String fieldName, Class<?> clazz) {
+		try {
+			Field field = clazz.getDeclaredField(fieldName);
+			field.setAccessible(true);
+			return (T) field.get(clazz);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

@@ -15,6 +15,9 @@ import testutil.functional.html.tags.Anchor;
 import testutil.functional.response.ResponseAssert;
 
 import java.util.Collection;
+import java.util.Map;
+
+import static testutil.util.ReflectionUtil.getStaticFieldValue;
 
 public abstract class AbstractFunctionalTest extends FunctionalTest {
 
@@ -54,8 +57,13 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 		return Assertions.assertThat(b);
 	}
 
-	public static Response get(Object url) {
-		return new Response(GET(newRequest(), url));
+	public static Response get(Object url){
+		return new Response(GET(url), getRenderArgs());
 	}
+
+	private static Map<String, Object> getRenderArgs() {
+		return getStaticFieldValue("renderArgs", FunctionalTest.class);
+	}
+
 
 }

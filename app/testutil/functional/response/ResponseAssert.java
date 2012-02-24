@@ -1,6 +1,6 @@
 package testutil.functional.response;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.fest.assertions.Assertions;
 import testutil.functional.AbstractFunctionalAssert;
 import testutil.functional.Response;
 
@@ -12,7 +12,8 @@ public class ResponseAssert extends AbstractFunctionalAssert<ResponseAssert, Res
 		super(ResponseAssert.class, actual, actual);
 	}
 
-	public ResponseAssert hasRenderArg(String arg1) {
-		throw new NotImplementedException();
+	public ResponseAssert hasRenderArg(String argName) {
+		Assertions.assertThat(actual.getRenderArgs().keySet()).contains(argName);
+		return this;
 	}
 }

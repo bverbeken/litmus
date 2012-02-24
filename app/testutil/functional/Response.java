@@ -3,13 +3,16 @@ package testutil.functional;
 import play.mvc.Http;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 public class Response {
 
 	private final Http.Response wrappedResponse;
+	private Map<String, Object> renderArgs;
 
-	public Response(Http.Response wrappedResponse){
+	public Response(Http.Response wrappedResponse, Map<String, Object> renderArgs){
 		this.wrappedResponse = wrappedResponse;
+		this.renderArgs = renderArgs;
 	}
 
 	public Integer getStatus() {
@@ -42,5 +45,9 @@ public class Response {
 	
 	public String getCookieValue(String name){
 		return getCookie(name).value;
+	}
+
+	public Map<String, Object> getRenderArgs() {
+		return renderArgs;
 	}
 }
