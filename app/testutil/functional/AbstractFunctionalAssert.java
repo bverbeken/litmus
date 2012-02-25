@@ -5,7 +5,6 @@ import org.fest.assertions.GenericAssert;
 import play.Play;
 import play.mvc.Http;
 import testutil.PlayAssertions;
-import testutil.functional.response.ResponseContentTypeUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -63,9 +62,10 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	}
 
 	public SelfType hasContentType(String expected) {
-		assertThat(ResponseContentTypeUtil.hasContentType(response, expected))
+		assertThat(response.getContentType())
 				.as("Expected content type '" + expected + "' but was '" + response.getContentType() + "'")
-				.isTrue();
+				.startsWith(expected);
+
 		return (SelfType) this;
 	}
 
