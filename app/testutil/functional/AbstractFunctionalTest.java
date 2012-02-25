@@ -57,7 +57,7 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 		return Assertions.assertThat(b);
 	}
 
-	public static Response get(Object url){
+	public static Response get(Object url) {
 		return new Response(GET(url), getRenderArgs());
 	}
 

@@ -40,15 +40,25 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	public SelfType isForbidden() {
 		return isStatus(FORBIDDEN);
 	}
+	
+	public SelfType isRedirect(){
+		assertThat(response.getStatus()).isGreaterThanOrEqualTo(300).isLessThan(400);
+		return (SelfType) this;
+	}
 
-	public SelfType redirectsTo(String location) {
-		isStatus(FOUND);
-		hasHeader("location", location);
+	public SelfType isRedirectTo(String location) {
+		isRedirect();
+		hasHeaderIgnoringCase("location", location);
 		return (SelfType) this;
 	}
 
 	public SelfType hasHeader(String headerName, String headerValue) {
 		assertThat(response.getHeader(headerName)).isEqualTo(headerValue);
+		return (SelfType) this;
+	}
+
+	public SelfType hasHeaderIgnoringCase(String headerName, String headerValue) {
+		assertThat(response.getHeader(headerName)).isEqualToIgnoringCase(headerValue);
 		return (SelfType) this;
 	}
 
@@ -102,6 +112,12 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 
 	public SelfType hasNoCookie(String cookieName) {
 		Assertions.assertThat(response.getCookie(cookieName)).isNull();
+		return (SelfType) this;
+	}
+
+
+	public SelfType hasRenderArg(String argName) {
+		Assertions.assertThat(response.getRenderArgs().keySet()).contains(argName);
 		return (SelfType) this;
 	}
 
