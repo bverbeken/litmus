@@ -114,6 +114,11 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 
 	/* ************************************ Flash params ************************************ */
 
+	public SelfType hasFlashParam(String name) {
+		Assertions.assertThat(response.getFlashParam(name)).isNotNull();
+		return (SelfType) this;
+	}
+
 	public SelfType hasFlashParam(String name, String value) {
 		PlayAssertions.assertThat(response.getFlashParam(name)).isEqualTo(value);
 		return (SelfType) this;
@@ -146,8 +151,8 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 
 	/* ************************************ render args ************************************ */
 
-	public SelfType hasRenderArg(String argName) {
-		Assertions.assertThat(response.getRenderArgs().keySet()).contains(argName);
+	public SelfType hasRenderArg(String name) {
+		Assertions.assertThat(response.getRenderArgs().get(name)).isNotNull();
 		return (SelfType) this;
 	}
 
