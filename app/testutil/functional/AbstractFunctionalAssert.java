@@ -2,14 +2,9 @@ package testutil.functional;
 
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
-import play.Play;
 import play.mvc.Http;
 import testutil.PlayAssertions;
 
-import java.io.UnsupportedEncodingException;
-
-import static java.lang.String.format;
-import static java.net.URLEncoder.encode;
 import static org.fest.assertions.Assertions.assertThat;
 import static play.mvc.Http.StatusCode.*;
 
@@ -28,6 +23,23 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		return (SelfType) this;
 	}
 
+	public SelfType isSuccess() {
+		assertThat(response.isSuccess()).isTrue();
+		return (SelfType) this;
+	}
+
+
+	public SelfType isError() {
+		assertThat(response.isError()).isTrue();
+		return (SelfType) this;
+	}
+
+
+	public SelfType isRedirect() {
+		assertThat(response.isRedirect()).isTrue();
+		return (SelfType) this;
+	}
+
 	public SelfType isOk() {
 		return isStatus(OK);
 	}
@@ -39,20 +51,11 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	public SelfType isForbidden() {
 		return isStatus(FORBIDDEN);
 	}
-	
-	public SelfType isRedirect(){
-		assertThat(response.getStatus()).isGreaterThanOrEqualTo(300).isLessThan(400);
-		return (SelfType) this;
-	}
+
 
 	public SelfType isRedirectTo(String location) {
 		isRedirect();
 		hasHeaderIgnoringCase("location", location);
-		return (SelfType) this;
-	}
-
-	public SelfType hasHeader(String headerName, String headerValue) {
-		assertThat(response.getHeader(headerName)).isEqualTo(headerValue);
 		return (SelfType) this;
 	}
 
@@ -87,20 +90,8 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		return (SelfType) this;
 	}
 
-	// TODO move this to Response
-	private static final String FLASH_COOKIE_NAME = Play.configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
-
-	// TODO move this to Response
-	private String buildFlashCookie(String key, String value) {
-		try {
-			return encode(format("\u0000%s:%s\u0000", key, value), "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public SelfType hasFlashVariable(String name, String bar) {
-		PlayAssertions.assertThat(response.getCookieValue(FLASH_COOKIE_NAME)).contains(buildFlashCookie(name, bar));
+	public SelfType hasFlashParam(String name, String value) {
+		PlayAssertions.assertThat(response.getFlashParam(name)).isEqualTo(value);
 		return (SelfType) this;
 	}
 
@@ -120,6 +111,5 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		Assertions.assertThat(response.getRenderArgs().keySet()).contains(argName);
 		return (SelfType) this;
 	}
-
 
 }
