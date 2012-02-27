@@ -28,15 +28,30 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		return (SelfType) this;
 	}
 
+	public SelfType isNoSuccess() {
+		assertThat(response.isSuccess()).isFalse();
+		return (SelfType) this;
+	}
 
 	public SelfType isError() {
 		assertThat(response.isError()).isTrue();
 		return (SelfType) this;
 	}
 
+	public SelfType isNoError() {
+		assertThat(response.isError()).isFalse();
+		return (SelfType) this;
+	}
+
 
 	public SelfType isRedirect() {
 		assertThat(response.isRedirect()).isTrue();
+		return (SelfType) this;
+	}
+
+
+	public SelfType isNoRedirect() {
+		assertThat(response.isRedirect()).isFalse();
 		return (SelfType) this;
 	}
 
