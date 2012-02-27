@@ -14,6 +14,7 @@ import static play.mvc.Http.StatusCode.error;
 import static play.mvc.Http.StatusCode.redirect;
 import static play.mvc.Http.StatusCode.success;
 
+@SuppressWarnings("unchecked")
 public class Response {
 
 	public static final String FLASH_COOKIE_NAME = Play.configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
@@ -71,6 +72,11 @@ public class Response {
 
 	public Map<String, Object> getRenderArgs() {
 		return renderArgs;
+	}
+
+
+	public <T> T getRenderArg(String name) {
+		return (T) renderArgs.get(name);
 	}
 
 

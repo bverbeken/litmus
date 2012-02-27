@@ -1,9 +1,6 @@
 package testutil.functional;
 
-import org.fest.assertions.Assertions;
-import org.fest.assertions.BooleanAssert;
-import org.fest.assertions.CollectionAssert;
-import org.fest.assertions.StringAssert;
+import org.fest.assertions.*;
 import play.mvc.Http;
 import play.test.FunctionalTest;
 import testutil.PlayAssertions;
@@ -15,6 +12,7 @@ import testutil.functional.html.tags.Anchor;
 import testutil.functional.response.ResponseAssert;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import static testutil.util.ReflectionUtil.getStaticFieldValue;
@@ -51,6 +49,10 @@ public abstract class AbstractFunctionalTest extends FunctionalTest {
 
 	protected CollectionAssert assertThat(Collection<?> c) {
 		return Assertions.assertThat(c);
+	}
+
+	protected ListAssert assertThat(List<?> l) {
+		return Assertions.assertThat(l);
 	}
 
 	protected BooleanAssert assertThat(boolean b) {

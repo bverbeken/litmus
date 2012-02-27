@@ -156,4 +156,5 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 		return (SelfType) this;
 	}
 
+
 }
