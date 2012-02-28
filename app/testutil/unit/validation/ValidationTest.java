@@ -4,7 +4,7 @@ import org.fest.assertions.Assertions;
 import org.junit.Test;
 import play.test.UnitTest;
 
-public abstract class AbstractValidationTest<T> extends UnitTest {
+public abstract class ValidationTest<T> extends UnitTest {
 
 
 	protected ValidationAssert<T> assertThat(String fieldName) {

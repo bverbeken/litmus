@@ -1,4 +1,4 @@
-package testutil.functional.cookie;
+package testutil.functional;
 
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
@@ -7,11 +7,8 @@ import static play.mvc.Http.Cookie;
 
 public class CookieAssert extends GenericAssert<CookieAssert, Cookie> {
 
-	public CookieAssert(Cookie actual) {
+	protected CookieAssert(Cookie actual) {
 		super(CookieAssert.class, actual);
-		if (actual == null) {
-			throw new CookieNotFoundException("Cookie not found in response");
-		}
 	}
 
 	public CookieAssert hasName(String name) {

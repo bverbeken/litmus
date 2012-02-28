@@ -1,4 +1,4 @@
-package testutil.functional.html.exception;
+package testutil.functional;
 
 public class ElementNotFoundException extends RuntimeException {
 

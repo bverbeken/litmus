@@ -1,11 +1,10 @@
-package testutil.functional.html;
+package testutil.functional;
 
 import org.fest.assertions.Assertions;
-import testutil.functional.AbstractFunctionalAssert;
 
-public class HtmlPageAssert extends AbstractFunctionalAssert<HtmlPageAssert, HtmlPage> {
+public class HtmlPageAssert extends FunctionalAssert<HtmlPageAssert, HtmlPage> {
 
-	public HtmlPageAssert(HtmlPage htmlPage) {
+	protected  HtmlPageAssert(HtmlPage htmlPage) {
 		super(HtmlPageAssert.class, htmlPage, htmlPage.getResponse());
 	}
 

@@ -1,6 +1,5 @@
 package testutil.functional;
 
-import play.Play;
 import play.mvc.Http;
 
 import java.io.UnsupportedEncodingException;
@@ -10,14 +9,13 @@ import java.util.regex.Matcher;
 import static com.google.common.collect.Maps.newHashMap;
 import static java.net.URLDecoder.decode;
 import static java.util.regex.Pattern.compile;
-import static play.mvc.Http.StatusCode.error;
-import static play.mvc.Http.StatusCode.redirect;
-import static play.mvc.Http.StatusCode.success;
+import static play.Play.configuration;
+import static play.mvc.Http.StatusCode.*;
 
 @SuppressWarnings("unchecked")
 public class Response {
 
-	public static final String FLASH_COOKIE_NAME = Play.configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
+	public static final String FLASH_COOKIE_NAME = configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
 	private final Http.Response wrappedResponse;
 	private Map<String, Object> renderArgs;
 

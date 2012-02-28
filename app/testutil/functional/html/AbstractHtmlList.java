@@ -1,4 +1,4 @@
-package testutil.functional.html.tags;
+package testutil.functional.html;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;

@@ -1,16 +1,12 @@
-package testutil;
+package testutil.functional;
 
 import org.fest.assertions.Assertions;
 import play.mvc.Http;
-import testutil.functional.Response;
-import testutil.functional.cookie.CookieAssert;
-import testutil.functional.html.*;
-import testutil.functional.html.tags.AbstractHtmlList;
-import testutil.functional.html.tags.AbstractHtmlTag;
-import testutil.functional.html.tags.Anchor;
-import testutil.functional.response.ResponseAssert;
+import testutil.functional.html.AbstractHtmlList;
+import testutil.functional.html.AbstractHtmlTag;
+import testutil.functional.html.Anchor;
 
-public class PlayAssertions extends Assertions {
+public class FunctionalAssertions extends Assertions {
 
 	public static ResponseAssert assertThat(Response response) {
 		return new ResponseAssert(response);

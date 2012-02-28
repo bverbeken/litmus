@@ -1,17 +1,12 @@
-package testutil.functional.html;
+package testutil.functional;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import testutil.functional.Response;
-import testutil.functional.html.exception.CannotInitializePageException;
-import testutil.functional.html.exception.ElementNotFoundException;
-import testutil.functional.html.tags.AbstractHtmlTag;
 
 import static org.jsoup.Jsoup.parse;
 import static play.Play.configuration;
-import static testutil.PlayAssertions.assertThat;
-import static testutil.functional.AbstractFunctionalTest.get;
+import static testutil.functional.FunctionalAssertions.assertThat;
+import static testutil.functional.FunctionalTest.get;
 
 public abstract class HtmlPage {
 
@@ -57,9 +52,4 @@ public abstract class HtmlPage {
 		return element;
 	}
 
-
-	// TODO
-	public AbstractHtmlTag find(String selector) {
-		throw new NotImplementedException();
-	}
 }

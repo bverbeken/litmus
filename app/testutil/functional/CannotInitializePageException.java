@@ -1,4 +1,4 @@
-package testutil.functional.html.exception;
+package testutil.functional;
 
 public class CannotInitializePageException extends RuntimeException {
 
@@ -6,7 +6,4 @@ public class CannotInitializePageException extends RuntimeException {
 		super(message);
 	}
 
-	public CannotInitializePageException(String message, Throwable cause) {
-		super(message,cause);
-	}
 }

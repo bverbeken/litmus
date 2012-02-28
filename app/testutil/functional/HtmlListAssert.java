@@ -1,11 +1,11 @@
-package testutil.functional.html;
+package testutil.functional;
 
 import org.fest.assertions.Assertions;
-import testutil.functional.html.tags.AbstractHtmlList;
+import testutil.functional.html.AbstractHtmlList;
 
 public class HtmlListAssert extends HtmlTagAssert<HtmlListAssert, AbstractHtmlList> {
 
-	public HtmlListAssert(AbstractHtmlList list) {
+	protected HtmlListAssert(AbstractHtmlList list) {
 		super(HtmlListAssert.class, list);
 	}
 

@@ -1,13 +1,13 @@
-package testutil.functional.html;
+package testutil.functional;
 
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
-import testutil.functional.html.tags.AbstractHtmlTag;
+import testutil.functional.html.AbstractHtmlTag;
 
 public class HtmlTagAssert<S extends HtmlTagAssert, T extends AbstractHtmlTag> extends GenericAssert<S, T> {
 
 	@SuppressWarnings("unchecked")
-	public HtmlTagAssert(T actual) {
+	protected HtmlTagAssert(T actual) {
 		super((Class<S>) HtmlTagAssert.class, actual);
 	}
 

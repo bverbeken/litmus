@@ -3,17 +3,16 @@ package testutil.functional;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 import play.mvc.Http;
-import testutil.PlayAssertions;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static play.mvc.Http.StatusCode.*;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType> {
+public abstract class FunctionalAssert<SelfType extends FunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType> {
 
 	private Response response;
 
-	protected AbstractFunctionalAssert(Class<SelfType> selfType, ActualType actual, Response response) {
+	protected FunctionalAssert(Class<SelfType> selfType, ActualType actual, Response response) {
 		super(selfType, actual);
 		this.response = response;
 	}
@@ -115,17 +114,17 @@ public abstract class AbstractFunctionalAssert<SelfType extends AbstractFunction
 	/* ************************************ Flash params ************************************ */
 
 	public SelfType hasFlashParam(String name) {
-		Assertions.assertThat(response.getFlashParam(name)).isNotNull();
+		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNotNull();
 		return (SelfType) this;
 	}
 
 	public SelfType hasFlashParam(String name, String value) {
-		PlayAssertions.assertThat(response.getFlashParam(name)).isEqualTo(value);
+		FunctionalAssertions.assertThat(response.getFlashParam(name)).isEqualTo(value);
 		return (SelfType) this;
 	}
 
 	public SelfType doesNotHaveFlashParam(String name) {
-		PlayAssertions.assertThat(response.getFlashParam(name)).isNull();
+		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNull();
 		return (SelfType) this;
 	}
 

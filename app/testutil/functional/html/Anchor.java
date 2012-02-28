@@ -1,4 +1,4 @@
-package testutil.functional.html.tags;
+package testutil.functional.html;
 
 import org.jsoup.nodes.Element;
 import testutil.functional.Request;
