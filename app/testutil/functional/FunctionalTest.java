@@ -1,10 +1,10 @@
 package testutil.functional;
 
-import org.fest.assertions.*;
+import org.fest.assertions.BooleanAssert;
+import org.fest.assertions.CollectionAssert;
+import org.fest.assertions.ListAssert;
+import org.fest.assertions.StringAssert;
 import play.mvc.Http;
-import testutil.functional.html.AbstractHtmlList;
-import testutil.functional.html.AbstractHtmlTag;
-import testutil.functional.html.Anchor;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,22 +20,6 @@ public abstract class FunctionalTest extends play.test.FunctionalTest {
 
 	protected CookieAssert assertThat(Http.Cookie cookie) {
 		return FunctionalAssertions.assertThat(cookie);
-	}
-
-	protected HtmlPageAssert assertThat(HtmlPage page) {
-		return FunctionalAssertions.assertThat(page);
-	}
-
-	protected HtmlTagAssert assertThat(AbstractHtmlTag tag) {
-		return FunctionalAssertions.assertThat(tag);
-	}
-
-	protected HtmlAnchorAssert assertThat(Anchor anchor) {
-		return FunctionalAssertions.assertThat(anchor);
-	}
-
-	protected HtmlListAssert assertThat(AbstractHtmlList list) {
-		return FunctionalAssertions.assertThat(list);
 	}
 
 	protected StringAssert assertThat(String string) {

@@ -42,14 +42,14 @@ public class ValidationAssert<T> {
 		return isInvalidBecause(ValidationMessages.MIN_SIZE);
 	}
 
-	public ValidationAssert<T> isInvalid(){
+	public ValidationAssert<T> isInvalid() {
 		Assertions.assertThat(Validator.getErrorsForField(valid, fieldName))
 				.as("expected validation error for field '" + fieldName + "' but it was valid.")
 				.isNotEmpty();
 		return this;
 	}
-	
-	public ValidationAssert<T> isValid(){
+
+	public ValidationAssert<T> isValid() {
 		List<String> errorsForField = Validator.getErrorsForField(valid, fieldName);
 		Assertions.assertThat(errorsForField)
 				.as("expected to be valid, but errors found: " + errorsForField)

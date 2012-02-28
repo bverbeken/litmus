@@ -27,16 +27,16 @@ public class Response {
 	public Integer getStatus() {
 		return wrappedResponse.status;
 	}
-	
-	public boolean isSuccess(){
+
+	public boolean isSuccess() {
 		return success(getStatus());
 	}
 
-	public boolean isError(){
+	public boolean isError() {
 		return error(getStatus());
 	}
 
-	public boolean isRedirect(){
+	public boolean isRedirect() {
 		return redirect(getStatus());
 	}
 

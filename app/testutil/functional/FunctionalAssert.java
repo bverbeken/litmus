@@ -137,18 +137,6 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 
 	/* ************************************ To Do ************************************ */
 
-	public SelfType hasContentType(String expected) {
-		assertThat(response.getContentType())
-				.as("Expected content type '" + expected + "' but was '" + response.getContentType() + "'")
-				.startsWith(expected);
-
-		return (SelfType) this;
-	}
-
-	public SelfType isHtml() {
-		return hasContentType("text/html");
-	}
-
 	public SelfType isEncoded(String encoding) {
 		assertThat(response.getEncoding()).isEqualToIgnoringCase(encoding);
 		return (SelfType) this;
@@ -156,11 +144,6 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 
 	public SelfType isUtf8() {
 		return isEncoded("utf-8");
-	}
-
-	public SelfType contentContains(String expected) {
-		assertThat(response.getContent()).contains(expected);
-		return (SelfType) this;
 	}
 
 
