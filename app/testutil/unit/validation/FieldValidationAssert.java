@@ -31,9 +31,7 @@ public class FieldValidationAssert<T> {
 	public FieldValidationAssert<T> withValue(Object value) {
 		set(valid, fieldName, value);
 		return this;
-
 	}
-
 
 	public FieldValidationAssert<T> isInvalid() {
 		Assertions.assertThat(Validator.getErrorsForField(valid, fieldName))

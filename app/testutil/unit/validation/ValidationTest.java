@@ -11,7 +11,7 @@ public abstract class ValidationTest<T> extends UnitTest {
 		return new FieldValidationAssert<T>(valid(), fieldName);
 	}
 
-	protected ValidationAssert<T> assertThat(T t){
+	protected ValidationAssert<T> assertThat(T t) {
 		return new ValidationAssert<T>(t);
 	}
 
