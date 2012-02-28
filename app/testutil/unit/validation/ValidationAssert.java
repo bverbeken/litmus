@@ -25,4 +25,9 @@ public class ValidationAssert<T> extends GenericAssert<ValidationAssert, T> {
 		Assertions.assertThat(Validator.getErrorMessagesForField(fieldName)).contains(error);
 		return this;
 	}
+
+	public ValidationAssert<T> isInvalidBecause(String fieldName, BuiltInValidation error) {
+		return isInvalidBecause(fieldName, error.getMessageKey());
+	}
+
 }
