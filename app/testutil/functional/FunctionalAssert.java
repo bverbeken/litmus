@@ -5,9 +5,7 @@ import org.fest.assertions.GenericAssert;
 import play.mvc.Http;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static play.mvc.Http.StatusCode.FORBIDDEN;
-import static play.mvc.Http.StatusCode.NOT_FOUND;
-import static play.mvc.Http.StatusCode.OK;
+import static play.mvc.Http.StatusCode.*;
 
 @SuppressWarnings("unchecked")
 public abstract class FunctionalAssert<SelfType extends FunctionalAssert, ActualType> extends GenericAssert<SelfType, ActualType> {
@@ -61,7 +59,6 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-
 	public SelfType isNoRedirect() {
 		assertThat(response.isRedirect()).isFalse();
 		return (SelfType) this;
@@ -88,7 +85,46 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-	/* ************************************ Content ************************************ */
+	public SelfType hasFlashParam(String name) {
+		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNotNull();
+		return (SelfType) this;
+	}
+
+	public SelfType hasFlashParam(String name, String value) {
+		FunctionalAssertions.assertThat(response.getFlashParam(name)).isEqualTo(value);
+		return (SelfType) this;
+	}
+
+	public SelfType doesNotHaveFlashParam(String name) {
+		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNull();
+		return (SelfType) this;
+	}
+
+	public SelfType hasCookie(String name) {
+		Http.Cookie cookie = response.getCookie(name);
+		Assertions.assertThat(cookie).describedAs(String.format("cookie [%s] not found", name)).isNotNull();
+		return (SelfType) this;
+	}
+
+	public SelfType hasCookieValue(String name, String value) {
+		Http.Cookie cookie = response.getCookie(name);
+		Assertions.assertThat(cookie).describedAs(String.format("cookie [%s] not found", name)).isNotNull();
+		Assertions.assertThat(cookie.value).isEqualTo(value);
+		return (SelfType) this;
+	}
+
+	public SelfType doesNotHaveCookie(String cookieName) {
+		Assertions.assertThat(response.getCookie(cookieName)).isNull();
+		return (SelfType) this;
+	}
+
+	public SelfType hasRenderArg(String name) {
+		Assertions.assertThat(response.getRenderArgs().get(name)).isNotNull();
+		return (SelfType) this;
+	}
+
+
+	/* ************************************ To Do ************************************ */
 
 	public SelfType hasContentType(String expected) {
 		assertThat(response.getContentType())
@@ -116,49 +152,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-	/* ************************************ Flash params ************************************ */
-
-	public SelfType hasFlashParam(String name) {
-		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNotNull();
-		return (SelfType) this;
-	}
-
-	public SelfType hasFlashParam(String name, String value) {
-		FunctionalAssertions.assertThat(response.getFlashParam(name)).isEqualTo(value);
-		return (SelfType) this;
-	}
-
-	public SelfType doesNotHaveFlashParam(String name) {
-		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNull();
-		return (SelfType) this;
-	}
-
-	/* ************************************ Cookies ************************************ */
-
-	public SelfType hasCookie(String name) {
-		Http.Cookie cookie = response.getCookie(name);
-		Assertions.assertThat(cookie).describedAs(String.format("cookie [%s] not found", name)).isNotNull();
-		return (SelfType) this;
-	}
-
-	public SelfType hasCookieValue(String name, String value) {
-		Http.Cookie cookie = response.getCookie(name);
-		Assertions.assertThat(cookie).describedAs(String.format("cookie [%s] not found", name)).isNotNull();
-		Assertions.assertThat(cookie.value).isEqualTo(value);
-		return (SelfType) this;
-	}
-
-	public SelfType doesNotHaveCookie(String cookieName) {
-		Assertions.assertThat(response.getCookie(cookieName)).isNull();
-		return (SelfType) this;
-	}
-
 	/* ************************************ render args ************************************ */
-
-	public SelfType hasRenderArg(String name) {
-		Assertions.assertThat(response.getRenderArgs().get(name)).isNotNull();
-		return (SelfType) this;
-	}
 
 
 }
