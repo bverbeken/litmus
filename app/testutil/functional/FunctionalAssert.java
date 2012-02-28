@@ -123,6 +123,17 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
+	public SelfType hasRenderArgValue(String name, Object expected) {
+		Assertions.assertThat(response.getRenderArgs().get(name)).isEqualTo(expected);
+		return (SelfType) this;
+	}
+
+
+	public SelfType doesNotHaveRenderArg(String name) {
+		FunctionalAssertions.assertThat(response.getRenderArgs().get(name)).isNull();
+		return (SelfType) this;
+	}
+
 
 	/* ************************************ To Do ************************************ */
 
