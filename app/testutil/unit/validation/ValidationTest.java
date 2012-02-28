@@ -7,10 +7,13 @@ import play.test.UnitTest;
 public abstract class ValidationTest<T> extends UnitTest {
 
 
-	protected ValidationAssert<T> assertThat(String fieldName) {
-		return new ValidationAssert<T>(valid(), fieldName);
+	protected FieldValidationAssert<T> assertThat(String fieldName) {
+		return new FieldValidationAssert<T>(valid(), fieldName);
 	}
 
+	protected ValidationAssert<T> assertThat(T t){
+		return new ValidationAssert<T>(t);
+	}
 
 	@Test
 	public void validObjectShouldValidate() {

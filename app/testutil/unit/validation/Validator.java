@@ -26,7 +26,7 @@ class Validator {
 		return Validation.current().valid(actual);
 	}
 
-	private static List<String> getErrorMessagesForField(String field) {
+	public static List<String> getErrorMessagesForField(String field) {
 		List<String> result = new ArrayList<String>();
 		List<play.data.validation.Error> errors = Validation.current().errorsMap().get("." + field);
 		if (errors != null && !errors.isEmpty()) {
