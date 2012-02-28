@@ -163,7 +163,5 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-	/* ************************************ render args ************************************ */
-
 
 }
