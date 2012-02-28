@@ -6,6 +6,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertTrue;
+import static testutil.unit.validation.BuiltInValidation.REQUIRED;
 import static testutil.util.ReflectionUtil.set;
 
 
@@ -20,7 +21,7 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> isRequired() {
-		return withValue(null).isInvalidBecauseRequired();
+		return withValue(null).isInvalidBecause(REQUIRED);
 	}
 
 	public FieldValidationAssert<T> shouldNotBe(Object value) {
@@ -33,14 +34,6 @@ public class FieldValidationAssert<T> {
 
 	}
 
-	public FieldValidationAssert<T> isInvalidBecauseRequired() {
-		return isInvalidBecause(ValidationMessages.REQUIRED);
-	}
-
-
-	public FieldValidationAssert<T> isInvalidBecauseTooShort() {
-		return isInvalidBecause(ValidationMessages.MIN_SIZE);
-	}
 
 	public FieldValidationAssert<T> isInvalid() {
 		Assertions.assertThat(Validator.getErrorsForField(valid, fieldName))
@@ -55,6 +48,10 @@ public class FieldValidationAssert<T> {
 				.as("expected to be valid, but errors found: " + errorsForField)
 				.isEmpty();
 		return this;
+	}
+
+	public FieldValidationAssert<T> isInvalidBecause(BuiltInValidation validation) {
+		return isInvalidBecause(validation.getMessageKey());
 	}
 
 	public FieldValidationAssert<T> isInvalidBecause(String error) {

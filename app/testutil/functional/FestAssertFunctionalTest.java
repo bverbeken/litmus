@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-class FestAssertFunctionalTest extends play.test.FunctionalTest {
+abstract class FestAssertFunctionalTest extends play.test.FunctionalTest {
 
 	protected ResponseAssert assertThat(Response response) {
 		return FunctionalAssertions.assertThat(response);
