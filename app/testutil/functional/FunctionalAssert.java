@@ -75,7 +75,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-	public SelfType doesNotHaveHeader(String name) {
+	public SelfType hasNoHeader(String name) {
 		assertThat(response.getHeader(name)).isNull();
 		return (SelfType) this;
 	}
@@ -95,7 +95,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-	public SelfType doesNotHaveFlashParam(String name) {
+	public SelfType hasNoFlashParam(String name) {
 		FunctionalAssertions.assertThat(response.getFlashParam(name)).isNull();
 		return (SelfType) this;
 	}
@@ -113,7 +113,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 		return (SelfType) this;
 	}
 
-	public SelfType doesNotHaveCookie(String cookieName) {
+	public SelfType hasNoCookie(String cookieName) {
 		Assertions.assertThat(response.getCookie(cookieName)).isNull();
 		return (SelfType) this;
 	}
@@ -129,7 +129,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 	}
 
 
-	public SelfType doesNotHaveRenderArg(String name) {
+	public SelfType hasNoRenderArg(String name) {
 		FunctionalAssertions.assertThat(response.getRenderArgs().get(name)).isNull();
 		return (SelfType) this;
 	}
