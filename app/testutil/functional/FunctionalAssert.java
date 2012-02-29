@@ -135,6 +135,28 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 	}
 
 
+	public SelfType isHtml() {
+		return hasContentType("text/html");
+	}
+	
+	public SelfType isXml(){
+		return hasContentType("text/xml");
+	}
+	
+	public SelfType isJson(){
+		return hasContentType("application/json");
+	}
+
+	public SelfType isText(){
+		return hasContentType("text/plain");
+	}
+
+
+	public SelfType hasContentType(String contentType){
+		FunctionalAssertions.assertThat(response.getContentType()).startsWith(contentType);
+		return (SelfType) this; 
+	}
+
 	/* ************************************ To Do ************************************ */
 
 	public SelfType isEncoded(String encoding) {
