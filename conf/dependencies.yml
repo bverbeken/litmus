@@ -1,4 +1,4 @@
-self: play -> play-testutils 0.1
+self: play -> litmus 0.1
 
 require:
     - play
