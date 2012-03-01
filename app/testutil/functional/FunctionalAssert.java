@@ -153,7 +153,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 
 
 	public SelfType hasContentType(String contentType){
-		FunctionalAssertions.assertThat(response.getContentType()).startsWith(contentType);
+		FunctionalAssertions.assertThat(response.getContentType()).isEqualTo(contentType);
 		return (SelfType) this; 
 	}
 

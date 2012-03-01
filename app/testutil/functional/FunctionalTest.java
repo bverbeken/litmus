@@ -10,21 +10,21 @@ import static testutil.util.ReflectionUtil.getStaticFieldValue;
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
 	public static Response get(Object url) {
-		return wrapResponse(GET(url));
+		return wrapResponse("GET", url, GET(url));
 	}
 
 	public static Response getAndFollowRedirect(Object url) {
-		return wrapResponse(GET(url, true));
+		return wrapResponse("GET", url, GET(url, true));
 	}
 
 	public static Response post(Object url) {
-		return wrapResponse(POST(url));
+		return wrapResponse("POST", url, POST(url));
 	}
 
 	// TODO: add other post, put, head and delete methods
 
-	private static Response wrapResponse(Http.Response get) {
-		return new Response(get, getRenderArgs());
+	private static Response wrapResponse(String httpMethod, Object request, Http.Response response ) {
+		return new Response(httpMethod, request, response, getRenderArgs());
 	}
 
 	private static Map<String, Object> getRenderArgs() {

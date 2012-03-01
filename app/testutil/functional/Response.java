@@ -11,15 +11,20 @@ import static java.net.URLDecoder.decode;
 import static java.util.regex.Pattern.compile;
 import static play.Play.configuration;
 import static play.mvc.Http.StatusCode.*;
+import static play.utils.HTTP.parseContentType;
 
 @SuppressWarnings("unchecked")
 public class Response {
 
 	public static final String FLASH_COOKIE_NAME = configuration.getProperty("application.session.cookie", "PLAY") + "_FLASH";
 	private final Http.Response wrappedResponse;
-	private Map<String, Object> renderArgs;
+	private final Map<String, Object> renderArgs;
+	private final Object request;
+	private final String httpMethod;
 
-	public Response(Http.Response wrappedResponse, Map<String, Object> renderArgs) {
+	public Response(String httpMethod, Object request, Http.Response wrappedResponse, Map<String, Object> renderArgs) {
+		this.httpMethod = httpMethod;
+		this.request = request;
 		this.wrappedResponse = wrappedResponse;
 		this.renderArgs = renderArgs;
 	}
@@ -45,7 +50,7 @@ public class Response {
 	}
 
 	public String getContentType() {
-		return wrappedResponse.contentType;
+		return parseContentType(wrappedResponse.contentType).contentType;
 	}
 
 	public String getEncoding() {
@@ -59,6 +64,14 @@ public class Response {
 			throw new RuntimeException("Failed to read content from response", e);
 		}
 	}
+
+	public String getText() {
+		if (!"text/plain".equals(getContentType())) {
+			throw new WrongContentTypeException("text/plain", getContentType(), httpMethod, request);
+		}
+		return getContent();
+	}
+
 
 	public Http.Cookie getCookie(String name) {
 		return wrappedResponse.cookies.get(name);
