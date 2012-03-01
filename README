@@ -1,26 +1,4 @@
-play-testutils is a very simple library that allows for more expressive testing when using Play!framework.
+Litmus is a simple Play!Framework module that allows for more expressive functional testing.
 
 Warning: this is a work in progress. The api is very very likely to change ;) 
-
-For example: 
-
-@Test
-public void testThatIndexPageWorks() {
-	assertThat(GET("/"))
-		.isOk()
-		.isHtml()	
-		.isUtf8();
-
-}
-
-instead of 
-
-@Test
-public void testThatIndexPageWorks() {
-    Response response = GET("/");
-    assertIsOk(response);
-    assertContentType("text/html", response);
-    assertCharset(play.Play.defaultWebEncoding, response);
-}
-
 
