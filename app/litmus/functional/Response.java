@@ -20,9 +20,9 @@ public class Response {
 	private final Http.Response wrappedResponse;
 	private final Map<String, Object> renderArgs;
 	private final Object request;
-	private final String httpMethod;
+	private final HttpMethod httpMethod;
 
-	public Response(String httpMethod, Object request, Http.Response wrappedResponse, Map<String, Object> renderArgs) {
+	public Response(HttpMethod httpMethod, Object request, Http.Response wrappedResponse, Map<String, Object> renderArgs) {
 		this.httpMethod = httpMethod;
 		this.request = request;
 		this.wrappedResponse = wrappedResponse;
