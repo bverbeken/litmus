@@ -66,12 +66,21 @@ public class Response {
 	}
 
 	public String getText() {
-		if (!"text/plain".equals(getContentType())) {
-			throw new WrongContentTypeException("text/plain", getContentType(), httpMethod, request);
-		}
+		verifyContentTypeIs("text/plain");
 		return getContent();
 	}
 
+	public Html getHtml() {
+		verifyContentTypeIs("text/html");
+		return new Html(getContent());
+	}
+
+
+	private void verifyContentTypeIs(String expectedContentType) {
+		if (!expectedContentType.equals(getContentType())) {
+			throw new WrongContentTypeException(expectedContentType, getContentType(), httpMethod, request);
+		}
+	}
 
 	public Http.Cookie getCookie(String name) {
 		return wrappedResponse.cookies.get(name);

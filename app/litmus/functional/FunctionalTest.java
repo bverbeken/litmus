@@ -4,13 +4,18 @@ import play.mvc.Http;
 
 import java.util.Map;
 
+import static litmus.util.PlayExceptionUtil.tryToFindNotFound;
 import static litmus.util.ReflectionUtil.getStaticFieldValue;
 
 
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
 	public static Response get(Object url) {
-		return wrapResponse("GET", url, GET(url));
+		try {
+			return wrapResponse("GET", url, GET(url));
+		} catch (Exception e) {
+			throw tryToFindNotFound(e);
+		}
 	}
 
 	public static Response getAndFollowRedirect(Object url) {
@@ -23,7 +28,7 @@ public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
 	// TODO: add other post, put, head and delete methods
 
-	private static Response wrapResponse(String httpMethod, Object request, Http.Response response ) {
+	private static Response wrapResponse(String httpMethod, Object request, Http.Response response) {
 		return new Response(httpMethod, request, response, getRenderArgs());
 	}
 

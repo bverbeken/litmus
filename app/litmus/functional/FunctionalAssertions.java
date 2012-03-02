@@ -13,4 +13,8 @@ public class FunctionalAssertions extends Assertions {
 		return new CookieAssert(cookie);
 	}
 
+	public static HtmlAssert assertThat(Html html){
+		return new HtmlAssert(html);
+	}
+
 }

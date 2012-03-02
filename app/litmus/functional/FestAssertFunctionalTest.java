@@ -21,6 +21,10 @@ abstract class FestAssertFunctionalTest extends play.test.FunctionalTest {
 		return FunctionalAssertions.assertThat(cookie);
 	}
 
+	protected HtmlAssert assertThat(Html html) {
+		return FunctionalAssertions.assertThat(html);
+	}
+
 	/* ************** FEST *************** */
 	public static BigDecimalAssert assertThat(BigDecimal actual) {
 		return Assertions.assertThat(actual);
