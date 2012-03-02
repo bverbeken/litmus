@@ -18,4 +18,10 @@ public class HtmlAssert extends GenericAssert<HtmlAssert, Html> {
 		Assertions.assertThat(actual.getTitle()).contains(titlePart);
 		return this;
 	}
+
+	public HtmlAssert titleMatches(String regex) {
+		Assertions.assertThat(actual.getTitle()).matches(regex);
+		return this;
+	}
+
 }

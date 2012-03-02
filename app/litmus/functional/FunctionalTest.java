@@ -12,19 +12,23 @@ import static litmus.util.ReflectionUtil.getStaticFieldValue;
 
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
-	public static Response get(Object url) {
+	protected static Response get(Object url) {
 		try {
 			return wrapResponse(GET, url, GET(url));
 		} catch (Exception e) {
 			throw tryToFindNotFound(e);
 		}
 	}
+	
+	protected static Html getHtml(Object url){
+		return get(url).getHtml();
+	}
 
-	public static Response getAndFollowRedirect(Object url) {
+	protected static Response getAndFollowRedirect(Object url) {
 		return wrapResponse(GET, url, GET(url, true));
 	}
 
-	public static Response post(Object url) {
+	protected static Response post(Object url) {
 		return wrapResponse(POST, url, POST(url));
 	}
 
