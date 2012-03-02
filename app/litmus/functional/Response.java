@@ -1,4 +1,4 @@
-package testutil.functional;
+package litmus.functional;
 
 import play.mvc.Http;
 

@@ -1,4 +1,4 @@
-package testutil.functional;
+package litmus.functional;
 
 import static java.lang.String.format;
 

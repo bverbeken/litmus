@@ -1,4 +1,4 @@
-package testutil.unit.validation;
+package litmus.unit.validation;
 
 import play.data.validation.Error;
 import play.data.validation.Validation;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import static play.data.validation.Validation.ValidationResult;
-import static testutil.util.ReflectionUtil.get;
+import static litmus.util.ReflectionUtil.get;
 
 class Validator {
 

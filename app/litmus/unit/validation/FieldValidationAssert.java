@@ -1,4 +1,4 @@
-package testutil.unit.validation;
+package litmus.unit.validation;
 
 import org.fest.assertions.Assertions;
 
@@ -6,8 +6,8 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertTrue;
-import static testutil.unit.validation.BuiltInValidation.REQUIRED;
-import static testutil.util.ReflectionUtil.set;
+import static litmus.unit.validation.BuiltInValidation.REQUIRED;
+import static litmus.util.ReflectionUtil.set;
 
 
 public class FieldValidationAssert<T> {

@@ -1,4 +1,4 @@
-package testutil.functional;
+package litmus.functional;
 
 public class HtmlResponseAssert extends FunctionalAssert<HtmlResponseAssert, Response> {
 

@@ -1,4 +1,4 @@
-package testutil.unit.validation;
+package litmus.unit.validation;
 
 import org.fest.assertions.Assertions;
 import org.junit.Test;

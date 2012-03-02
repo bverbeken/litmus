@@ -1,4 +1,4 @@
-package testutil.unit.validation;
+package litmus.unit.validation;
 
 public enum BuiltInValidation {
 

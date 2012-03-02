@@ -1,4 +1,4 @@
-package testutil.functional;
+package litmus.functional;
 
 import org.fest.assertions.*;
 import play.mvc.Http;

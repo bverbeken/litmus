@@ -1,10 +1,10 @@
-package testutil.functional;
+package litmus.functional;
 
 import play.mvc.Http;
 
 import java.util.Map;
 
-import static testutil.util.ReflectionUtil.getStaticFieldValue;
+import static litmus.util.ReflectionUtil.getStaticFieldValue;
 
 
 public abstract class FunctionalTest extends FestAssertFunctionalTest {

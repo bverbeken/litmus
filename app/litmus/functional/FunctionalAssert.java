@@ -1,4 +1,4 @@
-package testutil.functional;
+package litmus.functional;
 
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
