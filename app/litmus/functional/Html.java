@@ -20,11 +20,12 @@ public class Html {
 	public Elements select(String selector) {
 		return document.select(selector);
 	}
-	
-	public Element selectSingle(String selector){
+
+	public Element selectSingle(String selector) {
 		Elements elements = select(selector);
-		if (elements.size() != 1){
-			throw new IllegalArgumentException("more than one element found for selector [" + selector + "]");
+		if (elements.size() != 1) {
+			String msgPrefix = elements.isEmpty() ? "no" : "more than one";
+			throw new IllegalArgumentException(msgPrefix + " element found for selector [" + selector + "]");
 		}
 		return elements.first();
 	}

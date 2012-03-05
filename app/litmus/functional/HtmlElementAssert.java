@@ -3,6 +3,7 @@ package litmus.functional;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 import org.jsoup.nodes.Element;
+import play.i18n.Messages;
 
 public class HtmlElementAssert extends GenericAssert<HtmlElementAssert, Element> {
 
@@ -51,4 +52,7 @@ public class HtmlElementAssert extends GenericAssert<HtmlElementAssert, Element>
 		return this;
 	}
 
+	public HtmlElementAssert containsMessage(String key) {
+		return containsText(Messages.get(key));
+	}
 }
