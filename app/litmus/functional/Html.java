@@ -2,6 +2,8 @@ package litmus.functional;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Html {
 
@@ -14,5 +16,18 @@ public class Html {
 	public String getTitle() {
 		return document.title();
 	}
+
+	public Elements select(String selector) {
+		return document.select(selector);
+	}
+	
+	public Element selectSingle(String selector){
+		Elements elements = select(selector);
+		if (elements.size() != 1){
+			throw new IllegalArgumentException("more than one element found for selector [" + selector + "]");
+		}
+		return elements.first();
+	}
+
 
 }

@@ -2,6 +2,9 @@ package litmus.functional;
 
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
+import org.jsoup.select.Elements;
+
+import static java.lang.String.format;
 
 public class HtmlAssert extends GenericAssert<HtmlAssert, Html> {
 
@@ -21,6 +24,22 @@ public class HtmlAssert extends GenericAssert<HtmlAssert, Html> {
 
 	public HtmlAssert titleMatches(String regex) {
 		Assertions.assertThat(actual.getTitle()).matches(regex);
+		return this;
+	}
+
+
+	public HtmlAssert contains(String selector) {
+		Assertions.assertThat(actual.select(selector))
+				.as(format("Response html does not contain element that satisfies [%s]", selector))
+				.isNotEmpty();
+		return this;
+	}
+
+	public HtmlAssert doesNotContain(String selector) {
+		Elements elements = actual.select(selector);
+		Assertions.assertThat(elements)
+				.as(format("Response html contains the following elements that satisfy [%s]: %s", selector, elements))
+				.isEmpty();
 		return this;
 	}
 

@@ -1,6 +1,8 @@
 package litmus.functional;
 
 import org.fest.assertions.Assertions;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import play.mvc.Http;
 
 public class FunctionalAssertions extends Assertions {
@@ -13,8 +15,16 @@ public class FunctionalAssertions extends Assertions {
 		return new CookieAssert(cookie);
 	}
 
-	public static HtmlAssert assertThat(Html html){
+	public static HtmlAssert assertThat(Html html) {
 		return new HtmlAssert(html);
+	}
+
+	public static HtmlElementAssert assertThat(Element element) {
+		return new HtmlElementAssert(element);
+	}
+
+	public static HtmlElementsAssert assertThat(Elements element) {
+		return new HtmlElementsAssert(element);
 	}
 
 }
