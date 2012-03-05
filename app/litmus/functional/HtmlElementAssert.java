@@ -51,14 +51,4 @@ public class HtmlElementAssert extends GenericAssert<HtmlElementAssert, Element>
 		return this;
 	}
 
-
-	public void sdklm() {
-		actual.attributes();
-
-		// eventueel (later?)
-		actual.children(); // hasChild(), hasNoChildren()
-		actual.siblingElements();
-
-
-	}
 }
