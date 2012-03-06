@@ -52,7 +52,7 @@ public class HtmlElementAssert extends GenericAssert<HtmlElementAssert, Element>
 		return this;
 	}
 
-	public HtmlElementAssert containsMessage(String key) {
-		return containsText(Messages.get(key));
+	public HtmlElementAssert containsMessage(String key, Object... args) {
+		return containsText(Messages.get(key, args));
 	}
 }

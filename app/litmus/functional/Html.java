@@ -25,7 +25,7 @@ public class Html {
 		Elements elements = select(selector);
 		if (elements.size() != 1) {
 			String msgPrefix = elements.isEmpty() ? "no" : "more than one";
-			throw new IllegalArgumentException(msgPrefix + " element found for selector [" + selector + "]");
+			throw new WrongSelectorException(msgPrefix + " element found for selector [" + selector + "]");
 		}
 		return elements.first();
 	}
