@@ -5,15 +5,23 @@ import play.mvc.results.Result;
 
 import java.util.Map;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static litmus.functional.HttpMethod.GET;
+import static litmus.functional.HttpMethod.POST;
 import static litmus.util.ReflectionUtil.getStaticFieldValue;
 
 public class Request {
 
 	private final Object url;
+	private Map<String, String> params = newHashMap();
 
 	public Request(Object url) {
 		this.url = url;
+	}
+
+	public Request with(String name, String value) {
+		this.params.put(name, value);
+		return this;
 	}
 
 	public Response get() {
@@ -24,10 +32,19 @@ public class Request {
 		});
 	}
 
+	public Response post() {
+		return wrapResponse(POST, url, new ResponseFetcher() {
+			Http.Response fetch() {
+				return play.test.FunctionalTest.POST(url, params);
+			}
+		});
+	}
+
 	private static Response wrapResponse(HttpMethod httpMethod, Object request, ResponseFetcher fetcher) {
 		Map<String, Object> renderArgs = getStaticFieldValue("renderArgs", play.test.FunctionalTest.class);
 		return new Response(httpMethod, request, fetcher.fetchAndHandleException(), renderArgs);
 	}
+
 
 	private abstract static class ResponseFetcher {
 
