@@ -7,7 +7,6 @@ import play.mvc.Http;
 import static org.fest.assertions.Assertions.assertThat;
 import static play.mvc.Http.StatusCode.*;
 
-@SuppressWarnings("unchecked")
 public class ResponseAssert extends GenericAssert<ResponseAssert, Response> {
 
 	private Response response;
@@ -151,13 +150,10 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Response> {
 		return hasContentType("text/plain");
 	}
 
-
 	public ResponseAssert hasContentType(String contentType) {
 		FunctionalAssertions.assertThat(response.getContentType()).isEqualTo(contentType);
 		return this;
 	}
-
-	/* ************************************ To Do ************************************ */
 
 	public ResponseAssert isEncoded(String encoding) {
 		assertThat(response.getEncoding()).isEqualToIgnoringCase(encoding);
@@ -167,6 +163,5 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Response> {
 	public ResponseAssert isUtf8() {
 		return isEncoded("utf-8");
 	}
-
 
 }
