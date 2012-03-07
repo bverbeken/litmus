@@ -55,7 +55,7 @@ public abstract class FunctionalAssert<SelfType extends FunctionalAssert, Actual
 	}
 
 	public SelfType isRedirect() {
-		assertThat(response.isRedirect()).isTrue();
+		assertThat(response.isRedirect()).as("Expected a redirect, but status code was " + response.getStatus()).isTrue();
 		return (SelfType) this;
 	}
 
