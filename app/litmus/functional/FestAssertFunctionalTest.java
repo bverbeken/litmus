@@ -2,7 +2,6 @@ package litmus.functional;
 
 import org.fest.assertions.*;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import play.mvc.Http;
 
 import java.awt.image.BufferedImage;
@@ -31,9 +30,6 @@ abstract class FestAssertFunctionalTest extends play.test.FunctionalTest {
 		return FunctionalAssertions.assertThat(element);
 	}
 
-	protected HtmlElementsAssert assertThat(Elements elements) {
-		return FunctionalAssertions.assertThat(elements);
-	}
 
 	/* ************** FEST *************** */
 	public static BigDecimalAssert assertThat(BigDecimal actual) {

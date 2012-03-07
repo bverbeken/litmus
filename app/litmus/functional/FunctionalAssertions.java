@@ -2,7 +2,6 @@ package litmus.functional;
 
 import org.fest.assertions.Assertions;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import play.mvc.Http;
 
 public class FunctionalAssertions extends Assertions {
@@ -23,8 +22,5 @@ public class FunctionalAssertions extends Assertions {
 		return new HtmlElementAssert(element);
 	}
 
-	public static HtmlElementsAssert assertThat(Elements element) {
-		return new HtmlElementsAssert(element);
-	}
 
 }
