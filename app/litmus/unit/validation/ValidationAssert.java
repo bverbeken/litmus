@@ -5,11 +5,9 @@ import org.fest.assertions.GenericAssert;
 
 public class ValidationAssert<T> extends GenericAssert<ValidationAssert, T> {
 
-
 	protected ValidationAssert(T actual) {
 		super(ValidationAssert.class, actual);
 	}
-
 
 	public ValidationAssert<T> isValid() {
 		Assertions.assertThat(Validator.isValid(actual)).isTrue();

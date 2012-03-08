@@ -2,6 +2,10 @@ package litmus.unit.validation;
 
 public enum BuiltInValidation {
 
+	/* TODO: add value for inverse of most of the built in validations so that a is() method is possible on FieldValidationAssert
+	e.g. email -> invalid email, required -> null, past -> future date, is_true -> false, etc
+	 */
+
 	EMAIL,
 	EQUALS,
 	FUTURE,
