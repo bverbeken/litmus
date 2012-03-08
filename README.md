@@ -49,17 +49,16 @@ What could be improved/added
 * possibly a custom test runner so that all of these tests can be catogorized, ran individually, etc.
 
 
-Kudos To 
-========
+Kudos to the people behind
+=============================
 
-* The Play!Framework Team
-* Jsoup
-* Fest-assert
+* [Play framework](http://www.playframework.org/)
+* [jsoup](http://jsoup.org/)
+* [Fest](http://code.google.com/p/fest/)
 
 
 Disclaimer
 =================================
 This is a work in progress. Of course it is, it's software. Sorry for that :) 
 
-If litmus is missing features you dream of, or you have suggestions on how it could be made better, tweet me (
-[@bverbeken](http://twitter.com/bverbeken) or clone the github repo and send pull requests.
+If litmus is missing features you dream of, or you have suggestions on how it could be made better, tweet me ([@bverbeken](http://twitter.com/bverbeken)) or clone the github repo and start sending pull requests.
