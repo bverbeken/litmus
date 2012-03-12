@@ -28,14 +28,14 @@ public class HtmlAssert extends GenericAssert<HtmlAssert, Html> {
 	}
 
 
-	public HtmlAssert contains(String selector) {
+	public HtmlAssert containsElement(String selector) {
 		Assertions.assertThat(actual.select(selector))
 				.as(format("Response html does not contain element that satisfies [%s]", selector))
 				.isNotEmpty();
 		return this;
 	}
 
-	public HtmlAssert doesNotContain(String selector) {
+	public HtmlAssert doesNotContainElement(String selector) {
 		Elements elements = actual.select(selector);
 		Assertions.assertThat(elements)
 				.as(format("Response html contains the following elements that satisfy [%s]: %s", selector, elements))
