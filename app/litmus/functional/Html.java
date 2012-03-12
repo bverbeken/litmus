@@ -8,9 +8,11 @@ import org.jsoup.select.Elements;
 public class Html {
 
 	private final Document document;
+	private String source;
 
-	public Html(String content) {
-		this.document = Jsoup.parse(content);
+	public Html(String source) {
+		this.document = Jsoup.parse(source);
+		this.source = source;
 	}
 
 	public String getTitle() {
@@ -31,4 +33,7 @@ public class Html {
 	}
 
 
+	public String getSource() {
+		return source;
+	}
 }

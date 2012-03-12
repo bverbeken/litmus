@@ -43,4 +43,8 @@ public class HtmlAssert extends GenericAssert<HtmlAssert, Html> {
 		return this;
 	}
 
+	public void contains(String expectedString) {
+		Assertions.assertThat(actual.getSource()).contains(expectedString);
+	}
+
 }
