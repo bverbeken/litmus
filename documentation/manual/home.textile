@@ -1,31 +1,99 @@
-h1. {module name}
+h1. Litmus
 
-p(note). Write your module documentation in this file, possibly linking to other Textile files, and delete these notes when you are finished.
+p. Litmus aims to make writing functional tests for play apps easier, more fluent and more fun.
+When using Litmus, you'll be able to test the rendered html and text that comes out of controller methods, the content of cookies, existence, non-existence and content of validation messages, renderArgs and more.
+You'll also get a very convenient way to get and post. Instead of new-ing a HashMap<String, String>(), putting all request params in it and lose precious lines of code, you can simply do
 
-p(note). Start with a clear statement of what the module is and what it is for. Link to any third-party libraries that the module is based on.
+@new Request("/some/path").with("param1", "value").post()@
 
-p(note). Briefly describe why you might want to use this module in a Play application.
+p. Under the hood, litmus uses the following libraries
+* <a href="http://code.google.com/p/fest/">Fest-assert</a>'s fluent assertThat() API. @assertThat(actual).isEqualTo(expected)@ feels more natural than @assertEquals(expected, actual)@. A big plus is that this syntax allows you to chain asserts.
+* <a href="http://jsoup.org">JSoup</a>'s html parser, to enable you to assert things on the rendered html.
+
 
 h2. Sample application
 
-p(note). Your module should contain a sample app in the @sample@ directory that demonstrates the module. Describe how to run the demo here.
+If this documentation page is not enough, there's a <a href="http://github.com/bverbeken/litmus-samples">litmus-samples repository on github</a>.
+Go and check that out for all possible examples on how to use litmus.
 
 h2. Getting started
 
-p(note). Describe any installation that is required, beyond adding and resolving the module dependency.
-
-h2. Configuration
-
-p(note). List any configuration options that the module uses, with an @h3.@ heading for each one.
+p. First off, you need to declare litmus as a project dependency in your @dependencies.yml@. After that, you can just start to write your first litmus tests.
 
 h2. Usage
 
-p(note). Explain how to use the module, and describe any routes, controllers, models or views that the module provides.
+p. For the moment, litmus provides you with two types of tests, @litmus.functional.FunctionalTest@ and @litmus.unit.ValidationTest@.
+Both have a very specific purpose.
+* FunctionalTest is used to call action methods and assert things on the response such as cookies, renderArgs, the response body itself, etc.
+* ValidationTest is a small utility test class to help you in writing validation tests.
 
-h2. Tags
 
-p(note). List any tags the module provides, with an @h3.@ heading for each one. Include the tags’ arguments.
+h3. FunctionalTest
 
-h2. Commands
+This is the superclass you should use for all your functional tests. Like all litmus test classes, it is a subclass of a play test class (in casu @play.test.FunctionalTest@), so you'll be able to run litmus functional tests using @auto-test@ or in the TestRunner.
 
-p(note). List any commands the module provides, with an @h3.@ heading for each one. Include the commands’ options.
+p. @litmus.functional.FunctionalTest@ gives you the following:
+* all fest's @assertThat(xxx)@ methods are available in a litmus functional test (though not as static methods). That way, you can write things like @assertThat(aString).isNotEmpty();@
+* next to that, you get a number of custom Play-specific Assert classes, so you can write asserts on cookies, renderArgs, the html in the response body and more.
+* utility methods to easily call action methods on your controllers.
+
+h4. Let's see some code!
+
+TODO. Sorry 'bout that.
+Go and have a look at the <a href="http://github.com/bverbeken/litmus-samples">litmus-samples application</a>
+
+h3. ValidationTest
+
+ValidationTest is a superclass you can use to easily test validation annotations on your models. The idea is the following: for each test method in
+the test class, you start from a valid object, then change something, validate the object and assert that a validation error has occured (or not).
+
+p. To use it, you just
+* extend it, using the class under test as a generic type
+* implement the abstract @valid()@ method. This method should return an instance of the object under test that is valid.
+
+h4. An example
+
+bc. public class PersonValidationTest extends ValidationTest<Person> {
+    @Override
+    protected Person valid() {
+        return new Person("Ben", "Verbeken");
+    }
+}
+
+After that, you can write your test methods like this:
+
+bc. import static litmus.unit.validation.BuiltInValidation.REQUIRED;
+...
+@Test
+public void firstNameIsRequired() {
+    assertThat("firstName").withValue("").isInvalid();
+}
+
+You can use another method, if you want to chain asserts:
+
+bc. @Test
+public void firstNameIsRequired() {
+    assertThat("firstName").shouldNotBe("").shouldNotBe(null);
+}
+
+
+If you want to check for a specific validation error type, you can use the BuiltInValidation enum and do:
+
+bc. import static litmus.unit.validation.BuiltInValidation.REQUIRED;
+...
+@Test
+public void firstNameIsRequired() {
+    assertThat("firstName").withValue("").isInvalidBecause(REQUIRED);
+}
+
+Finally, you can of course also test your custom validation annotations, using
+
+bc. @Test
+public void myCustomValidation() {
+    assertThat(fieldName).withValue(x).isInvalidBecause("custom.msg.key");
+}
+
+
+p(note). ValidationTest itself also contains a test method, called @validObjectShouldValidate()@, that tests whether @valid()@ really returns a valid object.
+If your implementation of @valid()@ does not return a valid object (according to the annotations you put on its fields), this test will fail.
+
