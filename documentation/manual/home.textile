@@ -1,10 +1,11 @@
 h1. Litmus
 
-p. Litmus aims to make writing functional tests for play apps easier, more fluent and more fun.
-When using Litmus, you'll be able to test the rendered html and text that comes out of controller methods, the content of cookies, existence, non-existence and content of validation messages, renderArgs and more.
-You'll also get a very convenient way to get and post. Instead of new-ing a HashMap<String, String>(), putting all request params in it and lose precious lines of code, you can simply do
+h4. Litmus makes it easier to test your play app.
 
-@new Request("/some/path").with("param1", "value").post()@
+p. First and foremost, Litmus provides you a very fluent api for your functional testing needs. You'll be able to test the rendered html and text that comes out of controller methods, the content of cookies, existence, non-existence and content of validation messages, renderArgs and more.
+You'll also get a very convenient way to call your controller methods. Instead of new-ing a HashMap<String, String>(), putting all request params in it and lose precious lines of code, you can simply do @new Request("/some/path").with("param1", "value").post()@
+
+p. Next to that, Litmus gives you a parent ValidationTest you can extend to test the validation annotations on your models. What excuse do you have left not to tests these things when you can (and only have to) write @assertThat("firstName").isRequired()@.
 
 p. Under the hood, litmus uses the following libraries
 * <a href="http://code.google.com/p/fest/">Fest-assert</a>'s fluent assertThat() API. @assertThat(actual).isEqualTo(expected)@ feels more natural than @assertEquals(expected, actual)@. A big plus is that this syntax allows you to chain asserts.
@@ -34,7 +35,13 @@ This is the superclass you should use for all your functional tests. Like all li
 
 p. @litmus.functional.FunctionalTest@ gives you the following:
 * all fest's @assertThat(xxx)@ methods are available in a litmus functional test (though not as static methods). That way, you can write things like @assertThat(aString).isNotEmpty();@
-* next to that, you get a number of custom Play-specific Assert classes, so you can write asserts on cookies, renderArgs, the html in the response body and more.
+* next to that, you get a number of custom Play-specific Assert classes, so you can write asserts on
+** cookies
+** flash variables
+** header parameters
+** the html in the response body
+** the render arguments you passed to the view in your controller
+** the response itself (contentType, http status code, ...)
 * utility methods to easily call action methods on your controllers.
 
 h4. Let's see some code!
