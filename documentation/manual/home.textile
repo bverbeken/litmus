@@ -35,19 +35,121 @@ This is the superclass you should use for all your functional tests. Like all li
 
 p. @litmus.functional.FunctionalTest@ gives you the following:
 * all fest's @assertThat(xxx)@ methods are available in a litmus functional test (though not as static methods). That way, you can write things like @assertThat(aString).isNotEmpty();@
-* next to that, you get a number of custom Play-specific Assert classes, so you can write asserts on
-** cookies
-** flash variables
-** header parameters
-** the html in the response body
-** the render arguments you passed to the view in your controller
-** the response itself (contentType, http status code, ...)
+* next to that, you get a number of custom Play-specific Assert classes, so you can write asserts on the response itself (contentType, http status code, ...), cookies, flash variables, header parameters, the html in the response body, the render arguments you passed to the view in your controller, etc.
+
 * utility methods to easily call action methods on your controllers.
 
-h4. Let's see some code!
+p. In general, when you're writing a functional test, you do the following:
+* build a Request object
+* call a http method on this Request, which results in a Response object, your 'actual'.
+* assert that the actual response is conform to what you expect.
 
-TODO. Sorry 'bout that.
-Go and have a look at the <a href="http://github.com/bverbeken/litmus-samples">litmus-samples application</a>
+bc. Request request = new Request("/path/as/defined/in/your/routes/file");
+Response response = request.get(); // or request.post(), or ...
+assertThat(response).isOk();
+
+p(note). The Response object is a Litmus class that wraps @play.mvc.Http.Response and adds some functionality to retrieve the renderArgs and stuff.
+
+h4. Asserting the response itself
+
+the @ResponseAssert@ class is responsible for asserting that the actual response you got from sending your request is conform to what you expect:
+
+Asserts on http status codes
+
+bc. assertThat(response).isStatus(200);
+assertThat(response).isOk();
+assertThat(response).isNotFound();
+assertThat(response).isForbidden();
+...
+assertThat(response).isSuccess(); // status code is 200-299
+assertThat(response).isError();   // status code is 400-599
+assertThat(response).isRedirect();// status code is 300-399
+// or you can also assert the location header:
+assertThat(response).isRedirectTo("/another/path");
+
+
+Asserts on headers
+
+bc. assertThat(response).hasHeader("location");
+assertThat(response).hasNoHeader("location");
+
+
+Asserts on Flash Parameters
+
+bc. assertThat(response).hasFlashParam("aKey");
+// or if you want to assert its content too:
+assertThat(response).hasFlashParam("aKey", "aValue");
+assertThat(response).hasNoFlashParam("aKey");
+
+
+Asserts on cookies
+
+bc. assertThat(response).hasCookie("cookieName");
+assertThat(response).hasCookieValue("cookieName", "cookieValue");
+assertThat(response).hasNoCookie("cookieName");
+
+Asserts on renderArgs
+
+bc. assertThat(response).hasRenderArg("name");
+assertThat(response).hasRenderArgValue("name", anObject);
+assertThat(response).hasNoRenderArg("name");
+
+Asserts on content type
+
+bc. assertThat(response).hasContentType("text/plain");
+...
+// there are also some shortcut methods
+assertThat(response).isHtml(); // text/html
+assertThat(response).isXml();  // text/xml
+assertThat(response).isJson(); // application/json
+assertThat(response).isText(); // text/plain
+
+
+Asserts on response encoding
+
+bc. assertThat(response).isEncoded("utf-8");
+// or shorter:
+assertThat(response).isUtf8();
+
+Assert on validation errors
+
+bc. import static litmus.unit.validation.BuiltInValidation.REQUIRED;
+...
+assertThat(response).hasValidationError("firstName", REQUIRED);
+
+
+h4. Asserting the Html in the response body
+
+First, you need to get the html from the response. You can do this either by calling @.getHtml()@ on a response object, or by using a shortcut method on FunctionalTest itself.
+
+Option 1 (which is to be preferred when you want fine-grained control over your request)
+
+bc. Html html = new Request("/a/path")
+    .with("paramName", "paramValue")
+    .post()
+    .getHtml();
+
+Option 2 (much shorter when you're just GETting html)
+
+bc. Html html = getHtml("/a/path")
+
+Next, you'll want to assert that the resulting Html is conform to what you expect. You have several methods available:
+
+Title assertions:
+
+bc. assertThat(html).hasTitle("pageTitle");
+assertThat(html).titleContains("geTitl");
+assertThat(html).titleMatches("aRegex");
+
+Html content assertions:
+
+bc. assertThat(html).containsElement("#myDiv");
+assertThat(html).doesNotContain("#myDiv");
+assertThat(html).contains("<div id='myDiv'>This is my div!</div>");
+
+
+p(note). Litmus uses <a href="http://jsoup.org">JSoup</a> behind the scenes to do the html parsing and . See the jsoup documentation for more info on the supported selector syntax.
+
 
 h3. ValidationTest
 
