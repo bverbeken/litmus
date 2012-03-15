@@ -19,19 +19,19 @@ Go and check that out for all possible examples on how to use litmus.
 
 h2. Getting started
 
-p. First off, you need to declare litmus as a project dependency in your @dependencies.yml@. After that, you can just start to write your first litmus tests.
+p. First off, you need to declare litmus as a project dependency in your @dependencies.yml@.
 
-h2. Usage
-
-p. For the moment, litmus provides you with two types of tests, @litmus.functional.FunctionalTest@ and @litmus.unit.ValidationTest@.
-Both have a very specific purpose.
+p. After that, you can just start to write your first litmus tests. To do so, you can extend either @litmus.functional.FunctionalTest@ and @litmus.unit.ValidationTest@.
+These two parent test classes have a very specific purpose.
 * FunctionalTest is used to call action methods and assert things on the response such as cookies, renderArgs, the response body itself, etc.
 * ValidationTest is a small utility test class to help you in writing validation tests.
 
+Both are subclasses of the regular Play! test classes, so you'll be able to run it from the play testrunner ui, or by running @play auto-test@.
+
+
+h2. Usage
 
 h3. FunctionalTest
-
-This is the superclass you should use for all your functional tests. Like all litmus test classes, it is a subclass of a play test class (in casu @play.test.FunctionalTest@), so you'll be able to run litmus functional tests using @auto-test@ or in the TestRunner.
 
 p. @litmus.functional.FunctionalTest@ gives you the following:
 * all fest's @assertThat(xxx)@ methods are available in a litmus functional test (though not as static methods). That way, you can write things like @assertThat(aString).isNotEmpty();@
