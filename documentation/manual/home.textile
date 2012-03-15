@@ -150,6 +150,22 @@ assertThat(html).contains("<div id='myDiv'>This is my div!</div>");
 
 p(note). Litmus uses <a href="http://jsoup.org">JSoup</a> behind the scenes to do the html parsing and . See the jsoup documentation for more info on the supported selector syntax.
 
+h4. Html element assertions
+
+p. For more fine-grained asserts, you can also call @.getElement("css selector")@ on an Html object. This returns a jsoup @org.jsoup.nodes.Element@ object for which Litmus has an HtmlElementAssert class.
+This means you can do things like:
+
+bc. @Test
+public void testHtmlContent(){
+	Element actualDiv = getHtml("/a/path").selectSingle("#aDivId");
+	...
+    assertThat(actualDiv).containsText("this is the div text");
+    assertThat(actualDiv).containsTextIgnoringCase("tHis iS ThE DiV tExT");
+    assertThat(actualDiv).hasClass("aCssClass");
+    assertThat(actualDiv).hasAttribute("title");
+    assertThat(actualDiv).hasAttributeValue("title", "myTitle");
+    assertThat(actualDiv).containsMessage("a.message.key");
+}
 
 h3. ValidationTest
 
