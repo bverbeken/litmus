@@ -14,33 +14,12 @@ any excuse you might have not to test validation anymore. You can write things l
     assertThat("firstName").shouldNotBe("");
     assertThat("houseNumber").withValue(123).isValid();
 
-<!-- ------------------------------------------------------------------------------------------
-
 Documentation
-==========================
-For a full list of examples, go have a look at the [litmus-samples](https://github.com/bverbeken/litmus-samples) project. 
-It contains examples for all available asserts.     
+============================
+For more information on how to use Litmus, you can refer to
+* the litmus-samples project (<a href="http://github.com/bverbeken/litmus-samples">http://github.com/bverbeken/litmus-samples</a>). This is a normal play application that has examples for all the available asserts.
+* the documentation page, which can be found <a href="http://github.com/bverbeken/litmus/blob/master/documentation/manual/home.textile">here</a>.
 
-Getting started
-------------------
-For functional tests, extend from <b>litmus.functional.FunctionalTest</b>. This is a subclass of the regular Play! FunctionalTest class, so you'll be able to run it from the regular testrunner. 
-The litmus FunctionalTest class includes all assertThat() methods from org.fest.assertons.Assertions. See the fest documentation for more info. 
-Next to that, it provides you with a number of play-specific assertThat() methods: 
-    assertThat(response)
-    assertThat(cookie)
-    assertThat(html)
-    assertThat(htmlElement)
-
-
-a fluent api to build up a request
-----------------------------------
-You can write things like 
-    Response response = new Request("/login").with("username", "myUser").with("password", "secret").post();
-    
-And then assert on that response
-    assertThat(response).isOk();
-
------------------------------------------------------------------------------------------ -->
 
 What could be improved/added
 ===============================
