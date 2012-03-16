@@ -3,10 +3,10 @@ package litmus.functional;
 import play.mvc.Http;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static java.net.URLDecoder.decode;
 import static java.util.regex.Pattern.compile;
 import static play.Play.configuration;
@@ -101,7 +101,7 @@ public class Response {
 
 
 	public Map<String, String> getFlashParams() {
-		Map<String, String> result = newHashMap();
+		Map<String, String> result = new HashMap<String, String>();
 		String cookie = getCookieValue(FLASH_COOKIE_NAME);
 		if (cookie != null) {
 			String flashData = urlDecode(cookie);
