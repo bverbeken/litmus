@@ -36,8 +36,11 @@ Kudos to the people behind
 * [Fest](http://code.google.com/p/fest/)
 
 
-Disclaimer
+Project Information
 =================================
-This is a work in progress. Of course it is, it's software. Sorry for that :) 
 
+Source code: https://github.com/bverbeken/litmus   
+Issue tracking: https://github.com/bverbeken/litmus/issues
+
+This is a work in progress (of course it is, it's software).  
 If litmus is missing features you dream of, or you have suggestions on how it could be made better, tweet me ([@bverbeken](http://twitter.com/bverbeken)) or clone the github repo and start sending pull requests.
