@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+*       /                                       module:secure
+
+GET     /html/{action}                          HtmlController.{action}
+POST	/html/sayHello 							HtmlController.sayHello
+
+GET		/contentTypes/{contentType} 			ContentTypesController.{contentType}
+
+GET		/cookies/{action}						CookieController.{action}
+GET		/flash/{action}							FlashController.{action}
+GET		/renderargs/{action}					RenderArgsController.{action}
+GET		/response/{action}						ResponseController.{action}
+GET		/headers/{action}						HeaderController.{action}
+GET		/security/{action}						SecuredController.{action}
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

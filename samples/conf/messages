@@ -1,0 +1,6 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+this.is.a.message.key=This is a message value!
+this.is.a.message.key.with.args=This is a %s message key with args %s

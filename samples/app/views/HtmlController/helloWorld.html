@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+#{set title:'HelloWorld' /}
+
+#{form @HtmlController.sayHello(name)}
+	<p>
+		<label for="name">Your name: </label>
+		<input type="text" id="name" name="name" value="${params.name}" />
+		<span class="error">#{error 'name' /}</span>
+	</p>
+
+	<input type="submit" value="submit" />
+#{/form}
