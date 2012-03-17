@@ -39,7 +39,7 @@ Kudos to the people behind
 Project Information
 =================================
 
-Source code: https://github.com/bverbeken/litmus
+Source code: https://github.com/bverbeken/litmus   
 Issue tracking: https://github.com/bverbeken/litmus/issues
 
 This is a work in progress (of course it is, it's software).  
