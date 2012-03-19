@@ -16,27 +16,59 @@
 
 package litmus.functional;
 
+/**
+ * Base class for functional tests.
+ *
+ * @author Ben Verbeken
+ */
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
+	/**
+	 * Perform a GET on a URL. <br/>
+	 * This is a shortcut method for <pre>new Request(url).get();</pre>
+	 *
+	 * @param url the url to GET
+	 * @return the {@link Response} object
+	 */
 	protected static Response get(Object url) {
 		return new Request(url).get();
 	}
 
 
+	/**
+	 * Shortcut method you can use instead of <pre>get(url).getHtml();</pre>
+	 *
+	 * @param url the url to GET
+	 * @return an {@link Html} object
+	 */
 	protected static Html getHtml(Object url) {
 		return get(url).getHtml();
 	}
 
+
+	/**
+	 * Shortcut method for logging in.
+	 * <br/>
+	 * This method performs a POST on /login with the provided username and password parameters, like so:
+	 * <pre>
+	 *     new Request("/login").with("username", username).with("password", password).post();
+	 * </pre>
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return a {@link Response} object
+	 */
 	protected Response login(String username, String password) {
-		// TODO: check whether Secure module is available
 		return new Request("/login")
 				.with("username", username)
 				.with("password", password)
 				.post();
 	}
 
+	/**
+	 * Shortcut method for logging out, by calling clearCookies();
+	 */
 	protected void logout() {
-		// TODO: check whether Secure module is available
 		clearCookies();
 	}
 
