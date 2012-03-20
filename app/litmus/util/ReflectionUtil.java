@@ -20,9 +20,15 @@ import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings("unchecked")
+
+/**
+ * Utility class for reflection (get and set state on and from an object or class)
+ *
+ * @author Ben Verbeken
+ */
 public class ReflectionUtil {
 
+	@SuppressWarnings("unchecked")
 	public static <T> T get(String fieldName, Object object) {
 		try {
 			Field field = findFieldInTheHierarchy(object.getClass(), fieldName);
@@ -71,6 +77,7 @@ public class ReflectionUtil {
 				hasField(clazz, field));
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T getStaticFieldValue(String fieldName, Class<?> clazz) {
 		try {
 			Field field = clazz.getDeclaredField(fieldName);
