@@ -23,7 +23,9 @@ public class AllBuiltInValidationsTest extends ValidationTest<ModelForValidation
 		model.futureDate = FUTURE;
 		model.dateAfter1Jan2100 = makeDate("2222-01-01");
 		model.pastDate = PAST;
+		model.dateBefore31Dec2012 = makeDate("2000-01-01");
 		model.ipV4Address = "10.11.12.13";
+		// TODO: ipV6Address
 		model.trueBoolean = true;
 		model.matchingString = "1290";
 		model.maxInt = 8;
@@ -36,19 +38,11 @@ public class AllBuiltInValidationsTest extends ValidationTest<ModelForValidation
 		return model;
 	}
 
-	private Date makeDate(String date) {
-		try {
-			return new SimpleDateFormat("yyyy-MM-dd").parse(date);
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	@Test
 	public void emailShouldBeAnEmail() {
 		assertThat("email").shouldNotBe("not a valid email");
 		assertThat("email").shouldBeAValidEmailAddress();
-	}
+	}	
 
 	@Test
 	public void futureDate() {
@@ -62,12 +56,16 @@ public class AllBuiltInValidationsTest extends ValidationTest<ModelForValidation
 		assertThat("dateAfter1Jan2100").shouldBeAfter("2100-01-01");
 	}
 
-	// TODO: add tests for @Past("10-12-2025")
-
 	@Test
 	public void pastDate() {
 		assertThat("pastDate").shouldNotBe(FUTURE);
 		assertThat("pastDate").shouldBeInPast();
+	}
+	
+	@Test 
+	public void dateBeforeAGivenDate(){
+		assertThat("dateBefore31Dec2012").shouldBeBefore(makeDate("2012-12-31"));
+		assertThat("dateBefore31Dec2012").shouldBeBefore("2012-12-31");
 	}
 
 	@Test
@@ -85,6 +83,15 @@ public class AllBuiltInValidationsTest extends ValidationTest<ModelForValidation
 
 	// TODO: add tests for isTrue with String (Boolean.parseBoolean)
 	// TODO: add tests for isTrue with Number (true <> 0)
+
+
+	private Date makeDate(String date) {
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 
 }

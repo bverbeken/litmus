@@ -19,6 +19,9 @@ public class ModelForValidation {
 	
 	@InPast
 	public Date pastDate;
+	
+	@InPast("2012-12-31")
+	public Date dateBefore31Dec2012;
 
 	@IPv4Address
 	public String ipV4Address;

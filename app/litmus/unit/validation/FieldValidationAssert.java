@@ -18,15 +18,14 @@ package litmus.unit.validation;
 
 import org.fest.assertions.Assertions;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
 import static litmus.unit.validation.BuiltInValidation.*;
+import static litmus.util.DateUtil.asDate;
 import static litmus.util.ReflectionUtil.set;
 import static org.junit.Assert.assertTrue;
-import static play.utils.Utils.AlternativeDateFormat.getDefaultFormatter;
 
 
 public class FieldValidationAssert<T> {
@@ -49,6 +48,7 @@ public class FieldValidationAssert<T> {
 		set(valid, fieldName, value);
 		return this;
 	}
+
 
 	/**
 	 * Assert that the field is invalid when it contains the specified value.
@@ -83,15 +83,21 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
-		try {
-			return withValue(getDefaultFormatter().parse(dateAsString)).isInvalidBecause(AFTER);
-		} catch (ParseException e) {
-			throw new RuntimeException("failed to parse string [" + dateAsString + "]", e);
-		}
+		// TODO: check other values (corner cases).
+		return withValue(asDate(dateAsString)).isInvalidBecause(AFTER);
 	}
+
 
 	public FieldValidationAssert<T> shouldBeInPast() {
 		return verifyBuiltInValidation(IN_PAST);
+	}
+
+	public FieldValidationAssert<T> shouldBeBefore(Date date) {
+		return withValue(date).isInvalidBecause(BEFORE);
+	}
+
+	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
+		return withValue(asDate(dateAsString)).isInvalidBecause(BEFORE);
 	}
 
 	public FieldValidationAssert<T> shouldBeAValidIPv4Address() {

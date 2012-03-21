@@ -35,6 +35,7 @@ public enum BuiltInValidation {
 	IN_FUTURE("future", new Date(currentTimeMillis() - 999999)),
 	AFTER("after"),
 	IN_PAST("past", new Date(currentTimeMillis() + 999999)),
+	BEFORE("before"),
 	IP_V4_ADDRESS("ipv4", "not a valid ipv4 address"),
 	IP_V6_ADDRESS("ipv6"),
 	IS_TRUE("isTrue", false),
