@@ -31,6 +31,13 @@
     <entry_points version="2.0" />
   </component>
   <component name="IdProvider" IDEtalkID="3ACED47CC8CBECAC139FE48CFB9F27C6" />
+  <component name="ProjectDictionaryState">
+    <dictionary name="bver">
+      <words>
+        <w>yyyy</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/litmus-samples.iml" filepath="$PROJECT_DIR$/litmus-samples.iml" />

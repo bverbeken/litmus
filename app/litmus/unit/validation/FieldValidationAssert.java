@@ -18,12 +18,15 @@ package litmus.unit.validation;
 
 import org.fest.assertions.Assertions;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
-import static org.junit.Assert.assertTrue;
-import static litmus.unit.validation.BuiltInValidation.REQUIRED;
+import static litmus.unit.validation.BuiltInValidation.*;
 import static litmus.util.ReflectionUtil.set;
+import static org.junit.Assert.assertTrue;
+import static play.utils.Utils.AlternativeDateFormat.getDefaultFormatter;
 
 
 public class FieldValidationAssert<T> {
@@ -36,19 +39,80 @@ public class FieldValidationAssert<T> {
 		this.fieldName = fieldName;
 	}
 
-	public FieldValidationAssert<T> isRequired() {
-		return withValue(null).isInvalidBecause(REQUIRED);
-	}
-
-	public FieldValidationAssert<T> shouldNotBe(Object value) {
-		return withValue(value).isInvalid();
-	}
-
+	/**
+	 * Set a value on the field (using reflection).
+	 *
+	 * @param value the value to set on the field
+	 * @return this
+	 */
 	public FieldValidationAssert<T> withValue(Object value) {
 		set(valid, fieldName, value);
 		return this;
 	}
 
+	/**
+	 * Assert that the field is invalid when it contains the specified value.
+	 *
+	 * @param value the invalid value
+	 * @return this
+	 */
+	public FieldValidationAssert<T> shouldNotBe(Object value) {
+		return withValue(value).isInvalid();
+	}
+
+	/**
+	 * Assert that the field is required.
+	 * This is checked by setting the field value to 'null'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> isRequired() {
+		return withValue(null).isInvalidBecause(REQUIRED);
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidEmailAddress() {
+		return verifyBuiltInValidation(EMAIL);
+	}
+
+	public FieldValidationAssert<T> shouldBeInFuture() {
+		return verifyBuiltInValidation(IN_FUTURE);
+	}
+
+	public FieldValidationAssert<T> shouldBeAfter(Date date) {
+		return withValue(date).isInvalidBecause(AFTER);
+	}
+
+	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
+		try {
+			return withValue(getDefaultFormatter().parse(dateAsString)).isInvalidBecause(AFTER);
+		} catch (ParseException e) {
+			throw new RuntimeException("failed to parse string [" + dateAsString + "]", e);
+		}
+	}
+
+	public FieldValidationAssert<T> shouldBeInPast() {
+		return verifyBuiltInValidation(IN_PAST);
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidIPv4Address() {
+		return verifyBuiltInValidation(IP_V4_ADDRESS);
+	}
+
+	public FieldValidationAssert<T> shouldBeTrue() {
+		return verifyBuiltInValidation(IS_TRUE);
+	}
+
+
+	private FieldValidationAssert<T> verifyBuiltInValidation(BuiltInValidation validation) {
+		return withValue(validation.getInvalidValue()).isInvalidBecause(validation);
+	}
+
+	/**
+	 * Assert that the field is invalid. You should use this method
+	 * in a method chain, after calling .with(invalidValue);
+	 *
+	 * @return this
+	 */
 	public FieldValidationAssert<T> isInvalid() {
 		Assertions.assertThat(Validator.getErrorsForField(valid, fieldName))
 				.as("expected validation error for field '" + fieldName + "' but it was valid.")
@@ -56,6 +120,12 @@ public class FieldValidationAssert<T> {
 		return this;
 	}
 
+	/**
+	 * Assert that the field is valid. You should use this method
+	 * in a method chain, after calling .with(validValue);
+	 *
+	 * @return this
+	 */
 	public FieldValidationAssert<T> isValid() {
 		List<String> errorsForField = Validator.getErrorsForField(valid, fieldName);
 		Assertions.assertThat(errorsForField)
@@ -64,11 +134,18 @@ public class FieldValidationAssert<T> {
 		return this;
 	}
 
-	public FieldValidationAssert<T> isInvalidBecause(BuiltInValidation validation) {
-		return isInvalidBecause(validation.getMessageKey());
+	private FieldValidationAssert<T> isInvalidBecause(BuiltInValidation builtInValidation) {
+		return hasValidationError(builtInValidation.getMessageKey());
 	}
 
-	public FieldValidationAssert<T> isInvalidBecause(String error) {
+	/**
+	 * Assert that the field is invalid and that it fails validation with a given error key.
+	 * You should use this method in a method chain, after calling .with(invalidValue).
+	 *
+	 * @param error the expected error
+	 * @return this
+	 */
+	public FieldValidationAssert<T> hasValidationError(String error) {
 		List<String> errorsOnField = Validator.getErrorsForField(valid, fieldName);
 		assertTrue(
 				makeErrorMessage(fieldName, error, errorsOnField),
