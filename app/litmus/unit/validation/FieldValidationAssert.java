@@ -110,25 +110,21 @@ public class FieldValidationAssert<T> {
 	public FieldValidationAssert<T> shouldBeTrue() {
 		Object validValue = ReflectionUtil.get(fieldName, valid);
 		if (validValue instanceof Boolean) {
-			return checkValueIsUntrue(false);
+			return withValue(false).isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof String) {
-			return checkValueIsUntrue("false");
+			return withValue("false").isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof Integer) {
-			return checkValueIsUntrue(0);
+			return withValue(0).isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof Double) {
-			return checkValueIsUntrue(0D);
+			return withValue(0D).isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof Long) {
-			return checkValueIsUntrue(0L);
+			return withValue(0L).isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof Float) {
-			return checkValueIsUntrue(0F);
+			return withValue(0F).isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof BigDecimal) {
-			return checkValueIsUntrue(ZERO);
+			return withValue(ZERO).isInvalidBecause(IS_TRUE);
 		}
 		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
-	}
-
-	private FieldValidationAssert<T> checkValueIsUntrue(Object value) {
-		return withValue(value).isInvalidBecause(IS_TRUE);
 	}
 
 
