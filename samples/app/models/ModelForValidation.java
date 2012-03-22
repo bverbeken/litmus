@@ -2,6 +2,7 @@ package models;
 
 import play.data.validation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ModelForValidation {
@@ -16,21 +17,39 @@ public class ModelForValidation {
 
 	@InFuture("2100-01-01")
 	public Date dateAfter1Jan2100;
-	
+
 	@InPast
 	public Date pastDate;
-	
+
 	@InPast("2012-12-31")
 	public Date dateBefore31Dec2012;
 
 	@IPv4Address
 	public String ipV4Address;
 
-//	@IPv6Address
-//	public String ipV6Address;
+	//TODO	@IPv6Address
+	//	public String ipV6Address;
 
 	@IsTrue
 	public boolean trueBoolean;
+
+	@IsTrue
+	public String trueString;
+
+	@IsTrue
+	public Integer trueInteger;
+
+	@IsTrue
+	public Long trueLong;
+
+	@IsTrue
+	public Double trueDouble;
+
+	@IsTrue
+	public BigDecimal trueBigDecimal;
+
+	@IsTrue
+	public Float trueFloat;
 
 	@Match("[0-9]*")
 	public String matchingString;
@@ -58,10 +77,8 @@ public class ModelForValidation {
 	@Required
 	public String requiredString;
 
-
-//	@Unique
-//	public String uniqueString;
-
+	//	TODO @Unique
+	//	public String uniqueString;
 
 	@URL
 	public String url;

@@ -16,12 +16,15 @@
 
 package litmus.unit.validation;
 
+import litmus.util.ReflectionUtil;
 import org.fest.assertions.Assertions;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
+import static java.math.BigDecimal.ZERO;
 import static litmus.unit.validation.BuiltInValidation.*;
 import static litmus.util.DateUtil.asDate;
 import static litmus.util.ReflectionUtil.set;
@@ -105,7 +108,27 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeTrue() {
-		return verifyBuiltInValidation(IS_TRUE);
+		Object validValue = ReflectionUtil.get(fieldName, valid);
+		if (validValue instanceof Boolean) {
+			return checkValueIsUntrue(false);
+		} else if (validValue instanceof String) {
+			return checkValueIsUntrue("false");
+		} else if (validValue instanceof Integer) {
+			return checkValueIsUntrue(0);
+		} else if (validValue instanceof Double) {
+			return checkValueIsUntrue(0D);
+		} else if (validValue instanceof Long) {
+			return checkValueIsUntrue(0L);
+		} else if (validValue instanceof Float) {
+			return checkValueIsUntrue(0F);
+		} else if (validValue instanceof BigDecimal) {
+			return checkValueIsUntrue(ZERO);
+		}
+		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
+	}
+
+	private FieldValidationAssert<T> checkValueIsUntrue(Object value) {
+		return withValue(value).isInvalidBecause(IS_TRUE);
 	}
 
 

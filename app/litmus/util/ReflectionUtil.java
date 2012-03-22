@@ -31,7 +31,7 @@ public class ReflectionUtil {
 	@SuppressWarnings("unchecked")
 	public static <T> T get(String fieldName, Object object) {
 		try {
-			Field field = findFieldInTheHierarchy(object.getClass(), fieldName);
+			Field field = findFieldInClassHierarchy(object.getClass(), fieldName);
 			field.setAccessible(true);
 			return (T) field.get(object);
 		} catch (Exception e) {
@@ -42,15 +42,15 @@ public class ReflectionUtil {
 	public static void set(Object object, String fieldName, Object value) {
 		try {
 			assertFieldOnClass(object.getClass(), fieldName);
-			Field field = findFieldInTheHierarchy(object.getClass(), fieldName);
+			Field field = findFieldInClassHierarchy(object.getClass(), fieldName);
 			field.setAccessible(true);
 			field.set(object, value);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed to set value " + e);
 		}
 	}
 
-	private static Field findFieldInTheHierarchy(Class<?> clazz, String fieldName) {
+	private static Field findFieldInClassHierarchy(Class<?> clazz, String fieldName) {
 		Field field = getDeclaredField(clazz, fieldName);
 		while (field == null && clazz != Object.class) {
 			clazz = clazz.getSuperclass();
@@ -68,7 +68,7 @@ public class ReflectionUtil {
 	}
 
 	public static boolean hasField(Class clazz, String fieldName) {
-		return findFieldInTheHierarchy(clazz, fieldName) != null;
+		return findFieldInClassHierarchy(clazz, fieldName) != null;
 	}
 
 	public static void assertFieldOnClass(Class clazz, String field) {
