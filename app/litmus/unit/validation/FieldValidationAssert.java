@@ -19,15 +19,15 @@ package litmus.unit.validation;
 import litmus.util.ReflectionUtil;
 import org.fest.assertions.Assertions;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
-import static java.math.BigDecimal.ZERO;
 import static litmus.unit.validation.BuiltInValidation.*;
 import static litmus.util.DateUtil.asDate;
+import static litmus.util.ReflectionUtil.get;
 import static litmus.util.ReflectionUtil.set;
+import static litmus.util.RegexUtil.createNonMatchingString;
 import static org.junit.Assert.assertTrue;
 
 
@@ -108,25 +108,39 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeTrue() {
-		Object validValue = ReflectionUtil.get(fieldName, valid);
+		Object validValue = get(fieldName, valid);
 		if (validValue instanceof Boolean) {
 			return withValue(false).isInvalidBecause(IS_TRUE);
 		} else if (validValue instanceof String) {
 			return withValue("false").isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof Integer) {
-			return withValue(0).isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof Double) {
-			return withValue(0D).isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof Long) {
-			return withValue(0L).isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof Float) {
-			return withValue(0F).isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof BigDecimal) {
-			return withValue(ZERO).isInvalidBecause(IS_TRUE);
+		} else if (validValue instanceof Number) {
+			return withNumberValue("0").isInvalidBecause(IS_TRUE);
 		}
 		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
 	}
 
+	// TODO: refactor: feature envy smell
+	private FieldValidationAssert<T> withNumberValue(String numberValue) {
+		Class<?> fieldType = ReflectionUtil.getDeclaredFieldTypeWithoutPrimitives(valid.getClass(), fieldName);
+		Number typedNumber = ReflectionUtil.getTypedNumber(numberValue, fieldType);
+		ReflectionUtil.set(valid, fieldName, typedNumber);
+		return this;
+	}
+
+
+	public FieldValidationAssert<T> shouldMatch(String regex) {
+		return withValue(createNonMatchingString(regex)).isInvalidBecause(MATCH);
+	}
+
+	public FieldValidationAssert<T> shouldBeMax(Number maxNumber) {
+		String maxPlusOne = Integer.toString(maxNumber.intValue() + 1);
+		if (ReflectionUtil.getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
+			return withValue(maxPlusOne).isInvalidBecause(MAX);
+		} else {
+
+			return withNumberValue(maxPlusOne).isInvalidBecause(MAX);
+		}
+	}
 
 	private FieldValidationAssert<T> verifyBuiltInValidation(BuiltInValidation validation) {
 		return withValue(validation.getInvalidValue()).isInvalidBecause(validation);

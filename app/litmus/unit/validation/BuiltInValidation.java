@@ -21,24 +21,55 @@ import java.util.Date;
 import static java.lang.System.currentTimeMillis;
 
 /**
- * An enum containing a value for each available validation annotation in Play 1.2.4.
+ * An enum containing all validation annotations that are available in Play 1.2.4.
  */
 public enum BuiltInValidation {
 
-	/* TODO: add value for inverse of most of the built in validations so that a is() method is possible on FieldValidationAssert
-	e.g. email -> invalid email, required -> null, past -> future date, is_true -> false, etc
-	 */
 
-
-	EMAIL("email", "this is not a valid email address"),
+	EMAIL("email") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			return "this is not a valid email address";
+		}
+	},
 	// EQUALS("equals"),
-	IN_FUTURE("future", new Date(currentTimeMillis() - 999999)),
-	AFTER("after"),
-	IN_PAST("past", new Date(currentTimeMillis() + 999999)),
-	BEFORE("before"),
-	IP_V4_ADDRESS("ipv4", "not a valid ipv4 address"),
+	IN_FUTURE("future") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			return new Date(currentTimeMillis() - 999999);
+		}
+	},
+	AFTER("after") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			throw new UnsupportedOperationException("not implemented! [" + this + "]");
+		}
+	},
+	IN_PAST("past") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			return new Date(currentTimeMillis() + 999999);
+		}
+	},
+	BEFORE("before") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			throw new UnsupportedOperationException("not implemented! [" + this + "]");
+		}
+	},
+	IP_V4_ADDRESS("ipv4") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			return "this is not a valid ipv4 address";
+		}
+	},
 	IP_V6_ADDRESS("ipv6"),
-	IS_TRUE("isTrue", false),
+	IS_TRUE("isTrue") {
+		@Override
+		public Object getInvalidValue(Object... args) {
+			return false;
+		}
+	},
 	MATCH("match"),
 	MAX("max"),
 	MAX_SIZE("maxSize"),
@@ -54,15 +85,9 @@ public enum BuiltInValidation {
 
 
 	private final String messageSuffix;
-	private Object invalidValue;
 
 	BuiltInValidation(String messageSuffix) {
 		this.messageSuffix = messageSuffix;
-	}
-
-	BuiltInValidation(String messageSuffix, Object invalidValue) {
-		this.messageSuffix = messageSuffix;
-		this.invalidValue = invalidValue;
 	}
 
 
@@ -70,10 +95,9 @@ public enum BuiltInValidation {
 		return "validation." + messageSuffix;
 	}
 
-	public Object getInvalidValue() {
-		if (invalidValue == null){
-			throw new IllegalStateException("Don't call getInvalidValue() on " + this + ", it's just not there!!");
-		}
-		return invalidValue;
+
+	public Object getInvalidValue(Object... args) {
+		throw new UnsupportedOperationException("not implemented! [" + this + "]");
 	}
+
 }
