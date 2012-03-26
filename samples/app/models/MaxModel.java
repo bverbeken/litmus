@@ -13,5 +13,8 @@ public class MaxModel {
 
 
 	@Max(10)
+	public Long maxLong;
+	
+	@Max(10)
 	public String maxString;
 }

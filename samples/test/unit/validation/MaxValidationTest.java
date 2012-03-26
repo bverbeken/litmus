@@ -10,30 +10,38 @@ public class MaxValidationTest extends ValidationTest<MaxModel> {
 	protected MaxModel valid() {
 		MaxModel model = new MaxModel();
 		model.maxInt = 5;
-		model.maxString = "5";
 		model.maxDouble = 4D;
+		model.maxLong = 9L;
+		model.maxString = "5";
 		return model;
 	}
 
-	
 	@Test
-	public void maxDouble(){
+	public void maxDouble() {
 		assertThat("maxDouble").withValue(9.999999999999).isValid();
 		assertThat("maxDouble").shouldNotBe(10.000000000000001);
 		assertThat("maxDouble").shouldBeMax(10D);
 		assertThat("maxDouble").shouldBeMax(10);
+	}
+
+	@Test
+	public void maxLong() {
+		assertThat("maxLong").withValue(9L).isValid();
+		assertThat("maxLong").shouldNotBe(11L);
+		assertThat("maxLong").shouldBeMax(10L);
+		assertThat("maxLong").shouldBeMax(10);
 
 	}
-	
+
 	@Test
-	public void maxInt(){
+	public void maxInt() {
 		assertThat("maxInt").withValue(10).isValid();
 		assertThat("maxInt").shouldNotBe(11);
 		assertThat("maxInt").shouldBeMax(10);
 	}
 
 	@Test
-	public void maxString(){
+	public void maxString() {
 		assertThat("maxString").withValue("10").isValid();
 		assertThat("maxString").shouldNotBe("11");
 		assertThat("maxString").shouldNotBe("aaa");
