@@ -76,11 +76,19 @@ public enum BuiltInValidation {
 	MIN("min"),
 	MIN_SIZE("minSize"),
 	// PASSWORD --> what is this used for? Not for validation, I guess..?
-	PHONE("phone"),
+	PHONE("phone") {
+		public Object getInvalidValue(Object... args) {
+			return "this is not a valid phone";
+		}
+	},
 	RANGE("range"),
 	REQUIRED("required"),
 	UNIQUE("unique"),
-	URL("url"),
+	URL("url") {
+		public Object getInvalidValue(Object... args) {
+			return "not a url";
+		}
+	},
 	VALID("object");
 
 

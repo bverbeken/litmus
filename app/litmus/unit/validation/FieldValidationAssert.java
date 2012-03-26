@@ -74,11 +74,11 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeAValidEmailAddress() {
-		return verifyBuiltInValidation(EMAIL);
+		return checkBuiltInValidation(EMAIL);
 	}
 
 	public FieldValidationAssert<T> shouldBeInFuture() {
-		return verifyBuiltInValidation(IN_FUTURE);
+		return checkBuiltInValidation(IN_FUTURE);
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(Date date) {
@@ -92,7 +92,7 @@ public class FieldValidationAssert<T> {
 
 
 	public FieldValidationAssert<T> shouldBeInPast() {
-		return verifyBuiltInValidation(IN_PAST);
+		return checkBuiltInValidation(IN_PAST);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(Date date) {
@@ -104,7 +104,7 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeAValidIPv4Address() {
-		return verifyBuiltInValidation(IP_V4_ADDRESS);
+		return checkBuiltInValidation(IP_V4_ADDRESS);
 	}
 
 	public FieldValidationAssert<T> shouldBeTrue() {
@@ -152,6 +152,15 @@ public class FieldValidationAssert<T> {
 		return withValue(random(minSize - 1)).isInvalidBecause(MIN_SIZE);
 	}
 
+	public FieldValidationAssert<T> shouldBeAValidPhone(){
+		return checkBuiltInValidation(PHONE);
+	}
+
+
+	public FieldValidationAssert<T> shouldBeAValidUrl() {
+		return checkBuiltInValidation(URL);
+	}
+
 	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
 		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
 			return withValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
@@ -160,7 +169,9 @@ public class FieldValidationAssert<T> {
 		}
 	}
 
-	private FieldValidationAssert<T> verifyBuiltInValidation(BuiltInValidation validation) {
+
+
+	private FieldValidationAssert<T> checkBuiltInValidation(BuiltInValidation validation) {
 		return withValue(validation.getInvalidValue()).isInvalidBecause(validation);
 	}
 

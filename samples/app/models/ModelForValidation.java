@@ -1,39 +1,29 @@
 package models;
 
-import play.data.validation.*;
+import play.data.validation.Range;
+import play.data.validation.Required;
+import play.data.validation.Valid;
 
 public class ModelForValidation {
 
 //	EQUALS("equals"),
 
-
-	// MAX_SIZE("maxSize"),
-
-	@Min(10)
-	public int minInt;
-
-	// MIN_SIZE("minSize"),
-
 	// PASSWORD --> what is this used for? Not for validation, I guess..?
 
-	@Phone
-	public String phone;
 
 	@Range(min = 10, max = 20)
-	public int between10And20;
+	public int between10And20 = 12;
 
 
 	@Required
-	public String requiredString;
+	public String requiredString = null;
 
 	//	TODO @Unique
 	//	public String uniqueString;
 
-	@URL
-	public String url;
 
 	@Valid
-	public Person validObject;
+	public Person validObject =  new Person(null, null);
 
 
 }
