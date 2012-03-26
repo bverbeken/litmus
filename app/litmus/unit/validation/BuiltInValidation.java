@@ -36,7 +36,7 @@ public enum BuiltInValidation {
 	IN_FUTURE("future") {
 		@Override
 		public Object getInvalidValue(Object... args) {
-			return new Date(currentTimeMillis() - 999999);
+			return new Date(currentTimeMillis() - 100);
 		}
 	},
 	AFTER("after") {
@@ -48,7 +48,7 @@ public enum BuiltInValidation {
 	IN_PAST("past") {
 		@Override
 		public Object getInvalidValue(Object... args) {
-			return new Date(currentTimeMillis() + 999999);
+			return new Date(currentTimeMillis() + 100);
 		}
 	},
 	BEFORE("before") {

@@ -27,6 +27,7 @@ import static litmus.unit.validation.BuiltInValidation.*;
 import static litmus.util.DateUtil.asDate;
 import static litmus.util.ReflectionUtil.*;
 import static litmus.util.RegexUtil.createNonMatchingString;
+import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.junit.Assert.assertTrue;
 
 
@@ -141,6 +142,12 @@ public class FieldValidationAssert<T> {
 		return checkBoundary(boundary, MIN);
 	}
 
+	public FieldValidationAssert<T> shouldBeMaxSize(int maxNumber) {
+		withValue(random(maxNumber)).isValid();
+		return withValue(random(maxNumber + 1)).isInvalidBecause(MAX_SIZE);
+	}
+
+
 	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
 		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
 			return withValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
@@ -161,7 +168,7 @@ public class FieldValidationAssert<T> {
 	 */
 	public FieldValidationAssert<T> isInvalid() {
 		Assertions.assertThat(Validator.getErrorsForField(valid, fieldName))
-				.as("expected validation error for field '" + fieldName + "' but it was valid.")
+				.as("expected validation error on field '" + fieldName + "' but it was valid.")
 				.isNotEmpty();
 		return this;
 	}
