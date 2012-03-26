@@ -142,11 +142,15 @@ public class FieldValidationAssert<T> {
 		return checkBoundary(boundary, MIN);
 	}
 
-	public FieldValidationAssert<T> shouldBeMaxSize(int maxNumber) {
-		withValue(random(maxNumber)).isValid();
-		return withValue(random(maxNumber + 1)).isInvalidBecause(MAX_SIZE);
+	public FieldValidationAssert<T> shouldBeMaxSize(int maxSize) {
+		withValue(random(maxSize)).isValid();
+		return withValue(random(maxSize + 1)).isInvalidBecause(MAX_SIZE);
 	}
 
+	public FieldValidationAssert<T> shouldBeMinSize(int minSize) {
+		withValue(random(minSize)).isValid();
+		return withValue(random(minSize - 1)).isInvalidBecause(MIN_SIZE);
+	}
 
 	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
 		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
