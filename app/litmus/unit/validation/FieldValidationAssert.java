@@ -25,8 +25,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static litmus.unit.validation.BuiltInValidation.*;
 import static litmus.util.DateUtil.asDate;
-import static litmus.util.ReflectionUtil.get;
-import static litmus.util.ReflectionUtil.set;
+import static litmus.util.ReflectionUtil.*;
 import static litmus.util.RegexUtil.createNonMatchingString;
 import static org.junit.Assert.assertTrue;
 
@@ -133,12 +132,20 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeMax(Number maxNumber) {
-		String maxPlusOne = Integer.toString(maxNumber.intValue() + 1);
-		if (ReflectionUtil.getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
-			return withValue(maxPlusOne).isInvalidBecause(MAX);
-		} else {
+		String boundary = Integer.toString(maxNumber.intValue() + 1);
+		return checkBoundary(boundary, MAX);
+	}
 
-			return withNumberValue(maxPlusOne).isInvalidBecause(MAX);
+	public FieldValidationAssert<T> shouldBeMin(Number minNumber) {
+		String boundary = Integer.toString(minNumber.intValue() - 1);
+		return checkBoundary(boundary, MIN);
+	}
+
+	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
+		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
+			return withValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
+		} else {
+			return withNumberValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
 		}
 	}
 
@@ -199,6 +206,5 @@ public class FieldValidationAssert<T> {
 		}
 		return result;
 	}
-
 
 }
