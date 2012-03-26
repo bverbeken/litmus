@@ -16,83 +16,42 @@
 
 package litmus.unit.validation;
 
-import java.util.Date;
-
-import static java.lang.System.currentTimeMillis;
-
 /**
  * An enum containing all validation annotations that are available in Play 1.2.4.
  */
 public enum BuiltInValidation {
 
 
-	EMAIL("email") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			return "this is not a valid email address";
-		}
-	},
+	EMAIL("email", "this is not a valid email address"),
 	// EQUALS("equals"),
-	IN_FUTURE("future") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			return new Date(currentTimeMillis() - 100);
-		}
-	},
-	AFTER("after") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			throw new UnsupportedOperationException("not implemented! [" + this + "]");
-		}
-	},
-	IN_PAST("past") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			return new Date(currentTimeMillis() + 100);
-		}
-	},
-	BEFORE("before") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			throw new UnsupportedOperationException("not implemented! [" + this + "]");
-		}
-	},
-	IP_V4_ADDRESS("ipv4") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			return "this is not a valid ipv4 address";
-		}
-	},
+	IN_FUTURE("future"),
+	AFTER("after"),
+	IN_PAST("past"),
+	BEFORE("before"),
+	IP_V4_ADDRESS("ipv4", "this is not a valid ipv4 address"),
 	IP_V6_ADDRESS("ipv6"),
-	IS_TRUE("isTrue") {
-		@Override
-		public Object getInvalidValue(Object... args) {
-			return false;
-		}
-	},
+	IS_TRUE("isTrue", false),
 	MATCH("match"),
 	MAX("max"),
 	MAX_SIZE("maxSize"),
 	MIN("min"),
 	MIN_SIZE("minSize"),
 	// PASSWORD --> what is this used for? Not for validation, I guess..?
-	PHONE("phone") {
-		public Object getInvalidValue(Object... args) {
-			return "this is not a valid phone";
-		}
-	},
+	PHONE("phone", "this is not a valid phone number"),
 	RANGE("range"),
 	REQUIRED("required"),
 	UNIQUE("unique"),
-	URL("url") {
-		public Object getInvalidValue(Object... args) {
-			return "not a url";
-		}
-	},
+	URL("url", "not a url"),
 	VALID("object");
 
 
 	private final String messageSuffix;
+	private Object invalidValue;
+
+	BuiltInValidation(String messageSuffix, Object invalidValue) {
+		this.messageSuffix = messageSuffix;
+		this.invalidValue = invalidValue;
+	}
 
 	BuiltInValidation(String messageSuffix) {
 		this.messageSuffix = messageSuffix;
@@ -104,8 +63,12 @@ public enum BuiltInValidation {
 	}
 
 
-	public Object getInvalidValue(Object... args) {
-		throw new UnsupportedOperationException("not implemented! [" + this + "]");
+	public Object getInvalidValue() {
+		if (invalidValue == null) {
+			throw new UnsupportedOperationException("not implemented! [" + this + "]");
+		} else {
+			return invalidValue;
+		}
 	}
 
 }

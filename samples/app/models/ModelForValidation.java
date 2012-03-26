@@ -21,7 +21,6 @@ public class ModelForValidation {
 	//	TODO @Unique
 	//	public String uniqueString;
 
-
 	@Valid
 	public Person validObject =  new Person(null, null);
 

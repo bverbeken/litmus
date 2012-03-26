@@ -24,7 +24,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static litmus.unit.validation.BuiltInValidation.*;
-import static litmus.util.DateUtil.asDate;
+import static litmus.util.DateUtil.*;
 import static litmus.util.ReflectionUtil.*;
 import static litmus.util.RegexUtil.createNonMatchingString;
 import static org.apache.commons.lang.RandomStringUtils.random;
@@ -78,10 +78,12 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeInFuture() {
-		return checkBuiltInValidation(IN_FUTURE);
+		withValue(now()).isInvalid();
+		return withValue(dateInPast()).isInvalidBecause(IN_FUTURE);
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(Date date) {
+		// TODO: check other values (corner cases).
 		return withValue(date).isInvalidBecause(AFTER);
 	}
 
@@ -92,14 +94,17 @@ public class FieldValidationAssert<T> {
 
 
 	public FieldValidationAssert<T> shouldBeInPast() {
-		return checkBuiltInValidation(IN_PAST);
+		withValue(now()).isInvalidBecause(IN_PAST);
+		return withValue(dateInFuture()).isInvalidBecause(IN_PAST);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(Date date) {
+		// TODO: check other values (corner cases).
 		return withValue(date).isInvalidBecause(BEFORE);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
+		// TODO: check other values (corner cases).
 		return withValue(asDate(dateAsString)).isInvalidBecause(BEFORE);
 	}
 
