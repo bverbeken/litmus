@@ -3,7 +3,7 @@ package litmus.util;
 import java.text.ParseException;
 import java.util.Date;
 
-import static org.apache.commons.lang.time.DateUtils.addMilliseconds;
+import static org.apache.commons.lang.time.DateUtils.addHours;
 import static play.utils.Utils.AlternativeDateFormat.getDefaultFormatter;
 
 public final class DateUtil {
@@ -18,11 +18,11 @@ public final class DateUtil {
 	}
 
 	public static Date dateInFuture() {
-		return addMilliseconds(now(), 5);
+		return addHours(now(), 1);
 	}
 
 	public static Date dateInPast() {
-		return addMilliseconds(now(), -5);
+		return addHours(now(), -1);
 	}
 
 	public static Date now() {

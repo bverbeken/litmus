@@ -10,7 +10,6 @@ public class AllBuiltInValidationsTest extends ValidationTest<ModelForValidation
 	protected ModelForValidation valid() {
 		ModelForValidation model = new ModelForValidation();
 		model.between10And20 = 15;
-		model.requiredString = "aString";
 		model.validObject = new Person("Joe", "Jackson");
 		return model;
 	}

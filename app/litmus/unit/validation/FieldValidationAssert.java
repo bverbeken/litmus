@@ -83,28 +83,22 @@ public class FieldValidationAssert<T> {
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(Date date) {
-		// TODO: check other values (corner cases).
 		return withValue(date).isInvalidBecause(AFTER);
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
-		// TODO: check other values (corner cases).
 		return withValue(asDate(dateAsString)).isInvalidBecause(AFTER);
 	}
 
-
 	public FieldValidationAssert<T> shouldBeInPast() {
-		withValue(now()).isInvalidBecause(IN_PAST);
 		return withValue(dateInFuture()).isInvalidBecause(IN_PAST);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(Date date) {
-		// TODO: check other values (corner cases).
 		return withValue(date).isInvalidBecause(BEFORE);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
-		// TODO: check other values (corner cases).
 		return withValue(asDate(dateAsString)).isInvalidBecause(BEFORE);
 	}
 
@@ -157,7 +151,7 @@ public class FieldValidationAssert<T> {
 		return withValue(random(minSize - 1)).isInvalidBecause(MIN_SIZE);
 	}
 
-	public FieldValidationAssert<T> shouldBeAValidPhone(){
+	public FieldValidationAssert<T> shouldBeAValidPhone() {
 		return checkBuiltInValidation(PHONE);
 	}
 
@@ -173,7 +167,6 @@ public class FieldValidationAssert<T> {
 			return withNumberValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
 		}
 	}
-
 
 
 	private FieldValidationAssert<T> checkBuiltInValidation(BuiltInValidation validation) {
