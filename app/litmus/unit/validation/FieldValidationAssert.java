@@ -200,7 +200,7 @@ public class FieldValidationAssert<T> {
 		return this;
 	}
 
-	private FieldValidationAssert<T> isInvalidBecause(BuiltInValidation builtInValidation) {
+	public FieldValidationAssert<T> isInvalidBecause(BuiltInValidation builtInValidation) {
 		return hasValidationError(builtInValidation.getMessageKey());
 	}
 
