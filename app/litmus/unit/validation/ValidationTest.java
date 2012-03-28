@@ -20,6 +20,9 @@ import org.fest.assertions.Assertions;
 import org.junit.Test;
 import play.test.UnitTest;
 
+import static litmus.unit.validation.Validator.getAllErrors;
+import static litmus.unit.validation.Validator.isValid;
+
 
 /**
  * <p>Base class for testing validation annotations on {@link play.db.Model} classes.
@@ -55,9 +58,16 @@ public abstract class ValidationTest<T> extends UnitTest {
 	@Test
 	public void validObjectShouldValidate() {
 		T valid = valid();
-		Assertions.assertThat(Validator.isValid(valid))
-				.as("Expected object of type " + valid.getClass().getCanonicalName() + " to be valid, but it was invalid because: " + Validator.getAllErrors())
+		Assertions.assertThat(isValid(valid))
+				.as(invalidMessage(valid))
 				.isTrue();
+	}
+
+	private String invalidMessage(T valid) {
+		return String.format(
+				"Expected object of type %s to be valid, but it was invalid because: %s",
+				valid.getClass().getCanonicalName(),
+				getAllErrors());
 	}
 
 	/**

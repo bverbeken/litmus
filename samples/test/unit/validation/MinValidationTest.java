@@ -20,16 +20,16 @@ public class MinValidationTest extends ValidationTest<MinModel> {
 	public void minDouble() {
 		assertThat("minDouble").withValue(10.000000000001).isValid();
 		assertThat("minDouble").shouldNotBe(9.99999999999999);
-		assertThat("minDouble").shouldBeMin(10D);
-		assertThat("minDouble").shouldBeMin(10);
+		assertThat("minDouble").shouldNotBeLessThan(10D);
+		assertThat("minDouble").shouldNotBeLessThan(10);
 	}
 
 	@Test
 	public void minLong() {
 		assertThat("minLong").withValue(11L).isValid();
 		assertThat("minLong").shouldNotBe(9L);
-		assertThat("minLong").shouldBeMin(10L);
-		assertThat("minLong").shouldBeMin(10);
+		assertThat("minLong").shouldNotBeLessThan(10L);
+		assertThat("minLong").shouldNotBeLessThan(10);
 
 	}
 
@@ -37,7 +37,7 @@ public class MinValidationTest extends ValidationTest<MinModel> {
 	public void minInt() {
 		assertThat("minInt").withValue(10).isValid();
 		assertThat("minInt").shouldNotBe(9);
-		assertThat("minInt").shouldBeMin(10);
+		assertThat("minInt").shouldNotBeLessThan(10);
 	}
 
 	@Test
@@ -45,6 +45,6 @@ public class MinValidationTest extends ValidationTest<MinModel> {
 		assertThat("minString").withValue("10").isValid();
 		assertThat("minString").shouldNotBe("9");
 		assertThat("minString").shouldNotBe("aaa");
-		assertThat("minString").shouldBeMin(10);
+		assertThat("minString").shouldNotBeLessThan(10);
 	}
 }

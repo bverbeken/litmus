@@ -52,7 +52,6 @@ public class FieldValidationAssert<T> {
 		return this;
 	}
 
-
 	/**
 	 * Assert that the field is invalid when it contains the specified value.
 	 *
@@ -61,116 +60,6 @@ public class FieldValidationAssert<T> {
 	 */
 	public FieldValidationAssert<T> shouldNotBe(Object value) {
 		return withValue(value).isInvalid();
-	}
-
-	/**
-	 * Assert that the field is required.
-	 * This is checked by setting the field value to 'null'.
-	 *
-	 * @return this
-	 */
-	public FieldValidationAssert<T> isRequired() {
-		return withValue(null).isInvalidBecause(REQUIRED);
-	}
-
-	public FieldValidationAssert<T> shouldBeAValidEmailAddress() {
-		return checkBuiltInValidation(EMAIL);
-	}
-
-	public FieldValidationAssert<T> shouldBeInFuture() {
-		withValue(now()).isInvalid();
-		return withValue(dateInPast()).isInvalidBecause(IN_FUTURE);
-	}
-
-	public FieldValidationAssert<T> shouldBeAfter(Date date) {
-		return withValue(date).isInvalidBecause(AFTER);
-	}
-
-	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
-		return withValue(asDate(dateAsString)).isInvalidBecause(AFTER);
-	}
-
-	public FieldValidationAssert<T> shouldBeInPast() {
-		return withValue(dateInFuture()).isInvalidBecause(IN_PAST);
-	}
-
-	public FieldValidationAssert<T> shouldBeBefore(Date date) {
-		return withValue(date).isInvalidBecause(BEFORE);
-	}
-
-	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
-		return withValue(asDate(dateAsString)).isInvalidBecause(BEFORE);
-	}
-
-	public FieldValidationAssert<T> shouldBeAValidIPv4Address() {
-		return checkBuiltInValidation(IP_V4_ADDRESS);
-	}
-
-	public FieldValidationAssert<T> shouldBeTrue() {
-		Object validValue = get(fieldName, valid);
-		if (validValue instanceof Boolean) {
-			return withValue(false).isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof String) {
-			return withValue("false").isInvalidBecause(IS_TRUE);
-		} else if (validValue instanceof Number) {
-			return withNumberValue("0").isInvalidBecause(IS_TRUE);
-		}
-		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
-	}
-
-	// TODO: refactor: feature envy smell
-	private FieldValidationAssert<T> withNumberValue(String numberValue) {
-		Class<?> fieldType = ReflectionUtil.getDeclaredFieldTypeWithoutPrimitives(valid.getClass(), fieldName);
-		Number typedNumber = ReflectionUtil.getTypedNumber(numberValue, fieldType);
-		ReflectionUtil.set(valid, fieldName, typedNumber);
-		return this;
-	}
-
-
-	public FieldValidationAssert<T> shouldMatch(String regex) {
-		return withValue(createNonMatchingString(regex)).isInvalidBecause(MATCH);
-	}
-
-	public FieldValidationAssert<T> shouldBeMax(Number maxNumber) {
-		String boundary = Integer.toString(maxNumber.intValue() + 1);
-		return checkBoundary(boundary, MAX);
-	}
-
-	public FieldValidationAssert<T> shouldBeMin(Number minNumber) {
-		String boundary = Integer.toString(minNumber.intValue() - 1);
-		return checkBoundary(boundary, MIN);
-	}
-
-	public FieldValidationAssert<T> shouldBeMaxSize(int maxSize) {
-		withValue(random(maxSize)).isValid();
-		return withValue(random(maxSize + 1)).isInvalidBecause(MAX_SIZE);
-	}
-
-	public FieldValidationAssert<T> shouldBeMinSize(int minSize) {
-		withValue(random(minSize)).isValid();
-		return withValue(random(minSize - 1)).isInvalidBecause(MIN_SIZE);
-	}
-
-	public FieldValidationAssert<T> shouldBeAValidPhone() {
-		return checkBuiltInValidation(PHONE);
-	}
-
-
-	public FieldValidationAssert<T> shouldBeAValidUrl() {
-		return checkBuiltInValidation(URL);
-	}
-
-	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
-		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
-			return withValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
-		} else {
-			return withNumberValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
-		}
-	}
-
-
-	private FieldValidationAssert<T> checkBuiltInValidation(BuiltInValidation validation) {
-		return withValue(validation.getInvalidValue()).isInvalidBecause(validation);
 	}
 
 	/**
@@ -218,6 +107,112 @@ public class FieldValidationAssert<T> {
 				errorsOnField.contains(error));
 		return this;
 	}
+
+	/**
+	 * Assert that the field is required.
+	 * This is checked by setting the field value to 'null'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> isRequired() {
+		return withValue(null).isInvalidBecause(REQUIRED);
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidEmailAddress() {
+		return withValue("not a valid email address").isInvalidBecause(EMAIL);
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidIPv4Address() {
+		return withValue("not a valid ipv4 address").isInvalidBecause(IP_V4_ADDRESS);
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidIPv6Address() {
+		return this;
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidPhone() {
+		return withValue("not a valid phone").isInvalidBecause(PHONE);
+	}
+
+	public FieldValidationAssert<T> shouldBeAValidUrl() {
+		return withValue("not a url").isInvalidBecause(URL);
+	}
+
+	public FieldValidationAssert<T> shouldBeInFuture() {
+		withValue(now()).isInvalid();
+		return withValue(dateInPast()).isInvalidBecause(IN_FUTURE);
+	}
+
+	public FieldValidationAssert<T> shouldBeAfter(Date date) {
+		return withValue(date).isInvalidBecause(AFTER);
+	}
+
+	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
+		return withValue(asDate(dateAsString)).isInvalidBecause(AFTER);
+	}
+
+	public FieldValidationAssert<T> shouldBeInPast() {
+		return withValue(dateInFuture()).isInvalidBecause(IN_PAST);
+	}
+
+	public FieldValidationAssert<T> shouldBeBefore(Date date) {
+		return withValue(date).isInvalidBecause(BEFORE);
+	}
+
+	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
+		return withValue(asDate(dateAsString)).isInvalidBecause(BEFORE);
+	}
+
+	public FieldValidationAssert<T> shouldBeTrue() {
+		Object validValue = get(fieldName, valid);
+		if (validValue instanceof Boolean) {
+			return withValue(false).isInvalidBecause(IS_TRUE);
+		} else if (validValue instanceof String) {
+			return withValue("false").isInvalidBecause(IS_TRUE);
+		} else if (validValue instanceof Number) {
+			return withNumberValue("0").isInvalidBecause(IS_TRUE);
+		}
+		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
+	}
+
+	public FieldValidationAssert<T> shouldMatch(String regex) {
+		return withValue(createNonMatchingString(regex)).isInvalidBecause(MATCH);
+	}
+
+	public FieldValidationAssert<T> shouldNotBeMoreThan(Number maxNumber) {
+		return checkBoundary(Integer.toString(maxNumber.intValue() + 1), MAX);
+	}
+
+	public FieldValidationAssert<T> shouldNotBeLessThan(Number minNumber) {
+		return checkBoundary(Integer.toString(minNumber.intValue() - 1), MIN);
+	}
+
+	public FieldValidationAssert<T> shouldHaveMaxSize(int maxSize) {
+		withValue(random(maxSize)).isValid();
+		return withValue(random(maxSize + 1)).isInvalidBecause(MAX_SIZE);
+	}
+
+	public FieldValidationAssert<T> shouldHaveMinSize(int minSize) {
+		withValue(random(minSize)).isValid();
+		return withValue(random(minSize - 1)).isInvalidBecause(MIN_SIZE);
+	}
+
+	// TODO: refactor: feature envy smell
+	private FieldValidationAssert<T> withNumberValue(String numberValue) {
+		Class<?> fieldType = ReflectionUtil.getDeclaredFieldTypeWithoutPrimitives(valid.getClass(), fieldName);
+		Number typedNumber = ReflectionUtil.getTypedNumber(numberValue, fieldType);
+		ReflectionUtil.set(valid, fieldName, typedNumber);
+		return this;
+	}
+
+	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
+		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
+			return withValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
+		} else {
+			return withNumberValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
+		}
+	}
+
 
 	private String makeErrorMessage(String field, String errorMessageKey, List<String> errorsOnField) {
 		String result = format("Expected validation error '%s' not found on field '%s' of class %s.", errorMessageKey, field, valid.getClass().getCanonicalName());

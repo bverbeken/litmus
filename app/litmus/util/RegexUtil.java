@@ -3,7 +3,9 @@ package litmus.util;
 import org.apache.ivy.plugins.matcher.Matcher;
 import org.apache.ivy.plugins.matcher.RegexpPatternMatcher;
 
+// TODO remove
 public class RegexUtil {
+
 	public static String createNonMatchingString(String regex) {
 		Matcher matcher = new RegexpPatternMatcher().getMatcher(regex);
 		for (String str : new String[]{"a", "A", "ù", "1", "!", "$", "-"}) {

@@ -22,36 +22,30 @@ package litmus.unit.validation;
 public enum BuiltInValidation {
 
 
-	EMAIL("email", "this is not a valid email address"),
+	EMAIL("email"),
 	// EQUALS("equals"),
 	IN_FUTURE("future"),
 	AFTER("after"),
 	IN_PAST("past"),
 	BEFORE("before"),
-	IP_V4_ADDRESS("ipv4", "this is not a valid ipv4 address"),
+	IP_V4_ADDRESS("ipv4"),
 	IP_V6_ADDRESS("ipv6"),
-	IS_TRUE("isTrue", false),
+	IS_TRUE("isTrue"),
 	MATCH("match"),
 	MAX("max"),
 	MAX_SIZE("maxSize"),
 	MIN("min"),
 	MIN_SIZE("minSize"),
 	// PASSWORD --> what is this used for? Not for validation, I guess..?
-	PHONE("phone", "this is not a valid phone number"),
+	PHONE("phone"),
 	RANGE("range"),
 	REQUIRED("required"),
-	UNIQUE("unique"),
-	URL("url", "not a url"),
+	// UNIQUE("unique"),
+	URL("url"),
 	VALID("object");
 
 
 	private final String messageSuffix;
-	private Object invalidValue;
-
-	BuiltInValidation(String messageSuffix, Object invalidValue) {
-		this.messageSuffix = messageSuffix;
-		this.invalidValue = invalidValue;
-	}
 
 	BuiltInValidation(String messageSuffix) {
 		this.messageSuffix = messageSuffix;
@@ -60,15 +54,6 @@ public enum BuiltInValidation {
 
 	public String getMessageKey() {
 		return "validation." + messageSuffix;
-	}
-
-
-	public Object getInvalidValue() {
-		if (invalidValue == null) {
-			throw new UnsupportedOperationException("not implemented! [" + this + "]");
-		} else {
-			return invalidValue;
-		}
 	}
 
 }

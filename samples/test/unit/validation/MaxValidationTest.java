@@ -20,16 +20,16 @@ public class MaxValidationTest extends ValidationTest<MaxModel> {
 	public void maxDouble() {
 		assertThat("maxDouble").withValue(9.999999999999).isValid();
 		assertThat("maxDouble").shouldNotBe(10.000000000000001);
-		assertThat("maxDouble").shouldBeMax(10D);
-		assertThat("maxDouble").shouldBeMax(10);
+		assertThat("maxDouble").shouldNotBeMoreThan(10D);
+		assertThat("maxDouble").shouldNotBeMoreThan(10);
 	}
 
 	@Test
 	public void maxLong() {
 		assertThat("maxLong").withValue(9L).isValid();
 		assertThat("maxLong").shouldNotBe(11L);
-		assertThat("maxLong").shouldBeMax(10L);
-		assertThat("maxLong").shouldBeMax(10);
+		assertThat("maxLong").shouldNotBeMoreThan(10L);
+		assertThat("maxLong").shouldNotBeMoreThan(10);
 
 	}
 
@@ -37,7 +37,7 @@ public class MaxValidationTest extends ValidationTest<MaxModel> {
 	public void maxInt() {
 		assertThat("maxInt").withValue(10).isValid();
 		assertThat("maxInt").shouldNotBe(11);
-		assertThat("maxInt").shouldBeMax(10);
+		assertThat("maxInt").shouldNotBeMoreThan(10);
 	}
 
 	@Test
@@ -45,6 +45,6 @@ public class MaxValidationTest extends ValidationTest<MaxModel> {
 		assertThat("maxString").withValue("10").isValid();
 		assertThat("maxString").shouldNotBe("11");
 		assertThat("maxString").shouldNotBe("aaa");
-		assertThat("maxString").shouldBeMax(10);
+		assertThat("maxString").shouldNotBeMoreThan(10);
 	}
 }
