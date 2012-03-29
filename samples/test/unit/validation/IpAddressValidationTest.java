@@ -17,13 +17,13 @@ public class IpAddressValidationTest extends ValidationTest<IpAddressModel> {
 	@Test
 	public void ipv4Address() {
 		assertThat("ipV4Address").shouldNotBe("invalid ip v4 address");
-		assertThat("ipV4Address").shouldBeAValidIPv4Address();
+		assertThat("ipV4Address").mustBeAnIPv4Address();
 	}
 
 	@Test
 	public void ipv6Address(){
 		assertThat("ipV6Address").shouldNotBe("invalid ip v6 address");
-		assertThat("ipV6Address").shouldBeAValidIPv6Address();
+		assertThat("ipV6Address").mustBeAnIPv6Address();
 	}
 
 }

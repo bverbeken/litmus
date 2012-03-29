@@ -13,9 +13,9 @@ public class EmailValidationTest extends ValidationTest<EmailModel> {
 
 
 	@Test
-	public void emailShouldBeAnEmail() {
+	public void emailMustBeValid() {
 		assertThat("email").shouldNotBe("not a valid email");
-		assertThat("email").shouldBeAValidEmailAddress();
+		assertThat("email").mustBeAnEmailAddress();
 	}
 
 }

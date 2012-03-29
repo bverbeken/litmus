@@ -17,7 +17,7 @@ public class URLValidationTest extends ValidationTest<URLModel> {
 	public void url() {
 		assertThat("url").withValue(null).isValid();
 		assertThat("url").withValue("not a url!!").isInvalid(); 
-		assertThat("url").shouldBeAValidUrl();
+		assertThat("url").mustBeAURL();
 		
 	}
 }

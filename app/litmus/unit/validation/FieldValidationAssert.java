@@ -16,7 +16,6 @@
 
 package litmus.unit.validation;
 
-import litmus.util.ReflectionUtil;
 import org.fest.assertions.Assertions;
 
 import java.util.Date;
@@ -26,7 +25,6 @@ import static java.lang.String.format;
 import static litmus.unit.validation.BuiltInValidation.*;
 import static litmus.util.DateUtil.*;
 import static litmus.util.ReflectionUtil.*;
-import static litmus.util.RegexUtil.createNonMatchingString;
 import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.junit.Assert.assertTrue;
 
@@ -54,6 +52,7 @@ public class FieldValidationAssert<T> {
 
 	/**
 	 * Assert that the field is invalid when it contains the specified value.
+	 * This is a shorthand notation for <pre>assertThat("xxx").withValue(anInvalidValue().isInvalid()</pre>
 	 *
 	 * @param value the invalid value
 	 * @return this
@@ -83,13 +82,21 @@ public class FieldValidationAssert<T> {
 	 */
 	public FieldValidationAssert<T> isValid() {
 		List<String> errorsForField = Validator.getErrorsForField(valid, fieldName);
-		Assertions.assertThat(errorsForField)
-				.as("expected to be valid, but errors found: " + errorsForField)
-				.isEmpty();
+		assertTrue(
+				"expected to be valid, but errors found: " + errorsForField,
+				errorsForField.isEmpty());
 		return this;
 	}
 
-	public FieldValidationAssert<T> isInvalidBecause(BuiltInValidation builtInValidation) {
+
+	/**
+	 * Assert that the field is invalid and that it fails validation with a given error key.
+	 * You should use this method in a method chain, after calling .with(invalidValue).
+	 *
+	 * @param builtInValidation the built-in validation that is expected to fail
+	 * @return this
+	 */
+	public FieldValidationAssert<T> hasValidationError(BuiltInValidation builtInValidation) {
 		return hasValidationError(builtInValidation.getMessageKey());
 	}
 
@@ -103,7 +110,7 @@ public class FieldValidationAssert<T> {
 	public FieldValidationAssert<T> hasValidationError(String error) {
 		List<String> errorsOnField = Validator.getErrorsForField(valid, fieldName);
 		assertTrue(
-				makeErrorMessage(fieldName, error, errorsOnField),
+				validationErrorNotFoundMessage(fieldName, error, errorsOnField),
 				errorsOnField.contains(error));
 		return this;
 	}
@@ -115,68 +122,96 @@ public class FieldValidationAssert<T> {
 	 * @return this
 	 */
 	public FieldValidationAssert<T> isRequired() {
-		return withValue(null).isInvalidBecause(REQUIRED);
+		return withValue(null).hasValidationError(REQUIRED);
 	}
 
-	public FieldValidationAssert<T> shouldBeAValidEmailAddress() {
-		return withValue("not a valid email address").isInvalidBecause(EMAIL);
+	/**
+	 * Assert that the the field is a valid email address.
+	 * This is checked by setting the field value to 'not a valid email address'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAnEmailAddress() {
+		return withValue("not a valid email address").hasValidationError(EMAIL);
 	}
 
-	public FieldValidationAssert<T> shouldBeAValidIPv4Address() {
-		return withValue("not a valid ipv4 address").isInvalidBecause(IP_V4_ADDRESS);
+	/**
+	 * Assert that the field is a valid ip v4 address.
+	 * This is checked by setting the field value to 'not a valid ipv4 address'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAnIPv4Address() {
+		return withValue("not a valid ipv4 address").hasValidationError(IP_V4_ADDRESS);
 	}
 
-	public FieldValidationAssert<T> shouldBeAValidIPv6Address() {
-		return this;
+
+	/**
+	 * Assert that the field is a valid ip v6 address.
+	 * This is checked by setting the field value to 'not a valid ipv6 address'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAnIPv6Address() {
+		return withValue("not a valid ipv6 address").hasValidationError(IP_V6_ADDRESS);
 	}
 
-	public FieldValidationAssert<T> shouldBeAValidPhone() {
-		return withValue("not a valid phone").isInvalidBecause(PHONE);
+	/**
+	 * Assert that the field is a valid phone number.
+	 * This is checked by setting the field value to 'not a valid phone'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAPhoneNumber() {
+		return withValue("not a valid phone").hasValidationError(PHONE);
 	}
 
-	public FieldValidationAssert<T> shouldBeAValidUrl() {
-		return withValue("not a url").isInvalidBecause(URL);
+	/**
+	 * Assert that the field is a valid URL.
+	 * This is checked by setting the field value to 'not a valid url'.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAURL() {
+		return withValue("not a valid url").hasValidationError(URL);
 	}
+
 
 	public FieldValidationAssert<T> shouldBeInFuture() {
 		withValue(now()).isInvalid();
-		return withValue(dateInPast()).isInvalidBecause(IN_FUTURE);
+		return withValue(yesterday()).hasValidationError(IN_FUTURE);
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(Date date) {
-		return withValue(date).isInvalidBecause(AFTER);
+		return withValue(date).hasValidationError(AFTER);
 	}
 
 	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
-		return withValue(asDate(dateAsString)).isInvalidBecause(AFTER);
+		return withValue(asDate(dateAsString)).hasValidationError(AFTER);
 	}
 
 	public FieldValidationAssert<T> shouldBeInPast() {
-		return withValue(dateInFuture()).isInvalidBecause(IN_PAST);
+		return withValue(tomorrow()).hasValidationError(IN_PAST);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(Date date) {
-		return withValue(date).isInvalidBecause(BEFORE);
+		return withValue(date).hasValidationError(BEFORE);
 	}
 
 	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
-		return withValue(asDate(dateAsString)).isInvalidBecause(BEFORE);
+		return withValue(asDate(dateAsString)).hasValidationError(BEFORE);
 	}
 
 	public FieldValidationAssert<T> shouldBeTrue() {
 		Object validValue = get(fieldName, valid);
 		if (validValue instanceof Boolean) {
-			return withValue(false).isInvalidBecause(IS_TRUE);
+			return withValue(false).hasValidationError(IS_TRUE);
 		} else if (validValue instanceof String) {
-			return withValue("false").isInvalidBecause(IS_TRUE);
+			return withValue("false").hasValidationError(IS_TRUE);
 		} else if (validValue instanceof Number) {
-			return withNumberValue("0").isInvalidBecause(IS_TRUE);
+			return withNumberValue("0").hasValidationError(IS_TRUE);
 		}
 		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
-	}
-
-	public FieldValidationAssert<T> shouldMatch(String regex) {
-		return withValue(createNonMatchingString(regex)).isInvalidBecause(MATCH);
 	}
 
 	public FieldValidationAssert<T> shouldNotBeMoreThan(Number maxNumber) {
@@ -189,32 +224,30 @@ public class FieldValidationAssert<T> {
 
 	public FieldValidationAssert<T> shouldHaveMaxSize(int maxSize) {
 		withValue(random(maxSize)).isValid();
-		return withValue(random(maxSize + 1)).isInvalidBecause(MAX_SIZE);
+		return withValue(random(maxSize + 1)).hasValidationError(MAX_SIZE);
 	}
 
 	public FieldValidationAssert<T> shouldHaveMinSize(int minSize) {
 		withValue(random(minSize)).isValid();
-		return withValue(random(minSize - 1)).isInvalidBecause(MIN_SIZE);
+		return withValue(random(minSize - 1)).hasValidationError(MIN_SIZE);
 	}
 
-	// TODO: refactor: feature envy smell
 	private FieldValidationAssert<T> withNumberValue(String numberValue) {
-		Class<?> fieldType = ReflectionUtil.getDeclaredFieldTypeWithoutPrimitives(valid.getClass(), fieldName);
-		Number typedNumber = ReflectionUtil.getTypedNumber(numberValue, fieldType);
-		ReflectionUtil.set(valid, fieldName, typedNumber);
+		setNumberValue(numberValue, fieldName, valid);
 		return this;
 	}
 
+
 	private FieldValidationAssert<T> checkBoundary(String maxPlusOne, BuiltInValidation numberFieldValidation) {
 		if (getDeclaredFieldType(valid.getClass(), fieldName).equals(String.class)) {
-			return withValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
+			return withValue(maxPlusOne).hasValidationError(numberFieldValidation);
 		} else {
-			return withNumberValue(maxPlusOne).isInvalidBecause(numberFieldValidation);
+			return withNumberValue(maxPlusOne).hasValidationError(numberFieldValidation);
 		}
 	}
 
 
-	private String makeErrorMessage(String field, String errorMessageKey, List<String> errorsOnField) {
+	private String validationErrorNotFoundMessage(String field, String errorMessageKey, List<String> errorsOnField) {
 		String result = format("Expected validation error '%s' not found on field '%s' of class %s.", errorMessageKey, field, valid.getClass().getCanonicalName());
 		if (!errorsOnField.isEmpty()) {
 			result += format("Other validation errors '%s' on field '%s'", errorsOnField, field);

@@ -11,14 +11,14 @@ public class PastValidationTest extends ValidationTest<PastModel> {
 	@Override
 	protected PastModel valid() {
 		PastModel model = new PastModel();
-		model.pastDate = dateInPast();
+		model.pastDate = yesterday();
 		model.dateBefore31Dec2012 = asDate("2000-01-01");
 		return model;
 	}
 
 	@Test
 	public void pastDate() {
-		assertThat("pastDate").shouldNotBe(dateInFuture());
+		assertThat("pastDate").shouldNotBe(tomorrow());
 		assertThat("pastDate").shouldBeInPast();
 	}
 

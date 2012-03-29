@@ -17,6 +17,6 @@ public class PhoneValidationTest extends ValidationTest<PhoneModel> {
 	public void validPhone(){
 		assertThat("phone").withValue(null).isValid();
 		assertThat("phone").withValue("not a phone").isInvalid();
-		assertThat("phone").shouldBeAValidPhone();
+		assertThat("phone").mustBeAPhoneNumber();
 	}
 }

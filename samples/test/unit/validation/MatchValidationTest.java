@@ -4,6 +4,8 @@ import litmus.unit.validation.ValidationTest;
 import models.MatchModel;
 import org.junit.Test;
 
+import static litmus.unit.validation.BuiltInValidation.MATCH;
+
 public class MatchValidationTest extends ValidationTest<MatchModel> {
 
 	@Override
@@ -13,13 +15,9 @@ public class MatchValidationTest extends ValidationTest<MatchModel> {
 		return model;
 	}
 
-
 	@Test
 	public void match() {
-		assertThat("matchingString").shouldNotBe("aaa");
-		assertThat("matchingString").shouldMatch("[0-9]*");
-		assertThat("matchingString").shouldMatch("[1-2]*");
-		assertThat("matchingString").shouldMatch("[1]*");
+		assertThat("matchingString").withValue("aaa").hasValidationError(MATCH);
 	}
 
 }

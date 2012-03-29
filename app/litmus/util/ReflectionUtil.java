@@ -106,7 +106,7 @@ public class ReflectionUtil {
 		return getDeclaredField(clazz, field).getType();
 	}
 
-	public static Class<?> getDeclaredFieldTypeWithoutPrimitives(Class<?> clazz, String fieldName) {
+	private static Class<?> getDeclaredFieldTypeWithoutPrimitives(Class<?> clazz, String fieldName) {
 		try {
 			Class<?> type = clazz.getDeclaredField(fieldName).getType();
 			return type.isPrimitive() ? primitives.get(type.getCanonicalName()) : type;
@@ -121,8 +121,15 @@ public class ReflectionUtil {
 				hasField(clazz, field));
 	}
 
+	public static void setNumberValue(String numberValue, String fieldName, Object valid) {
+		Class<?> fieldType = getDeclaredFieldTypeWithoutPrimitives(valid.getClass(), fieldName);
+		Number typedNumber = getTypedNumber(numberValue, fieldType);
+		set(valid, fieldName, typedNumber);
+	}
 
-	public static Number getTypedNumber(String number, Class<?> fieldType) {
+
+
+	private static Number getTypedNumber(String number, Class<?> fieldType) {
 		try {
 			if (fieldType.equals(Number.class)) {
 				return 0;

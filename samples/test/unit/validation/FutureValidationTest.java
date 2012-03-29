@@ -10,14 +10,14 @@ public class FutureValidationTest extends ValidationTest<FutureModel> {
 	@Override
 	protected FutureModel valid() {
 		FutureModel model = new FutureModel();
-		model.futureDate = dateInFuture();
+		model.futureDate = tomorrow();
 		model.dateAfter1Jan2100 = asDate("2222-01-01");
 		return model;
 	}
 
 	@Test
 	public void futureDate() {
-		assertThat("futureDate").shouldNotBe(dateInPast());
+		assertThat("futureDate").shouldNotBe(yesterday());
 		assertThat("futureDate").shouldBeInFuture();
 	}
 

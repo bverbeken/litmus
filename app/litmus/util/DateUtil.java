@@ -3,7 +3,7 @@ package litmus.util;
 import java.text.ParseException;
 import java.util.Date;
 
-import static org.apache.commons.lang.time.DateUtils.addHours;
+import static org.apache.commons.lang.time.DateUtils.addDays;
 import static play.utils.Utils.AlternativeDateFormat.getDefaultFormatter;
 
 public final class DateUtil {
@@ -17,12 +17,12 @@ public final class DateUtil {
 		}
 	}
 
-	public static Date dateInFuture() {
-		return addHours(now(), 1);
+	public static Date tomorrow() {
+		return addDays(now(), 1);
 	}
 
-	public static Date dateInPast() {
-		return addHours(now(), -1);
+	public static Date yesterday() {
+		return addDays(now(), -1);
 	}
 
 	public static Date now() {

@@ -20,7 +20,7 @@ public class ValidValidationTest extends ValidationTest<ValidModel> {
 	@Test
 	public void validShouldBeValid() {
 		Object invalidPerson = new Person(null, null);
-		assertThat("validPerson").withValue(invalidPerson).isInvalidBecause(VALID);
+		assertThat("validPerson").withValue(invalidPerson).hasValidationError(VALID);
 		assertThat("validPerson").withValue(invalidPerson).hasValidationError("validation.object");
 	}
 }
