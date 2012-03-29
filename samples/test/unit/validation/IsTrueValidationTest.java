@@ -24,53 +24,53 @@ public class IsTrueValidationTest extends ValidationTest<IsTrueModel> {
 
 	@Test
 	public void isTrue_Boolean() {
-		assertThat("trueBoolean").shouldNotBe(false);
-		assertThat("trueBoolean").shouldBeTrue();
+		assertThat("trueBoolean").mustNotBe(false);
+		assertThat("trueBoolean").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_String() {
-		assertThat("trueString").shouldNotBe("");
-		assertThat("trueString").shouldNotBe("false");
-		assertThat("trueString").shouldNotBe("anything else");
-		assertThat("trueString").shouldNotBe(null);
-		assertThat("trueString").shouldBeTrue();
+		assertThat("trueString").mustNotBe("");
+		assertThat("trueString").mustNotBe("false");
+		assertThat("trueString").mustNotBe("anything else");
+		assertThat("trueString").mustNotBe(null);
+		assertThat("trueString").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_Integer() {
-		assertThat("trueInteger").shouldNotBe(0);
-		assertThat("trueInteger").shouldNotBe(null);
-		assertThat("trueInteger").shouldBeTrue();
+		assertThat("trueInteger").mustNotBe(0);
+		assertThat("trueInteger").mustNotBe(null);
+		assertThat("trueInteger").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_Long() {
-		assertThat("trueLong").shouldNotBe(0L);
-		assertThat("trueLong").shouldNotBe(null);
-		assertThat("trueLong").shouldBeTrue();
+		assertThat("trueLong").mustNotBe(0L);
+		assertThat("trueLong").mustNotBe(null);
+		assertThat("trueLong").mustBeTrue();
 	}
 
 
 	@Test
 	public void isTrue_Double() {
-		assertThat("trueDouble").shouldNotBe(0d);
-		assertThat("trueDouble").shouldNotBe(null);
-		assertThat("trueDouble").shouldBeTrue();
+		assertThat("trueDouble").mustNotBe(0d);
+		assertThat("trueDouble").mustNotBe(null);
+		assertThat("trueDouble").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_Float() {
-		assertThat("trueFloat").shouldNotBe(0f);
-		assertThat("trueFloat").shouldNotBe(null);
-		assertThat("trueFloat").shouldBeTrue();
+		assertThat("trueFloat").mustNotBe(0f);
+		assertThat("trueFloat").mustNotBe(null);
+		assertThat("trueFloat").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_BigDecimal() {
-		assertThat("trueBigDecimal").shouldNotBe(BigDecimal.ZERO);
-		assertThat("trueBigDecimal").shouldNotBe(null);
-		assertThat("trueBigDecimal").shouldBeTrue();
+		assertThat("trueBigDecimal").mustNotBe(BigDecimal.ZERO);
+		assertThat("trueBigDecimal").mustNotBe(null);
+		assertThat("trueBigDecimal").mustBeTrue();
 	}
 
 }

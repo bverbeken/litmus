@@ -18,14 +18,12 @@ public final class DateUtil {
 	}
 
 	public static Date tomorrow() {
-		return addDays(now(), 1);
+		return addDays(new Date(), 1);
 	}
 
 	public static Date yesterday() {
-		return addDays(now(), -1);
+		return addDays(new Date(), -1);
 	}
 
-	public static Date now() {
-		return new Date();
-	}
+	
 }

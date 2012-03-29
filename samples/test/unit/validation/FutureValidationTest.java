@@ -17,14 +17,14 @@ public class FutureValidationTest extends ValidationTest<FutureModel> {
 
 	@Test
 	public void futureDate() {
-		assertThat("futureDate").shouldNotBe(yesterday());
-		assertThat("futureDate").shouldBeInFuture();
+		assertThat("futureDate").mustNotBe(yesterday());
+		assertThat("futureDate").mustBeInTheFuture();
 	}
 
 	@Test
 	public void dateAfterAGivenDate() {
-		assertThat("dateAfter1Jan2100").shouldBeAfter(asDate("2100-01-01"));
-		assertThat("dateAfter1Jan2100").shouldBeAfter("2100-01-01");
+		assertThat("dateAfter1Jan2100").mustBeAfter(asDate("2100-01-01"));
+		assertThat("dateAfter1Jan2100").mustBeAfter("2100-01-01");
 	}
 
 }

@@ -32,7 +32,6 @@ import static litmus.unit.validation.Validator.isValid;
  */
 public abstract class ValidationTest<T> extends UnitTest {
 
-
 	/**
 	 * @param fieldName the name of the field on the Model class you want to assert
 	 * @return a {@link FieldValidationAssert} instance

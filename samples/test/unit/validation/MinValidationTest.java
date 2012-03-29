@@ -19,32 +19,32 @@ public class MinValidationTest extends ValidationTest<MinModel> {
 	@Test
 	public void minDouble() {
 		assertThat("minDouble").withValue(10.000000000001).isValid();
-		assertThat("minDouble").shouldNotBe(9.99999999999999);
-		assertThat("minDouble").shouldNotBeLessThan(10D);
-		assertThat("minDouble").shouldNotBeLessThan(10);
+		assertThat("minDouble").mustNotBe(9.99999999999999);
+		assertThat("minDouble").mustNotBeLessThan(10D);
+		assertThat("minDouble").mustNotBeLessThan(10);
 	}
 
 	@Test
 	public void minLong() {
 		assertThat("minLong").withValue(11L).isValid();
-		assertThat("minLong").shouldNotBe(9L);
-		assertThat("minLong").shouldNotBeLessThan(10L);
-		assertThat("minLong").shouldNotBeLessThan(10);
+		assertThat("minLong").mustNotBe(9L);
+		assertThat("minLong").mustNotBeLessThan(10L);
+		assertThat("minLong").mustNotBeLessThan(10);
 
 	}
 
 	@Test
 	public void minInt() {
 		assertThat("minInt").withValue(10).isValid();
-		assertThat("minInt").shouldNotBe(9);
-		assertThat("minInt").shouldNotBeLessThan(10);
+		assertThat("minInt").mustNotBe(9);
+		assertThat("minInt").mustNotBeLessThan(10);
 	}
 
 	@Test
 	public void minString() {
 		assertThat("minString").withValue("10").isValid();
-		assertThat("minString").shouldNotBe("9");
-		assertThat("minString").shouldNotBe("aaa");
-		assertThat("minString").shouldNotBeLessThan(10);
+		assertThat("minString").mustNotBe("9");
+		assertThat("minString").mustNotBe("aaa");
+		assertThat("minString").mustNotBeLessThan(10);
 	}
 }

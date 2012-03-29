@@ -17,7 +17,7 @@ public class MinSizeValidationTest extends ValidationTest<MinSizeModel> {
 	public void minString() {
 		assertThat("minString").withValue(null).isValid();
 		assertThat("minString").withValue("").isValid();
-		assertThat("minString").shouldHaveMinSize(4);
+		assertThat("minString").mustNotHaveSizeSmallerThan(4);
 	}
 
 }

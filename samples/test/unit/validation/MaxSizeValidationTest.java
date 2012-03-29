@@ -20,7 +20,7 @@ public class MaxSizeValidationTest extends ValidationTest<MaxSizeModel> {
 	public void ifStringIsNullItPassesValidation() {
 		assertThat("maxString").withValue(null).isValid();
 		assertThat("maxString").withValue("").isValid();
-		assertThat("maxString").shouldHaveMaxSize(4);
+		assertThat("maxString").mustNotHaveSizeGreaterThan(4);
 	}
 
 

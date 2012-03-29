@@ -57,7 +57,7 @@ public class FieldValidationAssert<T> {
 	 * @param value the invalid value
 	 * @return this
 	 */
-	public FieldValidationAssert<T> shouldNotBe(Object value) {
+	public FieldValidationAssert<T> mustNotBe(Object value) {
 		return withValue(value).isInvalid();
 	}
 
@@ -176,33 +176,17 @@ public class FieldValidationAssert<T> {
 		return withValue("not a valid url").hasValidationError(URL);
 	}
 
-
-	public FieldValidationAssert<T> shouldBeInFuture() {
-		withValue(now()).isInvalid();
-		return withValue(yesterday()).hasValidationError(IN_FUTURE);
-	}
-
-	public FieldValidationAssert<T> shouldBeAfter(Date date) {
-		return withValue(date).hasValidationError(AFTER);
-	}
-
-	public FieldValidationAssert<T> shouldBeAfter(String dateAsString) {
-		return withValue(asDate(dateAsString)).hasValidationError(AFTER);
-	}
-
-	public FieldValidationAssert<T> shouldBeInPast() {
-		return withValue(tomorrow()).hasValidationError(IN_PAST);
-	}
-
-	public FieldValidationAssert<T> shouldBeBefore(Date date) {
-		return withValue(date).hasValidationError(BEFORE);
-	}
-
-	public FieldValidationAssert<T> shouldBeBefore(String dateAsString) {
-		return withValue(asDate(dateAsString)).hasValidationError(BEFORE);
-	}
-
-	public FieldValidationAssert<T> shouldBeTrue() {
+	/**
+	 * Assert that the field is 'true'. This is checked by setting the field value to:
+	 * <ul>
+	 * <li>false if it is a boolean</li>
+	 * <li>"false" if it is a String</li>
+	 * <li>0 if it is a number</li>
+	 * </ul>
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeTrue() {
 		Object validValue = get(fieldName, valid);
 		if (validValue instanceof Boolean) {
 			return withValue(false).hasValidationError(IS_TRUE);
@@ -214,20 +198,66 @@ public class FieldValidationAssert<T> {
 		throw new UnsupportedOperationException("@IsTrue is not supported on fields of type [" + validValue.getClass() + "]");
 	}
 
-	public FieldValidationAssert<T> shouldNotBeMoreThan(Number maxNumber) {
-		return checkBoundary(Integer.toString(maxNumber.intValue() + 1), MAX);
+	/**
+	 * Assert that a Date or String field's value is in the future.
+	 *
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeInTheFuture() {
+		withValue(new Date()).hasValidationError(IN_FUTURE);
+		return withValue(yesterday()).hasValidationError(IN_FUTURE);
 	}
 
-	public FieldValidationAssert<T> shouldNotBeLessThan(Number minNumber) {
+	/**
+	 * Assert that a Date or String field's value is after a given date.
+	 *
+	 * @param date the Date after which the field's value must lie
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAfter(Date date) {
+		withValue(date).hasValidationError(AFTER);
+		return withValue(date).hasValidationError(AFTER);
+	}
+
+	/**
+	 * Assert that a Date or String field's value is after a given date, passed as a String.
+	 * To parse the string, play.utils.Utils.AlternativeDateFormat.getDefaultFormatter().parse(dateAsString) is used.
+	 *
+	 * @param dateAsString the date as a String.
+	 * @return this
+	 */
+	public FieldValidationAssert<T> mustBeAfter(String dateAsString) {
+		return mustBeAfter(asDate(dateAsString));
+	}
+
+	public FieldValidationAssert<T> mustBeInThePast() {
+		// TODO : check NOW value like this: withValue(new Date()).hasValidationError(IN_PAST); (fails sometimes..?)
+		return withValue(tomorrow()).hasValidationError(IN_PAST);
+	}
+
+	public FieldValidationAssert<T> mustBeBefore(Date date) {
+		withValue(date).hasValidationError(BEFORE);
+		return withValue(date).hasValidationError(BEFORE);
+	}
+
+	public FieldValidationAssert<T> mustBeBefore(String dateAsString) {
+		return mustBeBefore(asDate(dateAsString));
+	}
+
+	public FieldValidationAssert<T> mustNotBeGreaterThan(Number max) {
+		return checkBoundary(Integer.toString(max.intValue() + 1), MAX);
+	}
+
+	public FieldValidationAssert<T> mustNotBeLessThan(Number minNumber) {
 		return checkBoundary(Integer.toString(minNumber.intValue() - 1), MIN);
 	}
 
-	public FieldValidationAssert<T> shouldHaveMaxSize(int maxSize) {
+	public FieldValidationAssert<T> mustNotHaveSizeGreaterThan(int maxSize) {
 		withValue(random(maxSize)).isValid();
 		return withValue(random(maxSize + 1)).hasValidationError(MAX_SIZE);
 	}
 
-	public FieldValidationAssert<T> shouldHaveMinSize(int minSize) {
+	public FieldValidationAssert<T> mustNotHaveSizeSmallerThan(int minSize) {
 		withValue(random(minSize)).isValid();
 		return withValue(random(minSize - 1)).hasValidationError(MIN_SIZE);
 	}

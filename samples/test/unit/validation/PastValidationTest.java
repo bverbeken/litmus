@@ -18,14 +18,14 @@ public class PastValidationTest extends ValidationTest<PastModel> {
 
 	@Test
 	public void pastDate() {
-		assertThat("pastDate").shouldNotBe(tomorrow());
-		assertThat("pastDate").shouldBeInPast();
+		assertThat("pastDate").mustNotBe(tomorrow());
+		assertThat("pastDate").mustBeInThePast();
 	}
 
 	@Test
 	public void dateBeforeAGivenDate() {
-		assertThat("dateBefore31Dec2012").shouldBeBefore(asDate("2012-12-31"));
-		assertThat("dateBefore31Dec2012").shouldBeBefore("2012-12-31");
+		assertThat("dateBefore31Dec2012").mustBeBefore(asDate("2012-12-31"));
+		assertThat("dateBefore31Dec2012").mustBeBefore("2012-12-31");
 	}
 
 
