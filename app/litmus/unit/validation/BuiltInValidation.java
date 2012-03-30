@@ -23,7 +23,7 @@ public enum BuiltInValidation {
 
 
 	EMAIL("email"),
-	// EQUALS("equals"),
+	EQUALS("equals"),
 	IN_FUTURE("future"),
 	AFTER("after"),
 	IN_PAST("past"),
@@ -40,7 +40,7 @@ public enum BuiltInValidation {
 	PHONE("phone"),
 	RANGE("range"),
 	REQUIRED("required"),
-	// UNIQUE("unique"),
+	UNIQUE("unique"),
 	URL("url"),
 	VALID("object");
 
