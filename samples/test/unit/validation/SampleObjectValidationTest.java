@@ -16,13 +16,16 @@
 
 package unit.validation;
 
+import litmus.unit.validation.ValidationTest;
 import models.Person;
 import org.junit.Test;
-import litmus.unit.validation.ValidationTest;
 
+import static litmus.unit.validation.BuiltInValidation.EMAIL;
 import static litmus.unit.validation.BuiltInValidation.REQUIRED;
 
 public class SampleObjectValidationTest extends ValidationTest<Person> {
+
+	private Person personWithoutFirstName = new Person(null);
 
 	@Override
 	protected Person valid() {
@@ -30,16 +33,25 @@ public class SampleObjectValidationTest extends ValidationTest<Person> {
 	}
 
 	@Test
-	public void firstNameIsRequired() {
-		Person personWithoutFirstName = new Person(null);
+	public void personIsInvalidWithoutFirstName() {
 		assertThat(personWithoutFirstName).isInvalid();
+	}
+
+	@Test
+	public void firstNameIsRequired(){
 		assertThat(personWithoutFirstName).isInvalidBecause("firstName", REQUIRED);
+	}
+
+	@Test
+	public void orIfYouWantToProvideYourOwnValidationFailedMessage(){
 		assertThat(personWithoutFirstName).isInvalidBecause("firstName", "validation.required");
 	}
 
 	@Test
-	public void isValid() {
-		Person validPerson = valid();
-		assertThat(validPerson).isValid();
+	public void emailShouldBeValid(){
+		Person person = valid();
+		person.email = "not an email!";
+		System.out.println("person = " + person);
+		assertThat(person).isInvalidBecause("email", EMAIL);
 	}
 }

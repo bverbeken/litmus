@@ -16,6 +16,7 @@
 
 package models;
 
+import play.data.validation.Email;
 import play.data.validation.MinSize;
 import play.data.validation.Required;
 
@@ -31,6 +32,9 @@ public class Person {
 	@MinSize(4)
 	public String lastName;
 
+	@Email
+	public String email;
+
 	public Person(String firstName) {
 		this(firstName, null);
 	}
@@ -42,7 +46,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return firstName + " " + lastName;
+		return firstName + " " + lastName + "(" + email + ")";
 	}
 
 	@Override

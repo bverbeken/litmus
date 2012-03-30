@@ -19,6 +19,8 @@ package litmus.unit.validation;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.GenericAssert;
 
+import static litmus.unit.validation.Validator.getErrorMessagesForField;
+
 public class ValidationAssert<T> extends GenericAssert<ValidationAssert, T> {
 
 	protected ValidationAssert(T actual) {
@@ -36,7 +38,10 @@ public class ValidationAssert<T> extends GenericAssert<ValidationAssert, T> {
 	}
 
 	public ValidationAssert<T> isInvalidBecause(String fieldName, String error) {
-		Assertions.assertThat(Validator.getErrorMessagesForField(fieldName)).contains(error);
+		isInvalid();
+		Assertions.assertThat(getErrorMessagesForField(fieldName))
+				.as("Validation error " + error + " was expected but not found")
+				.contains(error);
 		return this;
 	}
 
