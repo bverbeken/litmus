@@ -36,7 +36,6 @@ public enum BuiltInValidation {
 	MAX_SIZE("maxSize"),
 	MIN("min"),
 	MIN_SIZE("minSize"),
-	// PASSWORD --> what is this used for? Not for validation, I guess..?
 	PHONE("phone"),
 	RANGE("range"),
 	REQUIRED("required"),

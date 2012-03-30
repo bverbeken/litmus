@@ -73,6 +73,4 @@ public abstract class FunctionalTest extends FestAssertFunctionalTest {
 	}
 
 
-	// TODO: add post, put, head and delete methods
-
 }
