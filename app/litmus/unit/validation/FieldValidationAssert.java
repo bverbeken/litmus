@@ -57,7 +57,7 @@ public class FieldValidationAssert<T> {
 	 * @param value the invalid value
 	 * @return this
 	 */
-	public FieldValidationAssert<T> mustNotBe(Object value) {
+	public FieldValidationAssert<T> isInvalidWhenEqualTo(Object value) {
 		return withValue(value).isInvalid();
 	}
 

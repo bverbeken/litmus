@@ -18,7 +18,7 @@ public class PastValidationTest extends ValidationTest<PastModel> {
 
 	@Test
 	public void pastDate() {
-		assertThat("pastDate").mustNotBe(tomorrow());
+		assertThat("pastDate").isInvalidWhenEqualTo(tomorrow());
 		assertThat("pastDate").mustBeInThePast();
 	}
 

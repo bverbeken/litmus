@@ -30,8 +30,8 @@ public class SampleFieldValidationTest extends ValidationTest<Person> {
 	@Test
 	public void firstNameIsRequired() {
 		assertThat("firstName").isRequired();
-		assertThat("firstName").mustNotBe("");
-		assertThat("firstName").mustNotBe(null);
+		assertThat("firstName").isInvalidWhenEqualTo("");
+		assertThat("firstName").isInvalidWhenEqualTo(null);
 	}
 
 	@Test

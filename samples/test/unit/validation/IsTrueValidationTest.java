@@ -24,52 +24,52 @@ public class IsTrueValidationTest extends ValidationTest<IsTrueModel> {
 
 	@Test
 	public void isTrue_Boolean() {
-		assertThat("trueBoolean").mustNotBe(false);
+		assertThat("trueBoolean").isInvalidWhenEqualTo(false);
 		assertThat("trueBoolean").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_String() {
-		assertThat("trueString").mustNotBe("");
-		assertThat("trueString").mustNotBe("false");
-		assertThat("trueString").mustNotBe("anything else");
-		assertThat("trueString").mustNotBe(null);
+		assertThat("trueString").isInvalidWhenEqualTo("");
+		assertThat("trueString").isInvalidWhenEqualTo("false");
+		assertThat("trueString").isInvalidWhenEqualTo("anything else");
+		assertThat("trueString").isInvalidWhenEqualTo(null);
 		assertThat("trueString").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_Integer() {
-		assertThat("trueInteger").mustNotBe(0);
-		assertThat("trueInteger").mustNotBe(null);
+		assertThat("trueInteger").isInvalidWhenEqualTo(0);
+		assertThat("trueInteger").isInvalidWhenEqualTo(null);
 		assertThat("trueInteger").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_Long() {
-		assertThat("trueLong").mustNotBe(0L);
-		assertThat("trueLong").mustNotBe(null);
+		assertThat("trueLong").isInvalidWhenEqualTo(0L);
+		assertThat("trueLong").isInvalidWhenEqualTo(null);
 		assertThat("trueLong").mustBeTrue();
 	}
 
 
 	@Test
 	public void isTrue_Double() {
-		assertThat("trueDouble").mustNotBe(0d);
-		assertThat("trueDouble").mustNotBe(null);
+		assertThat("trueDouble").isInvalidWhenEqualTo(0d);
+		assertThat("trueDouble").isInvalidWhenEqualTo(null);
 		assertThat("trueDouble").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_Float() {
-		assertThat("trueFloat").mustNotBe(0f);
-		assertThat("trueFloat").mustNotBe(null);
+		assertThat("trueFloat").isInvalidWhenEqualTo(0f);
+		assertThat("trueFloat").isInvalidWhenEqualTo(null);
 		assertThat("trueFloat").mustBeTrue();
 	}
 
 	@Test
 	public void isTrue_BigDecimal() {
-		assertThat("trueBigDecimal").mustNotBe(BigDecimal.ZERO);
-		assertThat("trueBigDecimal").mustNotBe(null);
+		assertThat("trueBigDecimal").isInvalidWhenEqualTo(BigDecimal.ZERO);
+		assertThat("trueBigDecimal").isInvalidWhenEqualTo(null);
 		assertThat("trueBigDecimal").mustBeTrue();
 	}
 
