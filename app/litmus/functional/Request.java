@@ -19,9 +19,9 @@ package litmus.functional;
 import play.mvc.Http;
 import play.mvc.results.Result;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static litmus.functional.HttpMethod.GET;
 import static litmus.functional.HttpMethod.POST;
 import static litmus.util.ReflectionUtil.getStaticFieldValue;
@@ -29,7 +29,7 @@ import static litmus.util.ReflectionUtil.getStaticFieldValue;
 public class Request {
 
 	private final Object url;
-	private Map<String, String> params = newHashMap();
+	private Map<String, String> params = new HashMap<String, String>();
 
 	public Request(Object url) {
 		this.url = url;
