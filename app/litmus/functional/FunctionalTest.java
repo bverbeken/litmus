@@ -37,8 +37,8 @@ public abstract class FunctionalTest extends FestAssertFunctionalTest {
     }
 
     /**
-     * Perform a PST on a URL. <br/>
-     * This is a shortcut method for <pre>new Request(url).get();</pre>
+     * Perform a POST on a URL. <br/>
+     * This is a shortcut method for <pre>new Request(url).post(params);</pre>
      *
      * @param url the url to POST
      * @return the {@link Response} object
