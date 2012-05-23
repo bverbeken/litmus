@@ -16,6 +16,8 @@
 
 package litmus.functional;
 
+import java.util.Map;
+
 /**
  * Base class for functional tests.
  *
@@ -23,16 +25,27 @@ package litmus.functional;
  */
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
-	/**
-	 * Perform a GET on a URL. <br/>
-	 * This is a shortcut method for <pre>new Request(url).get();</pre>
-	 *
-	 * @param url the url to GET
-	 * @return the {@link Response} object
-	 */
-	protected static Response get(Object url) {
-		return new Request(url).get();
-	}
+    /**
+     * Perform a GET on a URL. <br/>
+     * This is a shortcut method for <pre>new Request(url).get();</pre>
+     *
+     * @param url the url to GET
+     * @return the {@link Response} object
+     */
+    protected static Response get(Object url) {
+        return new Request(url).get();
+    }
+
+    /**
+     * Perform a PST on a URL. <br/>
+     * This is a shortcut method for <pre>new Request(url).get();</pre>
+     *
+     * @param url the url to POST
+     * @return the {@link Response} object
+     */
+    protected static Response post(Object url, Map<String, String> params) {
+        return new Request(url).post(params);
+    }
 
 
 	/**
