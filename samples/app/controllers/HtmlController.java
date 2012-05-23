@@ -37,7 +37,8 @@ public class HtmlController extends Controller {
 			Validation.keep();
 			helloWorld();
 		}
-		renderText("Hello " + name + "!");
+        String msg = "Hello " + name + "!";
+		render(msg);
 	}
 
 

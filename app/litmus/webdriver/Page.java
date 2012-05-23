@@ -1,6 +1,10 @@
 package litmus.webdriver;
 
-import litmus.functional.Request;
+import org.fest.assertions.Assertions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public abstract class Page<T extends Page> {
 
@@ -13,8 +17,14 @@ public abstract class Page<T extends Page> {
     }
 
     public T open() {
-        System.out.println(new Request(relativeUrl).get().getHtml().getSource());
-        // TODO: add webdriver dependency
+        WebDriver driver = new FirefoxDriver();
+        driver.get("http://localhost:9000/html/helloworld");
+        WebElement name = driver.findElement(By.id("name"));
+        name.sendKeys("cheese");
+        name.submit();
+        String msg = driver.findElement(By.id("msg")).getText();
+        Assertions.assertThat(msg).isEqualTo("Hello cheese!");
+        driver.quit();
         return self;
     }
 
