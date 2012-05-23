@@ -35,10 +35,11 @@ public class Request {
 		this.url = url;
 	}
 
-	public Request with(String name, String value) {
-		this.params.put(name, value);
-		return this;
-	}
+    public Request with(String name, String value) {
+        this.params.put(name, value);
+        return this;
+    }
+
 
 	public Response get() {
 		return wrapResponse(GET, url, new ResponseFetcher() {
@@ -48,13 +49,18 @@ public class Request {
 		});
 	}
 
-	public Response post() {
-		return wrapResponse(POST, url, new ResponseFetcher() {
-			Http.Response fetch() {
-				return play.test.FunctionalTest.POST(url, params);
-			}
-		});
-	}
+    public Response post() {
+        return wrapResponse(POST, url, new ResponseFetcher() {
+            Http.Response fetch() {
+                return play.test.FunctionalTest.POST(url, params);
+            }
+        });
+    }
+
+    public Response post(Map<String, String> parameters) {
+        params.putAll(parameters);
+        return post();
+    }
 
 	private static Response wrapResponse(HttpMethod httpMethod, Object request, ResponseFetcher fetcher) {
 		Map<String, Object> renderArgs = getStaticFieldValue("renderArgs", play.test.FunctionalTest.class);
@@ -90,6 +96,4 @@ public class Request {
 			}
 		}
 	}
-
-
 }
