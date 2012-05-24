@@ -8,9 +8,12 @@ public class SampleWebdriverTest extends WebdriverTest {
 
     @Test
     public void testPage() {
-        new HelloWorldPage()
+        String actualMessage = new HelloWorldPage()
                 .open()
-                .enterName("Ben")
-                .clickSubmit();
+                .enterName("World")
+                .clickSubmit()
+                .getMessage();
+
+        assertThat(actualMessage).isEqualTo("Hello World!");
     }
 }

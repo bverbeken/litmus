@@ -1,10 +1,8 @@
 package litmus.webdriver;
 
-import org.fest.assertions.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
+import static litmus.webdriver.WebDriverFactory.getWebdriver;
 
 public abstract class Page<T extends Page> {
 
@@ -17,14 +15,8 @@ public abstract class Page<T extends Page> {
     }
 
     public T open() {
-        WebDriver driver = new FirefoxDriver();
-        driver.get("http://localhost:9000/html/helloworld");
-        WebElement name = driver.findElement(By.id("name"));
-        name.sendKeys("cheese");
-        name.submit();
-        String msg = driver.findElement(By.id("msg")).getText();
-        Assertions.assertThat(msg).isEqualTo("Hello cheese!");
-        driver.quit();
+        WebDriver driver = getWebdriver();
+        driver.get("http://localhost:9000" + relativeUrl);
         return self;
     }
 

@@ -2,6 +2,9 @@ package webdriver.pages;
 
 
 import litmus.webdriver.Page;
+import litmus.webdriver.WebDriverFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class HelloWorldPage extends Page<HelloWorldPage> {
 
@@ -10,11 +13,14 @@ public class HelloWorldPage extends Page<HelloWorldPage> {
     }
 
     public HelloWorldPage enterName(String name) {
-        // TODO: use name
+        WebElement element = WebDriverFactory.getWebdriver().findElement(By.id("name"));
+        element.sendKeys(name);
         return this;
     }
 
-    public void clickSubmit() {
-        // TODO
+    public SayHelloPage clickSubmit() {
+        WebElement element = WebDriverFactory.getWebdriver().findElement(By.id("submit"));
+        element.click();
+        return new SayHelloPage();
     }
 }
