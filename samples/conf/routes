@@ -3,6 +3,7 @@
 # ~~~~
 
 *       /                                       module:secure
+*       /                                       module:litmus
 
 GET     /html/{action}                          HtmlController.{action}
 POST	/html/sayHello 							HtmlController.sayHello

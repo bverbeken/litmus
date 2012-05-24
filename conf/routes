@@ -5,4 +5,4 @@
 #
 # ~~~~
 
-GET     /?                      Module.index
+GET     /@litmus                      LitmusTestRunner.showTests
