@@ -1,22 +1,21 @@
 package webdriver.pages;
 
 import litmus.webdriver.Page;
-import litmus.webdriver.WebDriverFactory;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class SayHelloPage extends Page<SayHelloPage> {
 
+    @FindBy(id="msg")
+    public WebElement message;
+
     public SayHelloPage() {
-        super(SayHelloPage.class, "/html/sayhello");
+        super("/html/sayhello");
     }
 
     @Override
     protected boolean arrivedAt() {
-        return WebDriverFactory.getWebdriver().getTitle().equals("SayHello");
-    }
-
-    public String getMessage() {
-        return WebDriverFactory.getWebdriver().findElement(By.id("msg")).getText();
+        return getTitle().equals("SayHello");
     }
 
 }

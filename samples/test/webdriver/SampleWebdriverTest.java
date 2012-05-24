@@ -3,29 +3,32 @@ package webdriver;
 import litmus.webdriver.WebdriverTest;
 import org.junit.Test;
 import webdriver.pages.HelloWorldPage;
+import webdriver.pages.SayHelloPage;
 
 public class SampleWebdriverTest extends WebdriverTest {
 
     @Test
     public void testPage() {
-        String actualMessage = new HelloWorldPage()
+        SayHelloPage page = new HelloWorldPage()
                 .open()
                 .enterName("World")
-                .clickSubmit()
-                .getMessage();
+                .clickSubmit();
 
-        assertThat(actualMessage).isEqualTo("Hello World!");
+        assertThat(page.message).containsText("Hello");
+        assertThat(page.message).containsText("World");
+        assertThat(page.message).containsText("!");
+
+        assertThat(page.message).hasText("Hello World!");
     }
 
 
     @Test
     public void testPageValidation() {
-        String actualErrorMessage = new HelloWorldPage()
+        HelloWorldPage page = new HelloWorldPage()
                 .open()
                 .enterName("Ben")
-                .clickSubmitAndExpectValidationErrors()
-                .getErrorMessage();
+                .clickSubmitAndExpectValidationErrors();
 
-        assertThat(actualErrorMessage).isEqualTo("Minimum size is 4");
+        assertThat(page.error).hasText("Minimum size is 4");
     }
 }

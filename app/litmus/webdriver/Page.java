@@ -4,15 +4,18 @@ import org.fest.assertions.Assertions;
 import org.openqa.selenium.WebDriver;
 
 import static litmus.webdriver.WebDriverFactory.getWebdriver;
+import static org.openqa.selenium.support.PageFactory.initElements;
 
+@SuppressWarnings("unchecked")
 public abstract class Page<T extends Page> {
 
-    private final T self;
     private final String relativeUrl;
+    protected WebDriver driver;
 
-    public Page(Class<T> ownClass, String relativeUrl) {
-        this.self = ownClass.cast(this);
+    public Page(String relativeUrl) {
         this.relativeUrl = relativeUrl;
+        this.driver = WebDriverFactory.getWebdriver();
+        initElements(driver, this);
     }
 
     public T open() {
@@ -23,10 +26,13 @@ public abstract class Page<T extends Page> {
 
     protected abstract boolean arrivedAt();
 
+    protected String getTitle(){
+        return driver.getTitle();
+    }
 
     public T assertArrivedAt() {
         Assertions.assertThat(arrivedAt()).isTrue();
-        return self;
+        return (T) this;
     }
 
 

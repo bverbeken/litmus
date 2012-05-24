@@ -2,43 +2,42 @@ package webdriver.pages;
 
 
 import litmus.webdriver.Page;
-import litmus.webdriver.WebDriverFactory;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class HelloWorldPage extends Page<HelloWorldPage> {
 
+    @FindBy(id="name")
+    public WebElement nameInput;
+
+    @FindBy(id="submit")
+    public WebElement submit;
+
+    @FindBy(className = "error")
+    public WebElement error;
+
     public HelloWorldPage() {
-        super(HelloWorldPage.class, "/html/helloworld");
+        super("/html/helloworld");
     }
 
     @Override
     protected boolean arrivedAt() {
-        return WebDriverFactory.getWebdriver().getTitle().equals("HelloWorld");
+        return getTitle().equals("HelloWorld");
     }
 
     public HelloWorldPage enterName(String name) {
-        WebElement element = WebDriverFactory.getWebdriver().findElement(By.id("name"));
-        element.sendKeys(name);
+        nameInput.sendKeys(name);
         return this;
     }
 
     public SayHelloPage clickSubmit() {
-        submit();
+        submit.click();
         return new SayHelloPage();
     }
 
-    private void submit() {
-        WebElement element = WebDriverFactory.getWebdriver().findElement(By.id("submit"));
-        element.click();
-    }
-
     public HelloWorldPage clickSubmitAndExpectValidationErrors() {
-        submit();
+        submit.click();
         return new HelloWorldPage().assertArrivedAt();
     }
 
-    public String getErrorMessage() {
-        return WebDriverFactory.getWebdriver().findElement(By.className("error")).getText();
-    }
 }

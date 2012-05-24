@@ -3,6 +3,7 @@ package litmus.webdriver;
 import litmus.functional.FestAssertFunctionalTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.openqa.selenium.WebElement;
 import play.Play;
 
 import static java.lang.Integer.parseInt;
@@ -23,5 +24,11 @@ public abstract class WebdriverTest extends FestAssertFunctionalTest {
     public static void quitWebdriver(){
         WebDriverFactory.quitAndInit();
     }
+
+
+    protected WebElementAssert assertThat(WebElement element) {
+        return new WebElementAssert(element);
+    }
+
 
 }
