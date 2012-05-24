@@ -10,7 +10,13 @@ public class SayHelloPage extends Page<SayHelloPage> {
         super(SayHelloPage.class, "/html/sayhello");
     }
 
+    @Override
+    protected boolean arrivedAt() {
+        return WebDriverFactory.getWebdriver().getTitle().equals("SayHello");
+    }
+
     public String getMessage() {
         return WebDriverFactory.getWebdriver().findElement(By.id("msg")).getText();
     }
+
 }

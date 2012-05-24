@@ -16,4 +16,16 @@ public class SampleWebdriverTest extends WebdriverTest {
 
         assertThat(actualMessage).isEqualTo("Hello World!");
     }
+
+
+    @Test
+    public void testPageValidation() {
+        String actualErrorMessage = new HelloWorldPage()
+                .open()
+                .enterName("Ben")
+                .clickSubmitAndExpectValidationErrors()
+                .getErrorMessage();
+
+        assertThat(actualErrorMessage).isEqualTo("Minimum size is 4");
+    }
 }

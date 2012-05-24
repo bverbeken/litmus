@@ -12,6 +12,11 @@ public class HelloWorldPage extends Page<HelloWorldPage> {
         super(HelloWorldPage.class, "/html/helloworld");
     }
 
+    @Override
+    protected boolean arrivedAt() {
+        return WebDriverFactory.getWebdriver().getTitle().equals("HelloWorld");
+    }
+
     public HelloWorldPage enterName(String name) {
         WebElement element = WebDriverFactory.getWebdriver().findElement(By.id("name"));
         element.sendKeys(name);
@@ -19,8 +24,21 @@ public class HelloWorldPage extends Page<HelloWorldPage> {
     }
 
     public SayHelloPage clickSubmit() {
+        submit();
+        return new SayHelloPage();
+    }
+
+    private void submit() {
         WebElement element = WebDriverFactory.getWebdriver().findElement(By.id("submit"));
         element.click();
-        return new SayHelloPage();
+    }
+
+    public HelloWorldPage clickSubmitAndExpectValidationErrors() {
+        submit();
+        return new HelloWorldPage().assertArrivedAt();
+    }
+
+    public String getErrorMessage() {
+        return WebDriverFactory.getWebdriver().findElement(By.className("error")).getText();
     }
 }
