@@ -16,9 +16,9 @@
 
 package functional.text;
 
-import org.junit.Test;
 import litmus.functional.FunctionalTest;
 import litmus.functional.WrongContentTypeException;
+import org.junit.Test;
 
 public class TextResponseExample extends FunctionalTest {
 

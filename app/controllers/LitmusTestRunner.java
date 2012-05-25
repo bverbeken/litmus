@@ -1,18 +1,14 @@
 package controllers;
 
-import com.beust.jcommander.internal.Maps;
-import litmus.engine.TestEngine;
+import litmus.engine.TestMap;
 import play.mvc.Controller;
 
-import java.util.List;
-import java.util.Map;
+import static litmus.engine.TestEngine.getAllTests;
 
 public class LitmusTestRunner extends Controller {
 
     public static void testList(){
-        Map<String, List<Class>> tests = Maps.newHashMap();
-        tests.put("UNIT", TestEngine.allUnitTests());
-        tests.put("FUNCTIONAL", TestEngine.allFunctionalTests());
+        TestMap tests = getAllTests();
         render(tests);
     }
 

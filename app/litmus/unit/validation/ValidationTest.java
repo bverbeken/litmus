@@ -16,10 +16,12 @@
 
 package litmus.unit.validation;
 
+import litmus.engine.Category;
 import org.fest.assertions.Assertions;
 import org.junit.Test;
 import play.test.UnitTest;
 
+import static litmus.engine.DefaultCategories.UNIT;
 import static litmus.unit.validation.Validator.getAllErrors;
 import static litmus.unit.validation.Validator.isValid;
 
@@ -30,6 +32,7 @@ import static litmus.unit.validation.Validator.isValid;
  *
  * @author Ben Verbeken
  */
+@Category(value = UNIT, priority = 10000)
 public abstract class ValidationTest<T> extends UnitTest {
 
 	/**
