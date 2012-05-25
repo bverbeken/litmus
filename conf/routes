@@ -5,4 +5,4 @@
 #
 # ~~~~
 
-GET     /@litmus                      LitmusTestRunner.showTests
+GET     /@litmus                      LitmusTestRunner.testList

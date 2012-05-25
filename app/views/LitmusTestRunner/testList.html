@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title>Litmus - Testrunner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>
+    <script src="@{'/public/test-runner/jquery-1.3.2.min.js'}" type="text/javascript"
+            charset="${_response_encoding}"></script>
+    <script src="@{'/public/test-runner/jquery.scrollTo-min.js'}" type="text/javascript"
+            charset="${_response_encoding}"></script>
+</head>
+
+<body>
+<div id="header" class="block">
+    <h1>Litmus testrunner</h1>
+
+    <p>
+        <strong>Select the tests to run</strong>, then click [Start] and pray
+    </p>
+
+</div>
+
+<div id="tests" class="block">
+
+    #{list items:tests.keySet(), as: 'category'}
+        <h2>${category}</h2>
+        <ul>
+            #{list items:tests.get(category), as:'test'}
+                <li>
+                    <div class="test" id="${test.name}.class">
+                    ${test.name}
+                    </div>
+                </li>
+            #{/list}
+        </ul>
+    #{/list}
+
+
+
+#{if !tests}
+    <h2><span>There is no test to run</span></h2>
+#{/if}
+
+</div>
+
+</body>
+</html>
+

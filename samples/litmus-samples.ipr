@@ -33,6 +33,9 @@
       <module fileurl="file://$PROJECT_DIR$/litmus-samples.iml" filepath="$PROJECT_DIR$/litmus-samples.iml" />
     </modules>
   </component>
+  <component name="ProjectResources">
+    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" />
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
