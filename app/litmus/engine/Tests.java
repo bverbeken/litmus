@@ -1,7 +1,6 @@
 package litmus.engine;
 
 import org.junit.Assert;
-import play.Play;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +11,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.reflect.Modifier.isAbstract;
 import static java.util.Collections.sort;
 import static litmus.engine.CategoryInstance.NONE;
+import static play.Play.classloader;
 
 public class Tests {
 
@@ -27,7 +27,7 @@ public class Tests {
     }
 
     private List<Class> getAllTests() {
-        return Play.classloader.getAssignableClasses(Assert.class);
+        return classloader.getAssignableClasses(Assert.class);
     }
 
 
