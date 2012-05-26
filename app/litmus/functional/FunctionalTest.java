@@ -20,7 +20,7 @@ import litmus.engine.Category;
 
 import java.util.Map;
 
-import static litmus.engine.DefaultCategories.FUNCTIONAL;
+import static litmus.engine.CategoryInstance.FUNCTIONAL;
 
 /**
  * Base class for functional tests.

@@ -5,7 +5,9 @@ import static org.apache.commons.lang.builder.HashCodeBuilder.reflectionHashCode
 
 public class CategoryInstance {
 
-    public static final CategoryInstance NONE = new CategoryInstance("Uncategorized", 100);
+    public static final String UNIT = "Unit Tests";
+    public static final String FUNCTIONAL = "Functional Tests";
+    public static final CategoryInstance NONE = new CategoryInstance("Uncategorized Tests", 999999);
 
 
     public String name;

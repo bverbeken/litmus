@@ -21,7 +21,7 @@ import org.fest.assertions.Assertions;
 import org.junit.Test;
 import play.test.UnitTest;
 
-import static litmus.engine.DefaultCategories.UNIT;
+import static litmus.engine.CategoryInstance.UNIT;
 import static litmus.unit.validation.Validator.getAllErrors;
 import static litmus.unit.validation.Validator.isValid;
 

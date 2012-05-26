@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static litmus.engine.DefaultCategories.UNIT;
+import static litmus.engine.CategoryInstance.UNIT;
 
 /**
  * Superclass for unit tests that extends play.test.UnitTest and provides all
