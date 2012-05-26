@@ -1,5 +1,8 @@
 package litmus.engine;
 
+import org.junit.Assert;
+import play.Play;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,18 +13,23 @@ import static java.lang.reflect.Modifier.isAbstract;
 import static java.util.Collections.sort;
 import static litmus.engine.CategoryInstance.NONE;
 
-public class TestMap {
+public class Tests {
 
     private HashMap<CategoryInstance, List<Class>> map = new HashMap<CategoryInstance, List<Class>>();
 
 
-    public TestMap(List<Class> allTests) {
-        for (Class testClass : allTests) {
+    public Tests() {
+        for (Class testClass : getAllTests()) {
             if (!isAbstract(testClass.getModifiers())) {
                 addTest(testClass);
             }
         }
     }
+
+    private List<Class> getAllTests() {
+        return Play.classloader.getAssignableClasses(Assert.class);
+    }
+
 
     private void addTest(Class<?> testClass) {
         Category annotation = findCategoryAnnotation(testClass);
