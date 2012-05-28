@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="@{'/public/litmus/style.css'}" type="text/css" />
 
 <script type="text/javascript">
+
 $(function () {
 
     $('#loading').ajaxStart(function () {
@@ -20,7 +21,7 @@ $(function () {
         window.location = bookmark();
         stop();
         updateSelected();
-    }
+    };
 
     var run = function () {
         updateSelected();
@@ -28,7 +29,7 @@ $(function () {
         $('.test, #header').removeClass('passed').removeClass('failed');
         $.ajax({
             type:'GET',
-            url:'@{LitmusTestRunner.run("init")}',
+            url:'@{LitmusTestRunner.init()}',
             success:function () {
                 runNextTest();
             },
@@ -36,7 +37,7 @@ $(function () {
                 testError(req.responseText);
             }
         });
-    }
+    };
 
     var runNextTest = function () {
         if ($(document.body).is('.running')) {
@@ -48,7 +49,7 @@ $(function () {
                 result();
             }
         }
-    }
+    };
 
     var result = function () {        
         clearInterval(window.checkResult);
@@ -62,7 +63,7 @@ $(function () {
         var areFailedTests = $('.test.failed').size();
         $.ajax({
             type:'GET',
-            url:'@{LitmusTestRunner.run("end")}',
+            url:'@{LitmusTestRunner.end()}',
             data:{result:areFailedTests ? 'failed' : 'passed'}
         });
         if (areFailedTests) {
@@ -72,14 +73,14 @@ $(function () {
         }
     };
 
-    var runTest = function (testId, test) {
+    var runTest = function (testClassName, test) {
         test.addClass('passing');
         $('.touch', test).html('&nbsp;');
-        if (/.class$/.test(testId)) {
+        if (/.class$/.test(testClassName)) {
             $.ajax({
                 type:'GET',
                 dataType:'html',
-                url:'@{LitmusTestRunner.run("XXX")}'.replace('XXX', testId),
+                url:'@{LitmusTestRunner.run("XXX")}'.replace('XXX', testClassName),
                 complete:function (res, status) {
                     var results = $("<div/>").append(res.responseText).find('table');
                     if (!results || !results.size()) {
@@ -132,7 +133,7 @@ $(function () {
         $('.test, #header').removeClass('passed').removeClass('failed');
         $('.touch').html('&sim;');
         $('.testResult').hide();
-    }
+    };
 
     var bookmark = function () {
         var url = 'http://' + document.location.host;
@@ -149,7 +150,7 @@ $(function () {
         });
         if (url)
             return url;
-    }
+    };
 
     $('.test a').click(function (e) {
         e.preventDefault();
@@ -160,7 +161,7 @@ $(function () {
 
     $('.test .touch').click(function (e) {
         e.preventDefault();
-        var test = $(this).closest('.test')
+        var test = $(this).closest('.test');
         if ($(test).is('.failed,.passed')) {
             $('.testResult', test).toggle();
             $(this).html($(this).html() == '-' ? '+' : '-');
@@ -262,15 +263,15 @@ function toggle_trace(link) {
     <div id="stopped">
         <span id="start">Start !</span>
         &nbsp;
-        <span class="nbToRun">no</span> test<span class="nbToRunPluralize"></span> to run <span id="bms">(<a id=""
-                                                                                                             href="#">Bookmark
-        this link to save this configuration</a>) - <span id="unselectAll"><a id="" href="#">Unselect
-        all</a></span></span>
+        <span class="nbToRun">no</span> test<span class="nbToRunPluralize"></span> to run
+        <span id="bms">(<a href="#">Bookmark this link to save this configuration</a>) -
+            <span id="unselectAll"><a href="#">Unselect all</a></span>
+        </span>
 
-                <span id="quickLinks">
-                    <span id="selectAllLink">(<a id="" href="#">Select all</a></span> -
-                    <span id="runAllLink"><a id="" href="#">Run all</a>)</span>
-                </span>
+        <span id="quickLinks">
+            <span id="selectAllLink">(<a href="#">Select all</a></span> -
+            <span id="runAllLink"><a href="#">Run all</a>)</span>
+        </span>
     </div>
 
     <div id="started">
@@ -289,7 +290,9 @@ function toggle_trace(link) {
 #{if tests}
     #{list items:tests.getCategories(), as: 'category'}
         <div>
-            <h2>${category}</h2>
+            <h2>
+                ${category}
+            </h2>
             <ul>
                 #{list items:tests.get(category), as:'test'}
                     <li>
