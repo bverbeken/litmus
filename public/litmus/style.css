@@ -159,7 +159,7 @@ li {
 }
 
 .passing .touch {
-    background: url(@{'/public/test-runner/running.gif'}) no-repeat;
+    background: url(running.gif) no-repeat;
 }
 
 .passing a {

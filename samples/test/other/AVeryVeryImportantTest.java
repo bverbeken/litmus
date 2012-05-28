@@ -10,6 +10,5 @@ public class AVeryVeryImportantTest extends UnitTest {
     @Test
     public void ifThisDoesntWorkTheWorldWillExplode() {
         assertTrue(true);
-        throw new RuntimeException("aaa");
     }
 }
