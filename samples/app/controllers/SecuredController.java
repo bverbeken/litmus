@@ -25,6 +25,6 @@ public class SecuredController extends Controller {
 
 
 	public static void secured() {
-		render();
+		renderText("If you can see this, you're logged in");
 	}
 }
