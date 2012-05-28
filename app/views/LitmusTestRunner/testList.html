@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Play! - Litmus Test Runner</title>
+<meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>
+<script src="@{'/public/litmus/jquery-1.3.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<script src="@{'/public/litmus/jquery.scrollTo-min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<link rel="stylesheet" href="@{'/public/litmus/style.css'}" type="text/css" />
+
+<script type="text/javascript">
+
+$(function () {
+
+    $('#loading').ajaxStart(function () {
+        $(this).show();
+    }).ajaxStop(function () {
+        $(this).hide();
+    });
+
+    var testError = function (msg) {
+        window.location = bookmark();
+        stop();
+        updateSelected();
+    };
+
+    var run = function () {
+        updateSelected();
+        $(document.body).addClass('running');
+        $('.test, #header').removeClass('passed').removeClass('failed');
+        $.ajax({
+            type:'GET',
+            url:'@{LitmusTestRunner.init()}',
+            success:function () {
+                runNextTest();
+            },
+            error:function (req) {
+                testError(req.responseText);
+            }
+        });
+    };
+
+    var runNextTest = function () {
+        if ($(document.body).is('.running')) {
+            var test = $('.test.selected:not(.passed,.failed):first');
+            if (test.size()) {
+                var testId = test.attr('id');
+                runTest(testId, test);
+            } else {
+                result();
+            }
+        }
+    };
+
+    var result = function () {        
+        clearInterval(window.checkResult);
+        $(document.body).removeClass('running');
+        $('.passing').removeClass('passing');
+        if ($('.test.failed').size()) {
+            $('#header').addClass('failed');
+        } else {
+            $('#header').addClass('passed');
+        }
+        var areFailedTests = $('.test.failed').size();
+        $.ajax({
+            type:'GET',
+            url:'@{LitmusTestRunner.end()}',
+            data:{result:areFailedTests ? 'failed' : 'passed'}
+        });
+        if (areFailedTests) {
+            var skip = $("#header").outerHeight();
+            skip += $("#results").outerHeight();
+            $.scrollTo($('.test.failed').offset().top - skip, 500);
+        }
+    };
+
+    var runTest = function (testClassName, test) {
+        test.addClass('passing');
+        $('.touch', test).html('&nbsp;');
+        if (/.class$/.test(testClassName)) {
+            $.ajax({
+                type:'GET',
+                dataType:'html',
+                url:'@{LitmusTestRunner.run("XXX")}'.replace('XXX', testClassName),
+                complete:function (res, status) {
+                    var results = $("<div/>").append(res.responseText).find('table');
+                    if (!results || !results.size()) {
+                        results = '<strong class="error">Error, the test has not been properly run. Check the server logs, or open this test in another browser tab to see the error page.</strong>';
+                    }
+                    if (status == 'success') {
+                        testSuccess(test, results);
+                    } else {
+                        testFail(test, results);
+                    }
+                }
+            });
+        }
+    };
+
+    var testSuccess = function (test, result) {
+        test.removeClass('passing').addClass('passed');
+        $('.touch', test).html('+');
+        $('.testResult', test).html(result);
+        runNextTest();
+    };
+
+    var testFail = function (test, result) {
+        test.removeClass('passing').addClass('failed');
+        $('.touch', test).html('-');
+        $('.testResult', test).html(result).show();
+        stop();
+    };
+
+    var stop = function () {
+        result();
+    };
+
+    var updateSelected = function () {
+        var nb = $('.test.selected').size();
+        if (nb) {
+            $('.nbToRun').text(nb);
+            $('.nbToRunPluralize').text((nb > 1) ? 's' : '');
+            $('#start').removeAttr('disabled').removeClass('disabled');
+            $('#bms').show();
+            $('#bms a').attr('href', bookmark());
+            $('#quickLinks').hide();
+        } else {
+            $('.nbToRun').text('no');
+            $('.nbToRunPluralize').text('');
+            $('#start').attr('disabled', 'true').addClass('disabled');
+            $('#bms').hide();
+            $('#quickLinks').show();
+        }
+        $('.test, #header').removeClass('passed').removeClass('failed');
+        $('.touch').html('&sim;');
+        $('.testResult').hide();
+    };
+
+    var bookmark = function () {
+        var url = 'http://' + document.location.host;
+        if (document.location.port && url.indexOf(":") == -1) {
+            url += ':' + document.location.port;
+        }
+        url += document.location.pathname;
+        url += '?select=';
+        var v = false;
+        $('.test.selected').each(function () {
+            if (v) url += ',';
+            url += $(this).attr('id');
+            v = true;
+        });
+        if (url)
+            return url;
+    };
+
+    $('.test a').click(function (e) {
+        e.preventDefault();
+        if ($(document.body).is('.running')) return;
+        $(this).closest('.test').toggleClass('selected');
+        updateSelected();
+    });
+
+    $('.test .touch').click(function (e) {
+        e.preventDefault();
+        var test = $(this).closest('.test');
+        if ($(test).is('.failed,.passed')) {
+            $('.testResult', test).toggle();
+            $(this).html($(this).html() == '-' ? '+' : '-');
+        }
+    });
+
+    $('#tests h2').click(function () {        
+        if ($(document.body).is('.running')) return;        
+        var ul = $(this).parent().find('ul');
+        if ($('.test', ul).size() == $('.test.selected', ul).size()) {
+            $('.test', ul).removeClass('selected');
+            $(this).removeClass('selected');
+        } else {
+            $('.test', ul).addClass('selected');
+            $(this).addClass('selected');
+        }
+        updateSelected();
+    });
+
+    $('#start').click(function () {
+        if ($(this).is('.disabled')) return;
+        run();
+    });
+
+    $('#stop').click(function () {
+        stop();
+    });  
+
+    $('#selectAllLink').click(function () {
+        $('.test').addClass('selected');
+        updateSelected();
+    });
+
+    $('#unselectAll').click(function (e) {
+        e.preventDefault();
+        $('.test').removeClass('selected');
+        updateSelected();
+    });
+
+    $('#runAllLink').click(function () {
+        $('.test').addClass('selected');
+        updateSelected();
+        run();
+    });
+    
+    
+    if (/select=/.exec(document.location.search)) {
+        var toSelect = /select=([^&]+)/.exec(document.location.search)[1].split(',');
+        if (toSelect[0] == 'all') {
+            $('.test').addClass('selected');
+        } else {
+            $(toSelect).each(function () {
+                $(document.getElementById(this)).addClass('selected');
+            });
+        }
+    }
+
+    updateSelected();
+
+
+    if (/auto=yes/.exec(document.location.search)) {
+        run();
+    }
+
+});
+
+function toggle_trace(link) {
+    var $link = jQuery(link);
+    var $trace = jQuery("pre[data-role=trace]", $link.parent());
+    if ($trace.attr('data-shown') == "true") {
+        $trace.hide();
+        $link.text("Show trace");
+        $trace.attr('data-shown', false);
+    } else {
+        $trace.show();
+        $link.text("Hide trace");
+        $trace.attr('data-shown', true);
+    }
+}
+
+</script>
+
+</head>
+<body>
+
+<div id="header" class="block">
+    <h1>Litmus Test Runner</h1>
+    <p> Select the tests or categories to run, then click [Start] and pray </p>
+    <div id="loading">working ...</div>
+</div>
+
+<div id="results" class="block">
+    <div id="stopped">
+        <span id="start">Start !</span>
+        &nbsp;
+        <span class="nbToRun">no</span> test<span class="nbToRunPluralize"></span> to run
+        <span id="bms">(<a href="#">Bookmark this link to save this configuration</a>) -
+            <span id="unselectAll"><a href="#">Unselect all</a></span>
+        </span>
+
+        <span id="quickLinks">
+            <span id="selectAllLink">(<a href="#">Select all</a></span> -
+            <span id="runAllLink"><a href="#">Run all</a>)</span>
+        </span>
+    </div>
+
+    <div id="started">
+        <span id="stop">Stop ...</span>
+        &nbsp;(running <span class="nbToRun">no</span> test<span class="nbToRunPluralize"></span>)
+    </div>
+
+    <div id="finished">
+
+    </div>
+
+</div>
+
+<div id="tests" class="block">
+
+#{if tests}
+    #{list items:tests.getCategories(), as: 'category'}
+        <div>
+            <h2>
+                ${category}
+            </h2>
+            <ul>
+                #{list items:tests.get(category), as:'test'}
+                    <li>
+                        <div class="test" id="${test.name}.class">
+                            <span class="touch">+</span>
+                            <a class="testLink" href="#" data-name="${test.name}">${test.name}</a>
+                            <div class="testResult"></div>
+                        </div>
+                    </li>
+                #{/list}
+            </ul>
+        </div>
+    #{/list}
+#{/if}
+
+#{if !tests}
+    <h2><span>There are no test to run</span></h2>
+#{/if}
+
+</div>
+</body>
+</html>
+
+
+
+

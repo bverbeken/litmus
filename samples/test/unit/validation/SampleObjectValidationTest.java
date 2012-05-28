@@ -51,7 +51,6 @@ public class SampleObjectValidationTest extends ValidationTest<Person> {
 	public void emailShouldBeValid(){
 		Person person = valid();
 		person.email = "not an email!";
-		System.out.println("person = " + person);
 		assertThat(person).isInvalidBecause("email", EMAIL);
 	}
 }

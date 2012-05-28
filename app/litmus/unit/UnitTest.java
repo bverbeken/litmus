@@ -1,5 +1,6 @@
 package litmus.unit;
 
+import litmus.engine.Category;
 import org.fest.assertions.*;
 
 import java.awt.image.BufferedImage;
@@ -10,10 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static litmus.engine.CategoryInstance.UNIT;
+
 /**
  * Superclass for unit tests that extends play.test.UnitTest and provides all
  * Assertions.assertThat(xxx) methods from fest-assert.
  */
+@Category(value = UNIT, priority = 10000)
 public abstract class UnitTest extends play.test.UnitTest {
 
 	public static BigDecimalAssert assertThat(BigDecimal actual) {
