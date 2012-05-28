@@ -265,11 +265,13 @@ li {
 #loading {
     background: #c00;
     color: #fff;
+    width: 100px;
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 4px 5px;
-    font-size: 80%;
+    top: 10px;
+    right: 40px;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
     display: none;
 }
 
