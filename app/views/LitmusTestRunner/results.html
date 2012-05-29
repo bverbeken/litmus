@@ -73,38 +73,38 @@
         <div id="results">
             <table>
                 #{list items:results.results, as:'result'}
-                <tr>
-                    <td width="20%" class="${result.passed ? 'passed' : 'failed'}" valign="top">
-                        <span>${result.name}</span>
-                    </td>
-                    <td class="${result.error ? 'error' : ''}" valign="top">
-                        #{if result.error}
-                        <strong>${result.error}</strong>
-                        #{if result.sourceInfos}
-                        <div class="source">
-                            <span>${result.sourceInfos} :</span>
-                        </div>
-                        <div class="sourceLine">
-                            <span>
-                                ${play.utils.Utils.open(result.sourceFile, result.sourceLine) ? ('<a href="' + play.utils.Utils.open(result.sourceFile, result.sourceLine) + '">').raw() : ''}
-                                    ${result.sourceCode}
-                                ${play.utils.Utils.open(result.sourceFile, result.sourceLine) ? '</a>'.raw() : ''}
-                            </span>
-                        </div>
-                        #{/if}
-                        #{if result.trace}
-                        <a href="#" onclick="toggle_trace(this); return false;">Show trace</a>
-                        <pre data-role="trace">${result.trace.raw()}</pre>
-                        #{/if}
-                        #{/if}
-                        #{else}
-                        Ok
-                        #{/else}
-                    </td>
-                    <td width="5%" align="right" class="time" valign="top">
-                        ${result.time} ms
-                    </td>
-                </tr>
+                    <tr>
+                        <td width="20%" class="${result.passed ? 'passed' : 'failed'}" valign="top">
+                            <span>${result.name}</span>
+                        </td>
+                        <td class="${result.error ? 'error' : ''}" valign="top">
+                            #{if result.error}
+                                <strong>${result.error}</strong>
+                                #{if result.sourceInfos}
+                                    <div class="source">
+                                        <span>${result.sourceInfos} :</span>
+                                    </div>
+                                    <div class="sourceLine">
+                                        <span>
+                                            ${play.utils.Utils.open(result.sourceFile, result.sourceLine) ? ('<a href="' + play.utils.Utils.open(result.sourceFile, result.sourceLine) + '">').raw() : ''}
+                                                ${result.sourceCode}
+                                            ${play.utils.Utils.open(result.sourceFile, result.sourceLine) ? '</a>'.raw() : ''}
+                                        </span>
+                                    </div>
+                                #{/if}
+                                #{if result.trace}
+                                    <a href="#" onclick="toggle_trace(this); return false;">Show trace</a>
+                                    <pre data-role="trace">${result.trace.raw()}</pre>
+                                #{/if}
+                            #{/if}
+                            #{else}
+                                Ok
+                            #{/else}
+                        </td>
+                        <td width="5%" align="right" class="time" valign="top">
+                            ${result.time} ms
+                        </td>
+                    </tr>
                 #{/list}
             </table>
         </div>
