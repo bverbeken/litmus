@@ -1,5 +1,6 @@
 package litmus.engine;
 
+import litmus.Category;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import static play.Play.classloader;
 
 public class Tests {
 
-    private HashMap<CategoryInstance, List<Class>> map = new HashMap<CategoryInstance, List<Class>>();
+    private HashMap<CategoryInstance, List<TestClass>> map = new HashMap<CategoryInstance, List<TestClass>>();
 
 
     public Tests() {
@@ -41,7 +42,7 @@ public class Tests {
     }
 
     private boolean addToCategory(Class<?> testClass, CategoryInstance category) {
-        return getOrCreateCategoryList(category).add(testClass);
+        return getOrCreateCategoryList(category).add(new TestClass(testClass));
     }
 
     private Category findCategoryAnnotation(Class<?> testClass) {
@@ -53,9 +54,9 @@ public class Tests {
         }
     }
 
-    private List<Class> getOrCreateCategoryList(CategoryInstance category) {
+    private List<TestClass> getOrCreateCategoryList(CategoryInstance category) {
         if (map.get(category) == null) {
-            map.put(category, new ArrayList<Class>());
+            map.put(category, new ArrayList<TestClass>());
         }
         return map.get(category);
     }
@@ -67,9 +68,9 @@ public class Tests {
     }
 
 
-    public List<Class> get(CategoryInstance o) {
-        List<Class> classes = map.get(o);
-        sort(classes, new ClassNameComparator());
+    public List<TestClass> get(CategoryInstance o) {
+        List<TestClass> classes = map.get(o);
+        sort(classes, new TestClassComparator());
         return classes;
     }
 

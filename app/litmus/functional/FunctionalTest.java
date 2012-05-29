@@ -16,7 +16,7 @@
 
 package litmus.functional;
 
-import litmus.engine.Category;
+import litmus.Category;
 
 import java.util.Map;
 

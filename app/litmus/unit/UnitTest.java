@@ -1,6 +1,6 @@
 package litmus.unit;
 
-import litmus.engine.Category;
+import litmus.Category;
 import org.fest.assertions.*;
 
 import java.awt.image.BufferedImage;

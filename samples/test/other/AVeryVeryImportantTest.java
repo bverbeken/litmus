@@ -1,6 +1,6 @@
 package other;
 
-import litmus.engine.Category;
+import litmus.Category;
 import litmus.unit.UnitTest;
 import org.junit.Test;
 

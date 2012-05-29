@@ -1,4 +1,4 @@
-package litmus.engine;
+package litmus;
 
 import java.lang.annotation.Retention;
 

@@ -1,6 +1,6 @@
 package litmus.webdriver;
 
-import litmus.engine.Category;
+import litmus.Category;
 import litmus.functional.FestAssertFunctionalTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

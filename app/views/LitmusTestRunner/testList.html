@@ -288,11 +288,11 @@ function toggle_trace(link) {
                 ${category}
             </h2>
             <ul>
-                #{list items:tests.get(category), as:'test'}
+                #{list items:tests.get(category), as:'testClass'}
                     <li>
-                        <div class="test" id="${test.name}.class">
+                        <div class="test" id="${testClass.name}.class">
                             <span class="touch">+</span>
-                            <a class="testLink" href="#" data-name="${test.name}">${test.name}</a>
+                            <a class="testLink" href="#" data-name="${testClass.name}">${testClass.name}</a>
                             <div class="testResult"></div>
                         </div>
                     </li>

@@ -16,7 +16,7 @@
 
 package litmus.unit.validation;
 
-import litmus.engine.Category;
+import litmus.Category;
 import org.fest.assertions.Assertions;
 import org.junit.Test;
 import play.test.UnitTest;
