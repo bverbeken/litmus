@@ -34,7 +34,8 @@ public class ValidationErrorExample extends FunctionalTest {
 
 	@Test
 	public void nameCannotBeNull(){
-		assertThat(request.post()).hasValidationError("name", REQUIRED);
+        assertThat(request.post()).hasValidationError("name", REQUIRED);
+        assertThat(request.post()).hasValidationError("name", "validation.required");
 	}
 	
 	@Test

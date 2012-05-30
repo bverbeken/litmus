@@ -182,9 +182,13 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Response> {
 	}
 
 	public ResponseAssert hasValidationError(String fieldName, BuiltInValidation validation) {
-		assertThat(response.getCookie("PLAY_ERRORS").value)
-				.as("expected validation error [" + validation +  "] on field [" + fieldName + "] not found")
-				.contains(fieldName + "%3A" + validation.getMessageKey());
-		return this;
+        return hasValidationError(fieldName, validation.getMessageKey());
 	}
+
+    public ResponseAssert hasValidationError(String fieldName, String validationMessage){
+        assertThat(response.getCookie("PLAY_ERRORS").value)
+                .as("expected validation error [" + validationMessage +  "] on field [" + fieldName + "] not found")
+                .contains(fieldName + "%3A" + validationMessage);
+        return this;
+    }
 }
