@@ -8,4 +8,6 @@ dist
 
 *.pyc
 *.iws
+*.ipr
+*.iml
 
