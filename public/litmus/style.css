@@ -91,12 +91,12 @@ li {
     color: #333;
 }
 
-#bms, #quickLinks {
+#bookmarkSave, #quickLinks {
     color: #888;
     font-size: 80%;
 }
 
-#bms a, #quickLinks a {
+#bookmarkSave a, #quickLinks a {
     color: #888;
 }
 

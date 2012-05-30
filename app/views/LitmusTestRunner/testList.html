@@ -4,7 +4,7 @@
 <title>Play! - Litmus Test Runner</title>
 <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>
 <script src="@{'/public/litmus/jquery-1.3.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-<link rel="stylesheet" href="@{'/public/litmus/style.css'}" type="text/css" />
+<link rel="stylesheet" href="@{'/public/litmus/style.css'}" type="text/css"/>
 
 <script type="text/javascript">
 
@@ -50,7 +50,7 @@ $(function () {
         }
     };
 
-    var result = function () {        
+    var result = function () {
         clearInterval(window.checkResult);
         $(document.body).removeClass('running');
         $('.passing').removeClass('passing');
@@ -73,7 +73,6 @@ $(function () {
 
     var runTest = function (testClassName, test) {
         test.addClass('passing');
-        $('.touch', test).html('&nbsp;');
         if (/.class$/.test(testClassName)) {
             $.ajax({
                 type:'GET',
@@ -96,15 +95,13 @@ $(function () {
 
     var testSuccess = function (test, result) {
         test.removeClass('passing').addClass('passed');
-        $('.touch', test).html('+');
         $('.testResult', test).html(result);
         runNextTest();
     };
 
     var testFail = function (test, result) {
         test.removeClass('passing').addClass('failed');
-        $('.touch', test).html('-');
-        $('.testResult', test).html(result).show();
+        $('.testResult', test).html(result);
         runNextTest();
     };
 
@@ -118,19 +115,17 @@ $(function () {
             $('.nbToRun').text(nb);
             $('.nbToRunPluralize').text((nb > 1) ? 's' : '');
             $('#start').removeAttr('disabled').removeClass('disabled');
-            $('#bms').show();
-            $('#bms a').attr('href', bookmark());
+            $('#bookmarkSave').show();
+            $('#bookmarkSave a').attr('href', bookmark());
             $('#quickLinks').hide();
         } else {
             $('.nbToRun').text('no');
             $('.nbToRunPluralize').text('');
             $('#start').attr('disabled', 'true').addClass('disabled');
-            $('#bms').hide();
+            $('#bookmarkSave').hide();
             $('#quickLinks').show();
         }
         $('.test, #header').removeClass('passed').removeClass('failed');
-        $('.touch').html('&sim;');
-        $('.testResult').hide();
     };
 
     var bookmark = function () {
@@ -160,14 +155,12 @@ $(function () {
     $('.test .touch').click(function (e) {
         e.preventDefault();
         var test = $(this).closest('.test');
-        if ($(test).is('.failed,.passed')) {
-            $('.testResult', test).toggle();
-            $(this).html($(this).html() == '-' ? '+' : '-');
-        }
+        $('.testResult', test).toggle();
+        $(this).html($(this).html() == '-' ? '+' : '-');
     });
 
-    $('#tests h2').click(function () {        
-        if ($(document.body).is('.running')) return;        
+    $('#tests h2').click(function () {
+        if ($(document.body).is('.running')) return;
         var ul = $(this).parent().find('ul');
         if ($('.test', ul).size() == $('.test.selected', ul).size()) {
             $('.test', ul).removeClass('selected');
@@ -186,7 +179,7 @@ $(function () {
 
     $('#stop').click(function () {
         stop();
-    });  
+    });
 
     $('#selectAllLink').click(function () {
         $('.test').addClass('selected');
@@ -204,8 +197,8 @@ $(function () {
         updateSelected();
         run();
     });
-    
-    
+
+
     if (/select=/.exec(document.location.search)) {
         var toSelect = /select=([^&]+)/.exec(document.location.search)[1].split(',');
         if (toSelect[0] == 'all') {
@@ -247,7 +240,9 @@ function toggle_trace(link) {
 
 <div id="header" class="block">
     <h1>Litmus Test Runner</h1>
+
     <p> Select the tests or categories to run, then click [Start] and pray </p>
+
     <div id="loading">working ...</div>
 </div>
 
@@ -256,7 +251,7 @@ function toggle_trace(link) {
         <span id="start">Start !</span>
         &nbsp;
         <span class="nbToRun">no</span> test<span class="nbToRunPluralize"></span> to run
-        <span id="bms">(<a href="#">Bookmark this link to save this configuration</a>) -
+        <span id="bookmarkSave">(<a href="#">Bookmark this link to save this configuration</a>) -
             <span id="unselectAll"><a href="#">Unselect all</a></span>
         </span>
 
@@ -283,24 +278,26 @@ function toggle_trace(link) {
     #{list items:tests.getCategories(), as: 'category'}
         <div>
             <h2>
-                ${category}
+            ${category}
             </h2>
             <ul>
                 #{list items:tests.get(category), as:'testClass'}
                     <li>
                         <div class="test" id="${testClass.name}.class">
                             <span class="touch">+</span>
-                            <a class="testLink" href="#" data-name="${testClass.name}">${testClass.name}</a>
-                            <div class="testResult"></div>
-                            <!--
-                            <div>
-                                <ul>
+                            <a class="testLink" data-name="${testClass.name}">${testClass.name}</a>
+
+                            <div class="testResult">
+                                <table>
                                     #{list items:testClass.testMethodNames, as: 'testMethod'}
-                                        <li>${testMethod}</li>
+                                        <tr>
+                                            <td>
+                                                <span>${testMethod}</span>
+                                            </td>
+                                        </tr>
                                     #{/list}
-                                </ul>
+                                </table>
                             </div>
-                            -->
                         </div>
                     </li>
                 #{/list}
