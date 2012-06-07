@@ -186,8 +186,7 @@ $(function () {
     });
 
     $('#selectAllLink').click(function () {
-        $('.test').addClass('selected');
-        updateSelected();
+        selectAllTests();
     });
 
     $('#unselectAll').click(function (e) {
@@ -200,10 +199,14 @@ $(function () {
         updateSelected();
     }
 
-
-    $('#runAllLink').click(function () {
+    function selectAllTests(){
         $('.test').addClass('selected');
         updateSelected();
+    }
+
+
+    $('#runAllLink').click(function () {
+        selectAllTests();
         run();
     });
 
@@ -211,9 +214,9 @@ $(function () {
     $('.runSingleTestClass').click(function(){
         unselectAllTests();
         var test = $(this).closest('.test');
-        var testId = test.attr('id');
         test.addClass('selected');
-        runTest(testId, test);
+        updateSelected();
+        run();
     });
 
     $('.runSingleCategory').click(function(){
