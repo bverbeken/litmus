@@ -202,8 +202,8 @@ $(function () {
     $('.runSingleTestClass').click(function(){
         var test = $(this).closest('.test');
         var testId = test.attr('id');
+        test.addClass('selected');
         runTest(testId, test);
-        updateSelected();
     });
 
 
