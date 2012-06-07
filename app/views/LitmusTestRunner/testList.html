@@ -209,6 +209,7 @@ $(function () {
 
 
     $('.runSingleTestClass').click(function(){
+        unselectAllTests();
         var test = $(this).closest('.test');
         var testId = test.attr('id');
         test.addClass('selected');
