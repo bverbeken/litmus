@@ -199,6 +199,14 @@ $(function () {
     });
 
 
+    $('.runSingleTestClass').click(function(){
+        var test = $(this).closest('.test');
+        var testId = test.attr('id');
+        runTest(testId, test);
+        updateSelected();
+    });
+
+
     if (/select=/.exec(document.location.search)) {
         var toSelect = /select=([^&]+)/.exec(document.location.search)[1].split(',');
         if (toSelect[0] == 'all') {
@@ -285,7 +293,8 @@ function toggle_trace(link) {
                     <li>
                         <div class="test" id="${testClass.name}.class">
                             <span class="touch">+</span>
-                            <a class="testLink" data-name="${testClass.name}">${testClass.name}</a>
+                            <a class="testLink">${testClass.name}</a>
+                            <input type="button" class="runSingleTestClass" value="run" />
 
                             <div class="testResult">
                                 <table>
