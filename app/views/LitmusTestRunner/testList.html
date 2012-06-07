@@ -159,9 +159,13 @@ $(function () {
         $(this).html($(this).html() == '-' ? '+' : '-');
     });
 
-    $('#tests h2').click(function () {
+    $('.categoryLink').click(function () {
         if ($(document.body).is('.running')) return;
-        var ul = $(this).parent().find('ul');
+        selectCategory($(this).parent().parent());
+    });
+
+    function selectCategory(categoryDiv){
+        var ul = categoryDiv.find('ul');
         if ($('.test', ul).size() == $('.test.selected', ul).size()) {
             $('.test', ul).removeClass('selected');
             $(this).removeClass('selected');
@@ -170,7 +174,7 @@ $(function () {
             $(this).addClass('selected');
         }
         updateSelected();
-    });
+    }
 
     $('#start').click(function () {
         if ($(this).is('.disabled')) return;
@@ -188,9 +192,14 @@ $(function () {
 
     $('#unselectAll').click(function (e) {
         e.preventDefault();
+        unselectAllTests();
+    });
+
+    function unselectAllTests() {
         $('.test').removeClass('selected');
         updateSelected();
-    });
+    }
+
 
     $('#runAllLink').click(function () {
         $('.test').addClass('selected');
@@ -204,6 +213,12 @@ $(function () {
         var testId = test.attr('id');
         test.addClass('selected');
         runTest(testId, test);
+    });
+
+    $('.runSingleCategory').click(function(){
+        unselectAllTests();
+        selectCategory($(this).parent().parent());
+        run();
     });
 
 
@@ -286,7 +301,8 @@ function toggle_trace(link) {
     #{list items:tests.getCategories(), as: 'category'}
         <div>
             <h2>
-            ${category}
+                <a class="categoryLink">${category}</a>
+                <input type="button" class="runSingleCategory" value="run">
             </h2>
             <ul>
                 #{list items:tests.get(category), as:'testClass'}
