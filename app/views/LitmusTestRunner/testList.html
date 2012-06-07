@@ -8,19 +8,18 @@
     <script type="text/javascript">
     $(function () {
 
-        $('#loading').ajaxStart(function () {
-            $(this).show();
-        }).ajaxStop(function () {
-                    $(this).hide();
-                });
-
-        var testError = function (msg) {
-            window.location = bookmark();
+        function testError(message) {
+            window.location = createBookmarkUrl();
             stop();
             updateSelected();
-        };
+        }
 
-        var run = function () {
+        function selectAllTestsAndRun(){
+            selectAllTests();
+            run();
+        }
+
+        function run() {
             updateSelected();
             $(document.body).addClass('running');
             $('.test, #header').removeClass('passed').removeClass('failed');
@@ -30,13 +29,13 @@
                 success:function () {
                     runNextTest();
                 },
-                error:function (req) {
-                    testError(req.responseText);
+                error:function (request) {
+                    testError(request.responseText);
                 }
             });
-        };
+        }
 
-        var runNextTest = function () {
+        function runNextTest() {
             if ($(document.body).is('.running')) {
                 var test = $('.test.selected:not(.passed,.failed):first');
                 if (test.size()) {
@@ -46,9 +45,9 @@
                     result();
                 }
             }
-        };
+        }
 
-        var result = function () {
+        function result() {
             clearInterval(window.checkResult);
             $(document.body).removeClass('running');
             $('.passing').removeClass('passing');
@@ -67,9 +66,9 @@
                 var skip = $("#header").outerHeight();
                 skip += $("#results").outerHeight();
             }
-        };
+        }
 
-        var runTest = function (testClassName, test) {
+        function runTest(testClassName, test) {
             test.addClass('passing');
             if (/.class$/.test(testClassName)) {
                 $.ajax({
@@ -89,32 +88,43 @@
                     }
                 });
             }
-        };
+        }
 
-        var testSuccess = function (test, result) {
+        function testSuccess(test, result) {
             test.removeClass('passing').addClass('passed');
             $('.testResult', test).html(result);
             runNextTest();
-        };
+        }
 
-        var testFail = function (test, result) {
+        function testFail(test, result) {
             test.removeClass('passing').addClass('failed');
             $('.testResult', test).html(result).show();
             runNextTest();
-        };
+        }
 
-        var stop = function () {
+        function stop () {
             result();
-        };
+        }
 
-        var updateSelected = function () {
+
+        function unselectAllTests() {
+            $('.test').removeClass('selected');
+            updateSelected();
+        }
+
+        function selectAllTests(){
+            $('.test').addClass('selected');
+            updateSelected();
+        }
+
+        function updateSelected() {
             var nb = $('.test.selected').size();
             if (nb) {
                 $('.nbToRun').text(nb);
                 $('.nbToRunPluralize').text((nb > 1) ? 's' : '');
                 $('#start').removeAttr('disabled').removeClass('disabled');
                 $('#bookmarkSave').show();
-                $('#bookmarkSave a').attr('href', bookmark());
+                $('#bookmarkSave a').attr('href', createBookmarkUrl());
                 $('#quickLinks').hide();
             } else {
                 $('.nbToRun').text('no');
@@ -124,9 +134,9 @@
                 $('#quickLinks').show();
             }
             $('.test, #header').removeClass('passed').removeClass('failed');
-        };
+        }
 
-        var bookmark = function () {
+        function createBookmarkUrl() {
             var url = 'http://' + document.location.host;
             if (document.location.port && url.indexOf(":") == -1) {
                 url += ':' + document.location.port;
@@ -135,13 +145,34 @@
             url += '?select=';
             var v = false;
             $('.test.selected').each(function () {
-                if (v) url += ',';
+                if (v) {
+                    url += ',';
+                }
                 url += $(this).attr('id');
                 v = true;
             });
-            if (url)
+            if (url) {
                 return url;
-        };
+            }
+        }
+
+        function selectCategory(categoryDiv){
+            var ul = categoryDiv.find('ul');
+            if ($('.test', ul).size() == $('.test.selected', ul).size()) {
+                $('.test', ul).removeClass('selected');
+                $(this).removeClass('selected');
+            } else {
+                $('.test', ul).addClass('selected');
+                $(this).addClass('selected');
+            }
+            updateSelected();
+        }
+
+        $('#loading').ajaxStart(function () {
+            $(this).show();
+        }).ajaxStop(function () {
+            $(this).hide();
+        });
 
         $('.test a').click(function (e) {
             e.preventDefault();
@@ -162,17 +193,6 @@
             selectCategory($(this).parent().parent());
         });
 
-        function selectCategory(categoryDiv){
-            var ul = categoryDiv.find('ul');
-            if ($('.test', ul).size() == $('.test.selected', ul).size()) {
-                $('.test', ul).removeClass('selected');
-                $(this).removeClass('selected');
-            } else {
-                $('.test', ul).addClass('selected');
-                $(this).addClass('selected');
-            }
-            updateSelected();
-        }
 
         $('#start').click(function () {
             if ($(this).is('.disabled')) return;
@@ -191,17 +211,6 @@
             e.preventDefault();
             unselectAllTests();
         });
-
-        function unselectAllTests() {
-            $('.test').removeClass('selected');
-            updateSelected();
-        }
-
-        function selectAllTests(){
-            $('.test').addClass('selected');
-            updateSelected();
-        }
-
 
         $('#runAllLink').click(function () {
             selectAllTestsAndRun();
@@ -235,11 +244,6 @@
         }
 
         updateSelected();
-
-        function selectAllTestsAndRun(){
-            selectAllTests();
-            run();
-        }
 
         if (/auto=yes/.exec(document.location.search)) {
             selectAllTestsAndRun();
