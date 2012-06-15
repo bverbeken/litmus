@@ -76,6 +76,15 @@ li {
     margin-bottom: 4px;
 }
 
+.test a.runButton {
+    background-image: url("favicon.png");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    position:relative;
+    top: 4px;
+    left: 6px;
+}
+
 .test a {
     background: #fafafa;
     padding: 3px 6px;
@@ -150,11 +159,11 @@ li {
     cursor: default;
 }
 
-.passed a, #header.passed {
+.passed a.testLink, #header.passed {
     background: #81CF5A !important;
 }
 
-.failed a, #header.failed {
+.failed a.testLink, #header.failed {
     background: #EF6868 !important;
 }
 
@@ -280,43 +289,3 @@ li {
     font-weight: normal !important;
     padding: 0 !important;
 }
-
-#selenium-mask {
-    background: #000;
-    opacity: .8;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: none;
-}
-
-#selenium {
-    position: fixed;
-    top: 20px;
-    bottom: 50px;
-    right: 20px;
-    left: 20px;
-    display: none;
-    z-index: 100000;
-    color: #fff;
-    font-size: 110%;
-}
-
-#stopSelenium {
-    background: #c00;
-    color: #fff;
-    font-size: 90%;
-    border: 1px double #c00;
-    cursor: pointer;
-    padding: 2px 8px;
-    -moz-user-select: none;
-}
-
-#selenium iframe {
-    margin-top: 10px;
-    border: 1px solid #666;
-    background: #fff;
-}
-

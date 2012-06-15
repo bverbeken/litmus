@@ -61,7 +61,7 @@
         <div>
             <h2>
                 <a class="categoryLink">${category}</a>
-                <input type="button" class="runSingleCategory runButton" value="run">
+                <input type="button" class="runSingleCategory runButton" value="run" />
             </h2>
             <ul>
                 #{list items:tests.get(category), as:'testClass'}
@@ -69,7 +69,7 @@
                         <div class="test" id="${testClass.name}.class">
                             <span class="touch">+</span>
                             <a class="testLink">${testClass.name}</a>
-                            <input type="button" class="runSingleTestClass runButton" value="run" />
+                            <a class="runSingleTestClass runButton" title="run ${testClass.name}">&nbsp;</a>
 
                             <div class="testResult">
                                 <table>
