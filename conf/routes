@@ -5,4 +5,7 @@
 #
 # ~~~~
 
-GET     /@litmus                      LitmusTestRunner.testList
+GET     /@litmus                LitmusTestRunner.testList
+GET     /@litmus/init           LitmusTestRunner.init
+GET     /@litmus/end            LitmusTestRunner.end
+GET     /@litmus/run            LitmusTestRunner.run
