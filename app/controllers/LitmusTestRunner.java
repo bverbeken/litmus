@@ -23,6 +23,11 @@ public class LitmusTestRunner extends Controller {
         render(tests);
     }
 
+    public static void testList2(){
+        Tests tests = new Tests();
+        render(tests);
+    }
+
     public static void init() {
         File testResults = getFile("test-result");
         if (!testResults.exists()) {
