@@ -75,7 +75,7 @@ public class LitmusTestRunner extends Controller {
             File testXunitResults = getFile("test-result/TEST-" + test.substring(0, test.length() - 6) + ".xml");
             writeContent(resultXunit, testXunitResults);
         } catch (Exception e) {
-            Logger.error(e, "Cannot ouput XML unit output");
+            Logger.error(e, "Cannot output XML unit output");
         }
     }
 
