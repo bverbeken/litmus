@@ -23,11 +23,6 @@ public class LitmusTestRunner extends Controller {
         render(tests);
     }
 
-    public static void testList2(){
-        Tests tests = new Tests();
-        render(tests);
-    }
-
     public static void init() {
         File testResults = getFile("test-result");
         if (!testResults.exists()) {
@@ -70,7 +65,7 @@ public class LitmusTestRunner extends Controller {
     private static void writeXmlOutput(Map<String, Object> options) {
         try {
             options.remove("out");
-            String test  = options.get("test").toString();
+            String test = options.get("test").toString();
             String resultXunit = load("LitmusTestRunner/results-xunit.xml").render(options);
             File testXunitResults = getFile("test-result/TEST-" + test.substring(0, test.length() - 6) + ".xml");
             writeContent(resultXunit, testXunitResults);
