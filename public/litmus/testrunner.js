@@ -13,7 +13,7 @@ $(function () {
 
     function run() {
         updateSelected();
-        $(".runButton").hide();
+        $(".runButton").attr('disabled', 'disabled');
         $(document.body).addClass('running');
         $('.test, #header').removeClass('passed').removeClass('failed');
         $.ajax({
@@ -44,7 +44,7 @@ $(function () {
         clearInterval(window.checkResult);
         $(document.body).removeClass('running');
         $('.passing').removeClass('passing');
-        $('.runButton').show();
+        $('.runButton').removeAttr('disabled');
         if ($('.test.failed').size()) {
             $('#header').addClass('failed');
         } else {
