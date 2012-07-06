@@ -28,6 +28,8 @@ public class Tests {
     }
 
     private List<Class> getAllTests() {
+        // TODO: don't just pick up Assert subclasses, but all non abstract classes that end with *Test
+        // Check junit's naming rules
         return classloader.getAssignableClasses(Assert.class);
     }
 
