@@ -250,10 +250,13 @@ add @%test.play.pool=2@ to your application.conf file.
 
 h3. The Litmus Test Runner
 
-When using litmus, you get an alternative test runner for free: point your browser to http://localhost:9000/@litmus to see it.
+When using litmus, you get an alternative test runner for free: point your browser to http://localhost:9000/@tests to see it.
 Litmus' test runner is obviously based on the original play test runner app, but with a couple of differences:
 * You can categorize your tests
 * There's a run button per test class, and per category. Handy if you just want to run a single test.
+
+p(note). Note: you can disable the alternative test runner by adding @litmus.runner=false@ to your application.conf file.
+
 
 h3. Test Categories
 

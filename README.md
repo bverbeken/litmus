@@ -25,8 +25,9 @@ any excuse you might have not to test validation anymore. You can write things l
 
 Custom test runner
 ------------------
-When using Litmus, you get an alternative test runner on http://localhost:9000/@litmus. If you annotate your test classes
-or their superclass like so:
+When using Litmus, the usual play test runner gets replaced by an alternative version (http://localhost:9000/@tests).
+
+If you annotate your test classes or their superclass like so:
 
     @Category(value = "verySlowTests")
 
@@ -35,6 +36,12 @@ Subclasses of litmus.UnitTest, litmus.FunctionalTest or litmus.WebdriverTest are
 Functional Tests and Webdriver Tests.
 
 Of course, play auto-test still works as before.
+
+Note: you can disable the alternative test runner by adding
+
+    litmus.runner=false
+
+to your application.conf file.
 
 Documentation
 ============================
