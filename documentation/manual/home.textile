@@ -1,9 +1,9 @@
 h1. Litmus
 
-h4. Litmus makes it easier to test your play app.
+h4. Litmus makes it easier to develop your play app TDD style.
 
 p. First and foremost, Litmus provides you a very fluent api for your functional testing needs. You'll be able to test the rendered html and text that comes out of controller methods, the content of cookies, existence, non-existence and content of validation messages, renderArgs and more.
-You'll also get a very convenient way to call your controller methods. Instead of new-ing a HashMap<String, String>(), putting all request params in it and lose precious lines of code, you can simply do @new Request("/some/path").with("param1", "value").post()@
+You'll also get a very convenient way to call your controller methods. Instead of new-ing a @HashMap<String, String>()@, putting all request params in it and lose precious lines of code, you can simply do @new Request("/some/path").with("param1", "value").post()@.
 
 p. Next to that, Litmus gives you a parent ValidationTest you can extend to test the validation annotations on your models. What excuse do you have left not to tests these things when you can (and only have to) write @assertThat("firstName").isRequired()@.
 
@@ -31,7 +31,7 @@ Both are subclasses of the regular Play! test classes, so you'll be able to run 
 
 h2. Usage
 
-h3. FunctionalTest
+h3. Functional Testing
 
 p. @litmus.functional.FunctionalTest@ gives you the following:
 * all fest's @assertThat(xxx)@ methods are available in a litmus functional test (though not as static methods). That way, you can write things like @assertThat(aString).isNotEmpty();@
@@ -167,7 +167,7 @@ public void testHtmlContent(){
     assertThat(actualDiv).containsMessage("a.message.key");
 }
 
-h3. ValidationTest
+h3. Validation Testing
 
 ValidationTest is a superclass you can use to easily test validation annotations on your models. The idea is the following: for each test method in
 the test class, you start from a valid object, then change something, validate the object and assert that a validation error has occured (or not).
@@ -219,6 +219,51 @@ public void myCustomValidation() {
 }
 
 
-p(note). ValidationTest itself also contains a test method, called @validObjectShouldValidate()@, that tests whether @valid()@ really returns a valid object.
-If your implementation of @valid()@ does not return a valid object (according to the annotations you put on its fields), this test will fail.
+p(note). ValidationTest itself also contains a test method, called @validObjectShouldValidate()@, that tests whether @valid()@ really returns a valid object. If your implementation of @valid()@ does not return a valid object (according to the annotations you put on its fields), this test will fail.
 
+
+h3. Webdriver testing
+
+Instead of Selenium 1, litmus provides you with Selenium Webdriver support for you UI testing needs.
+Basically, all you have to do is create a subclass of @litmus.WebdriverTest@ and write the test and page objects.
+Litmus provides you with a WebElementAssert, so you can write:
+
+bc. @Test
+public void someTest(){
+    SayHelloPage page = new HelloWorldPage()
+                .open()
+                .enterName("World");
+    assertThat(page.message).containsText("Hello");
+}
+
+The @containsText()@ method is part of @WebElementAssert@'s API.
+
+Please refer to the examples for more information.
+
+Currently, there are two issues with litmus webdriver tests:
+* only firefox is supported
+* each test quits the browser, which makes running multiple webdriver tests slooow.
+
+p(note). In order to be able to run webdriver tests, play needs an execution pool of at least 2 threads. To configure you app this way,
+add @%test.play.pool=2@ to your application.conf file.
+@litmus.WebdriverTest@ checks this setting your play configuration before running.
+
+h3. The Litmus Test Runner
+
+When using litmus, you get an alternative test runner for free: point your browser to http://localhost:9000/@litmus to see it.
+Litmus' test runner is obviously based on the original play test runner app, but with a couple of differences:
+* You can categorize your tests
+* There's a run button per test class, and per category. Handy if you just want to run a single test.
+
+h3. Test Categories
+
+To categorize tests, just put a @litmus.Category@ annotation on a test or a superclass, like so:
+
+bc. @Category("MyCategory")
+public class SomeTest{
+    ...
+}
+
+You can also give these tests a priority (an int). This priority will determine how high the category will be shown in the litmus test runner. The lower the number, the higher the priority.
+
+p(note). Subclasses of @litmus.UnitTest@, @litmus.FunctionalTest@ and @litmus.WebdriverTest@ will get categorized by default, with respective priorities of 10000, 20000 and 30000.
