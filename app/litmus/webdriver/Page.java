@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 import static litmus.webdriver.WebDriverFactory.getWebdriver;
 import static org.openqa.selenium.support.PageFactory.initElements;
+import static play.Play.configuration;
 
 @SuppressWarnings("unchecked")
 public abstract class Page<T extends Page> {
@@ -20,13 +21,25 @@ public abstract class Page<T extends Page> {
 
     public T open() {
         WebDriver driver = getWebdriver();
-        driver.get("http://localhost:9000" + relativeUrl); // TODO: detect the localhost:9000 part
+        driver.get(getAppUrl() + relativeUrl);
         return assertArrivedAt();
+    }
+
+    private String getAppUrl() {
+        String protocol = "http";
+        String port = "9000";
+        if (configuration.getProperty("https.port") != null) {
+            port = configuration.getProperty("https.port");
+            protocol = "https";
+        } else if (configuration.getProperty("http.port") != null) {
+            port = configuration.getProperty("http.port");
+        }
+        return protocol + "://localhost:" + port;
     }
 
     protected abstract boolean arrivedAt();
 
-    protected String getTitle(){
+    protected String getTitle() {
         return driver.getTitle();
     }
 
