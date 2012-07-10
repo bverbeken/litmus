@@ -18,6 +18,7 @@ GET		/headers/{action}						HeaderController.{action}
 GET		/security/{action}						SecuredController.{action}
 
 GET     /parameters                             RequestParametersController.answerGet
+GET     /paramtersMultipleParams                RequestParametersController.answerGetMultipleParams
 POST    /parameters                             RequestParametersController.answerPost
 
 # Ignore favicon requests

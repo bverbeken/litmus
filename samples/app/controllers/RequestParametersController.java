@@ -8,7 +8,11 @@ public class RequestParametersController extends Controller {
         renderText("Parameter passed: " + parameter);
     }
 
-    public static void answerPost(String parameter){
+    public static void answerGetMultipleParams(String parameter1, String parameter2) {
+        renderText("Parameters: (parameter1, " + parameter1 + "), (parameter2, " + parameter2 + ")");
+    }
+
+    public static void answerPost(String parameter) {
         renderText("Parameter passed: " + parameter);
     }
 

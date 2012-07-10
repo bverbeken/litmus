@@ -16,10 +16,15 @@
 
 package litmus.functional;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import play.mvc.Http;
 import play.mvc.results.Result;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static litmus.functional.HttpMethod.GET;
@@ -45,19 +50,20 @@ public class Request {
         return wrapResponse(GET, url, new ResponseFetcher() {
             Http.Response fetch() {
                 if (!params.isEmpty()) {
-                    return play.test.FunctionalTest.GET(addParametersToUrl(url, params));
+                    return play.test.FunctionalTest.GET(url + "?" + toQueryString(params));
                 }
                 return play.test.FunctionalTest.GET(url);
             }
         });
     }
 
-    private String addParametersToUrl(Object url, Map<String, String> params) {
-        String result = url + "?";
-        for (String key : params.keySet()) {
-            result += key + "=" + params.get(key);
-        }
-        return result;
+    private String toQueryString(Map<String, String> params) {
+        List<String> queryParts = Lists.newArrayList(Iterables.transform(params.entrySet(), new Function<Map.Entry<String, String>, String>() {
+            public String apply(Map.Entry<String, String> input) {
+                return input.getKey() + "=" + input.getValue();
+            }
+        }));
+        return StringUtils.join(queryParts, '&');
     }
 
     public Response post() {

@@ -25,5 +25,11 @@ public class RequestParametersExample extends FunctionalTest {
         assertThat(response.getText()).isEqualTo("Parameter passed: value1");
     }
 
+    @Test
+    public void worksWithMultipleParametersToo(){
+        Response response = new Request("/paramtersMultipleParams").with("parameter1", "value1").with("parameter2", "value 2").get();
+        assertThat(response.getText()).isEqualTo("Parameters: (parameter1, value1), (parameter2, value 2)");
+    }
+
 
 }
