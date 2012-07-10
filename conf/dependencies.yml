@@ -1,4 +1,4 @@
-self: play -> litmus 0.2-SNAPSHOT
+self: play -> litmus 0.2
 
 require:
     - play
