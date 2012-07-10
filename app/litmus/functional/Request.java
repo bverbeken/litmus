@@ -45,14 +45,14 @@ public class Request {
         return wrapResponse(GET, url, new ResponseFetcher() {
             Http.Response fetch() {
                 if (!params.isEmpty()) {
-                    return play.test.FunctionalTest.GET(makeUrl(url, params));
+                    return play.test.FunctionalTest.GET(addParametersToUrl(url, params));
                 }
                 return play.test.FunctionalTest.GET(url);
             }
         });
     }
 
-    private String makeUrl(Object url, Map<String, String> params) {
+    private String addParametersToUrl(Object url, Map<String, String> params) {
         String result = url + "?";
         for (String key : params.keySet()) {
             result += key + "=" + params.get(key);
