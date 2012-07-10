@@ -17,6 +17,9 @@ GET		/response/{action}						ResponseController.{action}
 GET		/headers/{action}						HeaderController.{action}
 GET		/security/{action}						SecuredController.{action}
 
+GET     /parameters                             RequestParametersController.answerGet
+POST    /parameters                             RequestParametersController.answerPost
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

@@ -28,12 +28,12 @@ import static litmus.util.ReflectionUtil.getStaticFieldValue;
 
 public class Request {
 
-	private final Object url;
-	private Map<String, String> params = new HashMap<String, String>();
+    private final Object url;
+    private Map<String, String> params = new HashMap<String, String>();
 
-	public Request(Object url) {
-		this.url = url;
-	}
+    public Request(Object url) {
+        this.url = url;
+    }
 
     public Request with(String name, String value) {
         this.params.put(name, value);
@@ -41,13 +41,24 @@ public class Request {
     }
 
 
-	public Response get() {
-		return wrapResponse(GET, url, new ResponseFetcher() {
-			Http.Response fetch() {
-				return play.test.FunctionalTest.GET(url);
-			}
-		});
-	}
+    public Response get() {
+        return wrapResponse(GET, url, new ResponseFetcher() {
+            Http.Response fetch() {
+                if (!params.isEmpty()) {
+                    return play.test.FunctionalTest.GET(makeUrl(url, params));
+                }
+                return play.test.FunctionalTest.GET(url);
+            }
+        });
+    }
+
+    private String makeUrl(Object url, Map<String, String> params) {
+        String result = url + "?";
+        for (String key : params.keySet()) {
+            result += key + "=" + params.get(key);
+        }
+        return result;
+    }
 
     public Response post() {
         return wrapResponse(POST, url, new ResponseFetcher() {
@@ -62,38 +73,38 @@ public class Request {
         return post();
     }
 
-	private static Response wrapResponse(HttpMethod httpMethod, Object request, ResponseFetcher fetcher) {
-		Map<String, Object> renderArgs = getStaticFieldValue("renderArgs", play.test.FunctionalTest.class);
-		return new Response(httpMethod, request, fetcher.fetchAndHandleException(), renderArgs);
-	}
+    private static Response wrapResponse(HttpMethod httpMethod, Object request, ResponseFetcher fetcher) {
+        Map<String, Object> renderArgs = getStaticFieldValue("renderArgs", play.test.FunctionalTest.class);
+        return new Response(httpMethod, request, fetcher.fetchAndHandleException(), renderArgs);
+    }
 
 
-	private abstract static class ResponseFetcher {
+    private abstract static class ResponseFetcher {
 
-		abstract Http.Response fetch();
+        abstract Http.Response fetch();
 
-		private Http.Response fetchAndHandleException() {
-			try {
-				return fetch();
-			} catch (Exception e) {
-				throw tryToFindNotFound(e);
-			}
-		}
+        private Http.Response fetchAndHandleException() {
+            try {
+                return fetch();
+            } catch (Exception e) {
+                throw tryToFindNotFound(e);
+            }
+        }
 
-		private static RuntimeException tryToFindNotFound(Throwable e) {
-			if (e.getCause() != null) {
-				if (e.getCause() instanceof Result) {
-					return (RuntimeException) e.getCause();
-				} else {
-					return tryToFindNotFound(e.getCause());
-				}
-			} else {
-				if (e instanceof RuntimeException) {
-					return (RuntimeException) e;
-				} else {
-					return new RuntimeException(e);
-				}
-			}
-		}
-	}
+        private static RuntimeException tryToFindNotFound(Throwable e) {
+            if (e.getCause() != null) {
+                if (e.getCause() instanceof Result) {
+                    return (RuntimeException) e.getCause();
+                } else {
+                    return tryToFindNotFound(e.getCause());
+                }
+            } else {
+                if (e instanceof RuntimeException) {
+                    return (RuntimeException) e;
+                } else {
+                    return new RuntimeException(e);
+                }
+            }
+        }
+    }
 }
