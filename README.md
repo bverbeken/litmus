@@ -46,7 +46,7 @@ to your application.conf file.
 Documentation
 ============================
 For more information on how to use Litmus, you can refer to
-* the litmus-samples project (<a href="http://github.com/bverbeken/litmus-samples">http://github.com/bverbeken/litmus-samples</a>). This is a normal play application that has examples for all the available asserts.
+* the <a href="http://github.com/bverbeken/litmus/samples">samples</a> folder, a play application that has examples for all the available asserts.
 * the documentation page, which can be found <a href="http://github.com/bverbeken/litmus/blob/master/documentation/manual/home.textile">here</a>.
 
 
