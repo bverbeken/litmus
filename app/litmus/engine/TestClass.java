@@ -13,7 +13,7 @@ import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.sort;
 
-public class TestClass {
+public class TestClass implements Comparable<TestClass>{
 
     private final Class clazz;
 
@@ -43,4 +43,8 @@ public class TestClass {
         });
     }
 
+    @Override
+    public int compareTo(TestClass o) {
+        return getName().compareTo(o.getName());
+    }
 }

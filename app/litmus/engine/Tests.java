@@ -72,7 +72,7 @@ public class Tests {
 
     public List<TestClass> get(CategoryInstance o) {
         List<TestClass> classes = map.get(o);
-        sort(classes, new TestClassComparator());
+        sort(classes);
         return classes;
     }
 
