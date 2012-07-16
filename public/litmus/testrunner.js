@@ -64,6 +64,7 @@ $(function () {
     }
 
     function runTest(testClassName, test) {
+        $('.touch', test).html('&nbsp;');
         test.addClass('passing');
         if (/.class$/.test(testClassName)) {
             $.ajax({
@@ -88,6 +89,7 @@ $(function () {
     function testSuccess(test, result) {
         test.removeClass('passing').addClass('passed');
         $('.testResult', test).html(result);
+        $('.touch', test).html('+');
         runNextTest();
     }
 
@@ -130,6 +132,7 @@ $(function () {
             $('#quickLinks').show();
         }
         $('.test, #header').removeClass('passed').removeClass('failed');
+        $('.touch').html('&sim;');
     }
 
     function createBookmarkUrl() {
@@ -180,8 +183,10 @@ $(function () {
     $('.test .touch').click(function (e) {
         e.preventDefault();
         var test = $(this).closest('.test');
-        $('.testResult', test).toggle();
-        $(this).html($(this).html() == '-' ? '+' : '-');
+        if($(test).is('.failed,.passed')) {
+            $('.testResult', test).toggle();
+            $(this).html($(this).html() == '-' ? '+' : '-');
+        }
     });
 
     $('.categoryLink').click(function () {

@@ -71,17 +71,7 @@
                             <span class="touch">+</span>
                             <input type="button" class="runSingleTestClass runButton" title="run ${testClass.name}" value="run">&nbsp;</a>
                             <a class="testLink">${testClass.name}</a>
-
-
-                            <div class="testResult">
-                                <table>
-                                    #{list items:testClass.testMethodNames, as: 'testMethod'}
-                                        <tr>
-                                            <td><span>${testMethod}</span></td>
-                                        </tr>
-                                    #{/list}
-                                </table>
-                            </div>
+                            <div class="testResult"></div>
                         </div>
                     </li>
                 #{/list}
