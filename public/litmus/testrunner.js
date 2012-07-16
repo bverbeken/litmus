@@ -29,6 +29,7 @@ $(function () {
     }
 
     function runNextTest() {
+        showResultInHeader();
         if ($(document.body).is('.running')) {
             var test = $('.test.selected:not(.passed,.failed):first');
             if (test.size()) {
@@ -38,6 +39,17 @@ $(function () {
                 result();
             }
         }
+    }
+
+    function showResultInHeader() {
+        var failedTestCount = $('.test.failed').size();
+        var passedTestCount = $('.test.passed').size();
+        var totalTestCount = $('.test.selected').size();;
+        $('#failedMessage').html("(Passed: " + passedTestCount + ", Failed: " + failedTestCount + ", Total: " +totalTestCount + ")");
+    }
+
+    function hideResultInHeader(){
+        $('#failedMessage').html("");
     }
 
     function result() {
@@ -133,6 +145,7 @@ $(function () {
         }
         $('.test, #header').removeClass('passed').removeClass('failed');
         $('.touch').html('&sim;');
+        hideResultInHeader();
     }
 
     function createBookmarkUrl() {
