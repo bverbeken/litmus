@@ -59,6 +59,7 @@ $(function () {
         if (areFailedTests) {
             var skip = $("#header").outerHeight();
             skip += $("#results").outerHeight();
+            $.scrollTo($('.test.failed').offset().top - skip, 500);
         }
     }
 
