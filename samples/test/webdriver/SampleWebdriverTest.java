@@ -26,8 +26,7 @@ public class SampleWebdriverTest extends WebdriverTest {
 
     @Test
     public void iGetACorrectErrorMessageWhenSubmittingValueThatIsTooSmall() {
-        HelloWorldPage page = new HelloWorldPage()
-                .open()
+        HelloWorldPage page = new HelloWorldPage().open()
                 .enterName("Ben")
                 .clickSubmitAndExpectValidationErrors();
 
@@ -35,7 +34,7 @@ public class SampleWebdriverTest extends WebdriverTest {
     }
 
     @Test
-    public void tagNameAssertExample(){
+    public void tagNameAssertExample() {
         SayHelloPage page = new HelloWorldPage().open()
                 .enterName("Caroline")
                 .clickSubmit();

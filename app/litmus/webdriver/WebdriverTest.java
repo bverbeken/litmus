@@ -29,7 +29,7 @@ public abstract class WebdriverTest extends FestAssertFunctionalTest {
 
 
     protected WebElementAssert assertThat(WebElement element) {
-        return new WebElementAssert(element);
+        return WebDriverAssertions.assertThat(element);
     }
 
 

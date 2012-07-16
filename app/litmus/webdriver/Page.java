@@ -8,7 +8,7 @@ import static org.openqa.selenium.support.PageFactory.initElements;
 import static play.Play.configuration;
 
 @SuppressWarnings("unchecked")
-public abstract class Page<T extends Page> {
+public abstract class Page<SelfType extends Page> {
 
     private final String relativeUrl;
     protected WebDriver driver;
@@ -19,7 +19,7 @@ public abstract class Page<T extends Page> {
         initElements(driver, this);
     }
 
-    public T open() {
+    public SelfType open() {
         WebDriver driver = getWebdriver();
         driver.get(getAppUrl() + relativeUrl);
         return assertArrivedAt();
@@ -43,9 +43,9 @@ public abstract class Page<T extends Page> {
         return driver.getTitle();
     }
 
-    public T assertArrivedAt() {
+    public SelfType assertArrivedAt() {
         Assertions.assertThat(arrivedAt()).isTrue();
-        return (T) this;
+        return (SelfType) this;
     }
 
 
