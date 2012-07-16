@@ -145,6 +145,7 @@ $(function () {
         }
         $('.test, #header').removeClass('passed').removeClass('failed');
         $('.touch').html('&sim;');
+        $('.testResult').hide();
         hideResultInHeader();
     }
 
