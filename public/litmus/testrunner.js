@@ -236,6 +236,14 @@ $(function () {
         selectAllTestsAndRun();
     });
 
+    $('#selectSlowTestsLink').click(function(){
+        selectTestsByCssClass('slow');
+    });
+
+    $('#selectFastTestsLink').click(function(){
+        selectTestsByCssClass('fast');
+    });
+
     $('#runSlowTestsLink').click(function(){
         selectTestsByCssClass('slow');
         run();
