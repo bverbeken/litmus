@@ -75,8 +75,8 @@
     #{list items:tests.getCategories(), as: 'category'}
         <div>
             <h2>
-                <a class="categoryLink">${category}</a>
                 <input type="button" class="runSingleCategory runButton" title ${category}="run" value="run">
+                <a class="categoryLink">${category}</a>
             </h2>
             <ul>
                 #{list items:tests.get(category), as:'testClass'}
