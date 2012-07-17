@@ -40,6 +40,8 @@
         <span id="quickLinks">
             <span id="selectAllLink">(<a href="#">Select all</a></span> -
             <span id="runAllLink"><a href="#">Run all</a>)</span>
+            <span id="runSlowTestsLink"><a href="#">Run Slow Tests</a></span>
+            <span id="runFastTestsLink"><a href="#">Run Fast Tests</a></span>
         </span>
     </div>
 
@@ -66,7 +68,7 @@
             <ul>
                 #{list items:tests.get(category), as:'testClass'}
                     <li>
-                        <div class="test" id="${testClass.name}.class">
+                        <div class="test ${category.slow ? 'slow' : 'fast'}" id="${testClass.name}.class">
                             <span class="touch">+</span>
                             <input type="button" class="runSingleTestClass runButton" title="run ${testClass.name}" value="run">&nbsp;</a>
                             <a class="testLink">${testClass.name}</a>

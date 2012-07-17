@@ -127,6 +127,11 @@ $(function () {
         updateSelected();
     }
 
+    function selectTestsByCssClass(cssClass){
+        $('.test.' + cssClass).addClass('selected');
+        updateSelected();
+    }
+
     function updateSelected() {
         var testToRunCount = $('.test.selected').size();
         if (testToRunCount) {
@@ -229,6 +234,16 @@ $(function () {
 
     $('#runAllLink').click(function () {
         selectAllTestsAndRun();
+    });
+
+    $('#runSlowTestsLink').click(function(){
+        selectTestsByCssClass('slow');
+        run();
+    });
+
+    $('#runFastTestsLink').click(function(){
+        selectTestsByCssClass('fast');
+        run();
     });
 
 

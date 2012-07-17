@@ -11,4 +11,6 @@ public @interface Category {
 
     int priority() default 100;
 
+    boolean slow() default false;
+
 }

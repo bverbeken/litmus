@@ -1,6 +1,7 @@
 package litmus.webdriver;
 
 import litmus.Category;
+import litmus.engine.CategoryInstance;
 import litmus.functional.FestAssertFunctionalTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -8,8 +9,9 @@ import org.openqa.selenium.WebElement;
 import play.Play;
 
 import static java.lang.Integer.parseInt;
+import static litmus.engine.CategoryInstance.WEBDRIVER;
 
-@Category(value = "WebDriver Tests", priority = 20000)
+@Category(value = WEBDRIVER, priority = 20000, slow = true)
 public abstract class WebdriverTest extends FestAssertFunctionalTest {
 
     @BeforeClass
