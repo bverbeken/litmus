@@ -8,7 +8,7 @@ public class WebDriverFactory {
     private static WebDriver driver;
 
 
-    public static WebDriver getWebdriver() {
+    public static WebDriver getWebDriver() {
         if (driver == null){
             driver = new FirefoxDriver();
         }

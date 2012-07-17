@@ -32,8 +32,8 @@ If you annotate your test classes or their superclass like so:
     @Category(value = "verySlowTests")
 
 then the litmus test runner will pick up these categories and allow you to run them separately from your browser.
-Subclasses of litmus.UnitTest, litmus.FunctionalTest or litmus.WebdriverTest are categorized by default as respectively Unit Tests,
-Functional Tests and Webdriver Tests.
+Subclasses of litmus.UnitTest, litmus.FunctionalTest or litmus.WebDriverTest are categorized by default as respectively Unit Tests,
+Functional Tests and WebDriver Tests.
 
 Of course, play auto-test still works as before.
 

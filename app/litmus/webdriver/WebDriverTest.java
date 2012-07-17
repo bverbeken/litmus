@@ -12,7 +12,7 @@ import static java.lang.Integer.parseInt;
 import static litmus.engine.CategoryInstance.WEBDRIVER;
 
 @Category(value = WEBDRIVER, priority = 20000, slow = true)
-public abstract class WebdriverTest extends FestAssertFunctionalTest {
+public abstract class WebDriverTest extends FestAssertFunctionalTest {
 
     @BeforeClass
     public static void checkPlayConfig() {
@@ -25,7 +25,7 @@ public abstract class WebdriverTest extends FestAssertFunctionalTest {
     }
 
     @AfterClass
-    public static void quitWebdriver() {
+    public static void quitWebDriver() {
         WebDriverFactory.quitAndInit();
     }
 

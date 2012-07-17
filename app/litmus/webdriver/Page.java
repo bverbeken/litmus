@@ -3,7 +3,7 @@ package litmus.webdriver;
 import org.fest.assertions.Assertions;
 import org.openqa.selenium.WebDriver;
 
-import static litmus.webdriver.WebDriverFactory.getWebdriver;
+import static litmus.webdriver.WebDriverFactory.getWebDriver;
 import static org.openqa.selenium.support.PageFactory.initElements;
 import static play.Play.configuration;
 
@@ -15,12 +15,12 @@ public abstract class Page<SelfType extends Page> {
 
     public Page(String relativeUrl) {
         this.relativeUrl = relativeUrl;
-        this.driver = WebDriverFactory.getWebdriver();
+        this.driver = WebDriverFactory.getWebDriver();
         initElements(driver, this);
     }
 
     public SelfType open() {
-        WebDriver driver = getWebdriver();
+        WebDriver driver = getWebDriver();
         driver.get(getAppUrl() + relativeUrl);
         return assertArrivedAt();
     }

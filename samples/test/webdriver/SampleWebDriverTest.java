@@ -1,11 +1,11 @@
 package webdriver;
 
-import litmus.webdriver.WebdriverTest;
+import litmus.webdriver.WebDriverTest;
 import org.junit.Test;
 import webdriver.pages.HelloWorldPage;
 import webdriver.pages.SayHelloPage;
 
-public class SampleWebdriverTest extends WebdriverTest {
+public class SampleWebDriverTest extends WebDriverTest {
 
     @Test
     public void iShouldBeAbleToSubmitAndSeeTheMessage() {
