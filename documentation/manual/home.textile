@@ -240,11 +240,11 @@ The @containsText()@ method is part of @WebElementAssert@'s API.
 
 Please refer to the examples for more information.
 
-Currently, there are two issues with litmus webdriver tests:
+Currently, there are two issues with litmus WebDriver tests:
 * only firefox is supported
-* each test quits the browser, which makes running multiple webdriver tests slooow.
+* each test quits the browser, which makes running multiple WebDriver tests slooow.
 
-p(note). In order to be able to run webdriver tests, play needs an execution pool of at least 2 threads. To configure you app this way,
+p(note). In order to be able to run WebDriver tests, play needs an execution pool of at least 2 threads. To configure you app this way,
 add @%test.play.pool=2@ to your application.conf file.
 @litmus.WebDriverTest@ checks this setting your play configuration before running.
 

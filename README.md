@@ -3,8 +3,8 @@ Litmus
 Litmus is a playframework (1.x) module that makes TDD easier with play. It's main features are:
 * more expressive functional testing
 * easy testing of your model validation, both built-in or custom validations
-* custom test runner that allows you to categorize tests and run categories separately
-* selenium webdriver integration, no more selenium 1 :)
+* custom test runner that allows you to categorize tests and run categories separately, or to run just the fast tests.
+* selenium WebDriver integration, no more selenium 1
 
 Expressive functional testing
 -----------------------------
