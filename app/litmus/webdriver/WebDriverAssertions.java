@@ -8,7 +8,11 @@ public class WebDriverAssertions {
 
     }
 
-    public static WebElementAssert assertThat(WebElement actual) {
-        return new WebElementAssert(actual);
+    public static WebElementAssert assertThat(WebElement actualWebElement) {
+        return new WebElementAssert(actualWebElement);
+    }
+
+    public static PageAssert assertThat(Page actualPage){
+        return new PageAssert(actualPage);
     }
 }

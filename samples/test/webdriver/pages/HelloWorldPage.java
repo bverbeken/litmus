@@ -16,9 +16,6 @@ public class HelloWorldPage extends Page<HelloWorldPage> {
     @FindBy(className = "error")
     public WebElement error;
 
-    public HelloWorldPage() {
-        super("/html/helloworld");
-    }
 
     @Override
     protected boolean arrivedAt() {

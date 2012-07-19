@@ -1,7 +1,6 @@
 package litmus.webdriver;
 
 import org.fest.assertions.Assertions;
-import org.openqa.selenium.WebDriver;
 
 import static litmus.webdriver.WebDriverFactory.getWebDriver;
 import static org.openqa.selenium.support.PageFactory.initElements;
@@ -10,22 +9,13 @@ import static play.Play.configuration;
 @SuppressWarnings("unchecked")
 public abstract class Page<SelfType extends Page> {
 
-    private final String relativeUrl;
-    protected WebDriver driver;
 
-    public Page(String relativeUrl) {
-        this.relativeUrl = relativeUrl;
-        this.driver = WebDriverFactory.getWebDriver();
-        initElements(driver, this);
+    public Page() {
+        initElements(getWebDriver(), this);
+        assertArrivedAt();
     }
 
-    public SelfType open() {
-        WebDriver driver = getWebDriver();
-        driver.get(getAppUrl() + relativeUrl);
-        return assertArrivedAt();
-    }
-
-    private String getAppUrl() {
+    private static String getAppUrl() {
         String protocol = "http";
         String port = "9000";
         if (configuration.getProperty("https.port") != null) {
@@ -40,7 +30,7 @@ public abstract class Page<SelfType extends Page> {
     protected abstract boolean arrivedAt();
 
     protected String getTitle() {
-        return driver.getTitle();
+        return getWebDriver().getTitle();
     }
 
     public SelfType assertArrivedAt() {
@@ -49,4 +39,7 @@ public abstract class Page<SelfType extends Page> {
     }
 
 
+    public static void open(String relativeUrl) {
+        getWebDriver().get(getAppUrl() + relativeUrl);
+    }
 }

@@ -1,7 +1,6 @@
 package litmus.webdriver;
 
 import litmus.Category;
-import litmus.engine.CategoryInstance;
 import litmus.functional.FestAssertFunctionalTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -32,6 +31,10 @@ public abstract class WebDriverTest extends FestAssertFunctionalTest {
 
     protected WebElementAssert assertThat(WebElement element) {
         return WebDriverAssertions.assertThat(element);
+    }
+
+    protected PageAssert assertThat(Page page){
+        return WebDriverAssertions.assertThat(page);
     }
 
 

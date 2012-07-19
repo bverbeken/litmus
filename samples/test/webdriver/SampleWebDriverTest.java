@@ -5,12 +5,14 @@ import org.junit.Test;
 import webdriver.pages.HelloWorldPage;
 import webdriver.pages.SayHelloPage;
 
+import static webdriver.pages.Pages.goToHelloWorldPage;
+import static webdriver.pages.Pages.goToSayHelloPage;
+
 public class SampleWebDriverTest extends WebDriverTest {
 
     @Test
     public void iShouldBeAbleToSubmitAndSeeTheMessage() {
-        SayHelloPage page = new HelloWorldPage()
-                .open()
+        SayHelloPage page = goToHelloWorldPage()
                 .enterName("World")
                 .clickSubmit();
 
@@ -26,7 +28,7 @@ public class SampleWebDriverTest extends WebDriverTest {
 
     @Test
     public void iGetACorrectErrorMessageWhenSubmittingValueThatIsTooSmall() {
-        HelloWorldPage page = new HelloWorldPage().open()
+        HelloWorldPage page = goToHelloWorldPage()
                 .enterName("Ben")
                 .clickSubmitAndExpectValidationErrors();
 
@@ -35,12 +37,20 @@ public class SampleWebDriverTest extends WebDriverTest {
 
     @Test
     public void tagNameAssertExample() {
-        SayHelloPage page = new HelloWorldPage().open()
+        SayHelloPage page = goToHelloWorldPage()
                 .enterName("Caroline")
                 .clickSubmit();
 
         assertThat(page.message).hasTagName("div");
         assertThat(page.message).isDiv();
+    }
+
+    @Test
+    public void iCanDirectlyAccessTheSayHelloPage(){
+        SayHelloPage page = goToSayHelloPage("Ben Verbeken");
+
+        assertThat(page).hasTitle("SayHello");
+        assertThat(page.message).containsTextExactly("Hello Ben Verbeken!");
     }
 
 
