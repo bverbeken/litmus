@@ -136,7 +136,7 @@ $(function () {
         var testToRunCount = $('.test.selected').size();
         if (testToRunCount) {
             $('.nbToRun').text(testToRunCount);
-            $('.nbToRunPluralize').text((testToRunCount > 1) ? 'es' : '');
+            $('.nbToRunPluralize').text((testToRunCount > 1) ? 's' : '');
             $('#start').removeAttr('disabled').removeClass('disabled');
             $('#bookmarkSave').show();
             $('#bookmarkSave a').attr('href', createBookmarkUrl());
