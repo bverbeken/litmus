@@ -11,7 +11,7 @@ Getting started
 To use Litmus, add the following to your dependencies.yml file: 
     
     require:
-     - litmus -> litmus [litmus version]
+     - litmus -> litmus 0.2.3
 
     repositories:
         - bverbeken:
@@ -19,9 +19,8 @@ To use Litmus, add the following to your dependencies.yml file:
             artifact: "http://bverbeken.github.com/modules/[module]-[revision].zip"
             contains:
                 - litmus -> *
-
-The latest version is 0.2.3. 
-
+                
+After that, a simple `play deps --sync` should be enough to get you up and running. 
 
 
 Expressive functional testing
@@ -55,11 +54,7 @@ Functional Tests and WebDriver Tests.
 
 Of course, play auto-test still works as before.
 
-Note: you can disable the alternative test runner by adding
-
-    litmus.runner=false
-
-to your application.conf file.
+Note: you can disable the alternative test runner by adding `litmus.runner=false` to your application.conf file.
 
 Documentation
 ============================
