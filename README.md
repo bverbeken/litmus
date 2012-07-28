@@ -6,6 +6,24 @@ Litmus is a playframework (1.x) module that makes TDD easier with play. It's mai
 * custom test runner that allows you to categorize tests and run categories separately, or to run just the fast tests.
 * selenium WebDriver integration, no more selenium 1
 
+Getting started
+---------------
+To use Litmus, add the following to your dependencies.yml file: 
+    
+    require:
+     - litmus -> litmus [litmus version]
+
+    repositories:
+        - bverbeken:
+            type: http
+            artifact: "http://bverbeken.github.com/modules/[module]-[revision].zip"
+            contains:
+                - litmus -> *
+
+The latest version is 0.2.3. 
+
+
+
 Expressive functional testing
 -----------------------------
 For example, litmus allows you to write most of your functional tests as one-liners like these:
