@@ -18,12 +18,14 @@ package litmus.unit.validation;
 
 import litmus.Category;
 import org.fest.assertions.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import play.test.UnitTest;
 
 import static litmus.engine.CategoryInstance.UNIT;
 import static litmus.unit.validation.Validator.getAllErrors;
 import static litmus.unit.validation.Validator.isValid;
+import static play.test.Fixtures.deleteAllModels;
 
 
 /**
@@ -34,6 +36,11 @@ import static litmus.unit.validation.Validator.isValid;
  */
 @Category(value = UNIT, priority = 10000)
 public abstract class ValidationTest<T> extends UnitTest {
+
+    @Before
+    public void cleanDb() {
+        deleteAllModels();
+    }
 
 	/**
 	 * @param fieldName the name of the field on the Model class you want to assert
