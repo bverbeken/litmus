@@ -17,10 +17,12 @@
 package litmus.functional;
 
 import litmus.Category;
+import play.mvc.Before;
 
 import java.util.Map;
 
 import static litmus.engine.CategoryInstance.FUNCTIONAL;
+import static play.test.Fixtures.deleteAllModels;
 
 /**
  * Base class for functional tests.
@@ -30,6 +32,10 @@ import static litmus.engine.CategoryInstance.FUNCTIONAL;
 @Category(value = FUNCTIONAL, priority = 20000)
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
+    @Before
+    public void cleanDb() {
+        deleteAllModels();
+    }
 
     /**
      * Perform a GET on a URL. <br/>
