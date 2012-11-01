@@ -17,7 +17,7 @@
 package litmus.functional;
 
 import litmus.Category;
-import play.mvc.Before;
+import org.junit.Before;
 
 import java.util.Map;
 
