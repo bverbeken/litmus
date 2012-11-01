@@ -16,6 +16,7 @@
 
 package unit.validation;
 
+import litmus.Builder;
 import litmus.unit.validation.ValidationTest;
 import models.Person;
 import org.junit.Test;
@@ -23,8 +24,8 @@ import org.junit.Test;
 public class SampleFieldValidationTest extends ValidationTest<Person> {
 
 	@Override
-	protected Person valid() {
-		return new Person("Ben", "Verbeken");
+	protected Builder<Person> valid() {
+		return new PersonBuilder();
 	}
 
 	@Test
@@ -38,5 +39,6 @@ public class SampleFieldValidationTest extends ValidationTest<Person> {
 	public void lastNameShouldHaveMinLenght() {
 		assertThat("lastName").withValue("1234").isValid();
 	}
+
 
 }

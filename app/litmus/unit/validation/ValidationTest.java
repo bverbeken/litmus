@@ -16,6 +16,7 @@
 
 package litmus.unit.validation;
 
+import litmus.Builder;
 import litmus.Category;
 import org.fest.assertions.Assertions;
 import org.junit.Before;
@@ -47,17 +48,30 @@ public abstract class ValidationTest<T> extends UnitTest {
 	 * @return a {@link FieldValidationAssert} instance
 	 */
 	protected FieldValidationAssert<T> assertThat(String fieldName) {
-		return new FieldValidationAssert<T>(valid(), fieldName);
+		return new FieldValidationAssert<T>(buildValid(), fieldName);
 	}
 
+    private T buildValid() {
+        return valid().build();
+    }
 
-	/**
+
+    /**
 	 * @param t the object to validate
 	 * @return a {@link ValidationAssert} instance
 	 */
 	protected ValidationAssert<T> assertThat(T t) {
 		return new ValidationAssert<T>(t);
 	}
+
+    /**
+     *
+     * @param builder the {@link Builder} that will be used to build the object to validate
+     * @return a {@link ValidationAssert} instance
+     */
+    protected ValidationAssert<T> assertThat(Builder<T> builder){
+        return new ValidationAssert<T>(builder.build());
+    }
 
 	/**
 	 * Test to verify that the valid() method actually returns a valid object.
@@ -66,9 +80,9 @@ public abstract class ValidationTest<T> extends UnitTest {
 	 */
 	@Test
 	public void validObjectShouldValidate() {
-		T valid = valid();
-		Assertions.assertThat(isValid(valid))
-				.as(invalidMessage(valid))
+		T validObject = buildValid();
+		Assertions.assertThat(isValid(validObject))
+				.as(invalidMessage(validObject))
 				.isTrue();
 	}
 
@@ -87,6 +101,6 @@ public abstract class ValidationTest<T> extends UnitTest {
 	 * @return a valid object of type T
 	 * @see litmus.unit.validation.ValidationTest#validObjectShouldValidate()
 	 */
-	protected abstract T valid();
+	protected abstract Builder<T> valid();
 
 }

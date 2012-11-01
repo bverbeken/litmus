@@ -1,50 +1,59 @@
 package unit.validation;
 
+import litmus.Builder;
 import litmus.unit.validation.ValidationTest;
 import models.MaxModel;
 import org.junit.Test;
 
 public class MaxValidationTest extends ValidationTest<MaxModel> {
 
-	@Override
-	protected MaxModel valid() {
-		MaxModel model = new MaxModel();
-		model.maxInt = 5;
-		model.maxDouble = 4D;
-		model.maxLong = 9L;
-		model.maxString = "5";
-		return model;
-	}
+    @Override
+    protected Builder<MaxModel> valid() {
+        return new MaxModelBuilder();
 
-	@Test
-	public void maxDouble() {
-		assertThat("maxDouble").withValue(9.999999999999).isValid();
-		assertThat("maxDouble").isInvalidWhenEqualTo(10.000000000000001);
-		assertThat("maxDouble").mustNotBeGreaterThan(10D);
-		assertThat("maxDouble").mustNotBeGreaterThan(10);
-	}
+    }
 
-	@Test
-	public void maxLong() {
-		assertThat("maxLong").withValue(9L).isValid();
-		assertThat("maxLong").isInvalidWhenEqualTo(11L);
-		assertThat("maxLong").mustNotBeGreaterThan(10L);
-		assertThat("maxLong").mustNotBeGreaterThan(10);
+    @Test
+    public void maxDouble() {
+        assertThat("maxDouble").withValue(9.999999999999).isValid();
+        assertThat("maxDouble").isInvalidWhenEqualTo(10.000000000000001);
+        assertThat("maxDouble").mustNotBeGreaterThan(10D);
+        assertThat("maxDouble").mustNotBeGreaterThan(10);
+    }
 
-	}
+    @Test
+    public void maxLong() {
+        assertThat("maxLong").withValue(9L).isValid();
+        assertThat("maxLong").isInvalidWhenEqualTo(11L);
+        assertThat("maxLong").mustNotBeGreaterThan(10L);
+        assertThat("maxLong").mustNotBeGreaterThan(10);
 
-	@Test
-	public void maxInt() {
-		assertThat("maxInt").withValue(10).isValid();
-		assertThat("maxInt").isInvalidWhenEqualTo(11);
-		assertThat("maxInt").mustNotBeGreaterThan(10);
-	}
+    }
 
-	@Test
-	public void maxString() {
-		assertThat("maxString").withValue("10").isValid();
-		assertThat("maxString").isInvalidWhenEqualTo("11");
-		assertThat("maxString").isInvalidWhenEqualTo("aaa");
-		assertThat("maxString").mustNotBeGreaterThan(10);
-	}
+    @Test
+    public void maxInt() {
+        assertThat("maxInt").withValue(10).isValid();
+        assertThat("maxInt").isInvalidWhenEqualTo(11);
+        assertThat("maxInt").mustNotBeGreaterThan(10);
+    }
+
+    @Test
+    public void maxString() {
+        assertThat("maxString").withValue("10").isValid();
+        assertThat("maxString").isInvalidWhenEqualTo("11");
+        assertThat("maxString").isInvalidWhenEqualTo("aaa");
+        assertThat("maxString").mustNotBeGreaterThan(10);
+    }
+
+    private class MaxModelBuilder extends Builder<MaxModel> {
+        @Override
+        public MaxModel build() {
+            MaxModel model = new MaxModel();
+            model.maxInt = 5;
+            model.maxDouble = 4D;
+            model.maxLong = 9L;
+            model.maxString = "5";
+            return model;
+        }
+    }
 }

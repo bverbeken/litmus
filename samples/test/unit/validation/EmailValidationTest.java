@@ -1,5 +1,6 @@
 package unit.validation;
 
+import litmus.Builder;
 import litmus.unit.validation.ValidationTest;
 import models.EmailModel;
 import org.junit.Test;
@@ -7,8 +8,8 @@ import org.junit.Test;
 public class EmailValidationTest extends ValidationTest<EmailModel> {
 
 	@Override
-	protected EmailModel valid() {
-		return new EmailModel("ben@ostia.be");
+	protected Builder<EmailModel> valid() {
+		return new EmailModelBuilder();
 	}
 
 
@@ -18,4 +19,12 @@ public class EmailValidationTest extends ValidationTest<EmailModel> {
 		assertThat("email").mustBeAnEmailAddress();
 	}
 
+    private class EmailModelBuilder extends Builder<EmailModel> {
+
+
+        @Override
+        public EmailModel build() {
+            return new EmailModel("ben@ostia.be");
+        }
+    }
 }

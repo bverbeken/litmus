@@ -28,8 +28,8 @@ public class SampleObjectValidationTest extends ValidationTest<Person> {
 	private Person personWithoutFirstName = new Person(null);
 
 	@Override
-	protected Person valid() {
-		return new Person("Ben", "Verbeken");
+	protected PersonBuilder valid() {
+        return new PersonBuilder();
 	}
 
 	@Test
@@ -49,8 +49,6 @@ public class SampleObjectValidationTest extends ValidationTest<Person> {
 
 	@Test
 	public void emailShouldBeValid(){
-		Person person = valid();
-		person.email = "not an email!";
-		assertThat(person).isInvalidBecause("email", EMAIL);
+        assertThat(valid().withEmail("not an email")).isInvalidBecause("email", EMAIL);
 	}
 }
