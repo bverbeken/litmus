@@ -1,7 +1,7 @@
 package litmus.webdriver;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class WebDriverFactory {
 
@@ -9,14 +9,16 @@ public class WebDriverFactory {
 
 
     public static WebDriver getWebDriver() {
-        if (driver == null){
-            driver = new FirefoxDriver();
+        if (driver == null) {
+            driver = new HtmlUnitDriver();
         }
         return driver;
     }
 
     public static void quitAndInit() {
-        driver.quit();
-        driver = null;
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
     }
 }
