@@ -1,6 +1,7 @@
 lib
 dist
 tmp
+.idea
 
 /samples/logs/
 /samples/modules/
