@@ -87,12 +87,18 @@ public class Response {
 	}
 
 	public Html getHtml() {
+        if(isRedirect()) {
+            return followRedirect().getHtml();
+        }
 		verifyContentTypeIs("text/html");
 		return new Html(getContent());
 	}
 
+    private Response followRedirect() {
+        return new Request(getHeader("Location")).get();
+    }
 
-	private void verifyContentTypeIs(String expectedContentType) {
+    private void verifyContentTypeIs(String expectedContentType) {
 		if (!expectedContentType.equals(getContentType())) {
 			throw new WrongContentTypeException(expectedContentType, getContentType(), httpMethod, request);
 		}

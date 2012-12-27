@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static litmus.engine.CategoryInstance.FUNCTIONAL;
 import static play.test.Fixtures.deleteAllModels;
+import static play.test.Fixtures.deleteDatabase;
 
 /**
  * Base class for functional tests.
@@ -34,7 +35,7 @@ public abstract class FunctionalTest extends FestAssertFunctionalTest {
 
     @Before
     public void cleanDb() {
-        deleteAllModels();
+        deleteDatabase();
     }
 
     /**
