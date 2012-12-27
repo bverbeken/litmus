@@ -7,7 +7,6 @@ public class WebDriverFactory {
 
     private static WebDriver driver;
 
-
     public static WebDriver getWebDriver() {
         if (driver == null) {
             driver = new HtmlUnitDriver();

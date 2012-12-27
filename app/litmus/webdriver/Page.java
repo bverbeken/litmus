@@ -1,14 +1,16 @@
 package litmus.webdriver;
 
 import org.fest.assertions.Assertions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-import static litmus.webdriver.WebDriverFactory.getWebDriver;
+import static org.openqa.selenium.By.tagName;
 import static org.openqa.selenium.support.PageFactory.initElements;
 import static play.Play.configuration;
 
 @SuppressWarnings("unchecked")
 public abstract class Page<SelfType extends Page> {
-
 
     public Page() {
         initElements(getWebDriver(), this);
@@ -33,13 +35,28 @@ public abstract class Page<SelfType extends Page> {
         return getWebDriver().getTitle();
     }
 
+    protected WebElement findElement(String cssSelector) {
+        return getWebDriver().findElement(By.cssSelector(cssSelector));
+    }
+
+    protected WebElement findElementByTagName(String tagName) {
+        return getWebDriver().findElement(tagName(tagName));
+    }
+
+    protected WebElement findElementById(String id) {
+        return getWebDriver().findElement(By.id(id));
+    }
+
+    protected WebDriver getWebDriver() {
+        return WebDriverFactory.getWebDriver();
+    }
+
     public SelfType assertArrivedAt() {
         Assertions.assertThat(arrivedAt()).isTrue();
         return (SelfType) this;
     }
 
-
     public static void open(String relativeUrl) {
-        getWebDriver().get(getAppUrl() + relativeUrl);
+        WebDriverFactory.getWebDriver().get(getAppUrl() + relativeUrl);
     }
 }

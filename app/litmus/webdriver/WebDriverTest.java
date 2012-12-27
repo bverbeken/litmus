@@ -28,14 +28,12 @@ public abstract class WebDriverTest extends FestAssertFunctionalTest {
         WebDriverFactory.quitAndInit();
     }
 
-
     protected WebElementAssert assertThat(WebElement element) {
         return WebDriverAssertions.assertThat(element);
     }
 
-    protected PageAssert assertThat(Page page){
+    protected PageAssert assertThat(Page page) {
         return WebDriverAssertions.assertThat(page);
     }
-
 
 }
