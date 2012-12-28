@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 import static org.openqa.selenium.By.tagName;
 import static org.openqa.selenium.support.PageFactory.initElements;
 import static play.Play.configuration;
@@ -33,6 +35,10 @@ public abstract class Page<SelfType extends Page> {
 
     protected String getTitle() {
         return getWebDriver().getTitle();
+    }
+
+    protected List<WebElement> findElements(String cssSelector) {
+        return getWebDriver().findElements(By.cssSelector(cssSelector));
     }
 
     protected WebElement findElement(String cssSelector) {
