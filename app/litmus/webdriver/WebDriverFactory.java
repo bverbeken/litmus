@@ -1,10 +1,7 @@
 package litmus.webdriver;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
-import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -14,7 +11,7 @@ public class WebDriverFactory {
 
     public static WebDriver getWebDriver() {
         if (driver == null) {
-            driver = new FirefoxDriver();
+            driver = new HtmlUnitDriver();
             driver.manage().timeouts().implicitlyWait(5, SECONDS);
         }
         return driver;
