@@ -5,5 +5,5 @@ require:
     - play                      -> less            0.9.1
     - org.easytesting           -> fest-assert     1.4
     - org.jsoup                 -> jsoup           1.6.1
-    - org.seleniumhq.selenium   -> selenium-java   2.21.0
+    - org.seleniumhq.selenium   -> selenium-java   2.25.0
 
