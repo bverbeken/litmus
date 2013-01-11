@@ -15,8 +15,4 @@ public class PageAssert extends GenericAssert<PageAssert, Page> {
         return this;
     }
 
-    public PageAssert containsFieldError(String field, String error) {
-        Assertions.assertThat(actual.findElementById(field + "Error").getText()).contains(error);
-        return this;
-    }
 }
