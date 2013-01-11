@@ -2,12 +2,18 @@ package litmus.webdriver;
 
 import litmus.Category;
 import litmus.functional.FestAssertFunctionalTest;
+import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebElement;
 import play.Play;
+import play.server.HttpServerPipelineFactory;
+
+import java.net.InetSocketAddress;
 
 import static java.lang.Integer.parseInt;
+import static java.util.concurrent.Executors.newCachedThreadPool;
 import static litmus.engine.CategoryInstance.WEBDRIVER;
 
 @Category(value = WEBDRIVER, priority = 20000, slow = true)

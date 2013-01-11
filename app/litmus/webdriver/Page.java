@@ -65,4 +65,8 @@ public abstract class Page<SelfType extends Page> {
     public static void open(String relativeUrl) {
         WebDriverFactory.getWebDriver().get(getAppUrl() + relativeUrl);
     }
+
+    public static void openUrl(String url) {
+        WebDriverFactory.getWebDriver().get(url);
+    }
 }
