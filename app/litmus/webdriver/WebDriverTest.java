@@ -23,6 +23,11 @@ public abstract class WebDriverTest extends FestAssertFunctionalTest {
         }
     }
 
+    @AfterClass
+    public static void quitWebDriver() {
+        WebDriverFactory.quitAndInit();
+    }
+
     protected WebElementAssert assertThat(WebElement element) {
         return WebDriverAssertions.assertThat(element);
     }
