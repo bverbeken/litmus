@@ -22,7 +22,6 @@ import org.junit.Before;
 import java.util.Map;
 
 import static litmus.engine.CategoryInstance.FUNCTIONAL;
-import static play.test.Fixtures.deleteAllModels;
 import static play.test.Fixtures.deleteDatabase;
 
 /**
@@ -32,6 +31,7 @@ import static play.test.Fixtures.deleteDatabase;
  */
 @Category(value = FUNCTIONAL, priority = 20000)
 public abstract class FunctionalTest extends FestAssertFunctionalTest {
+
 
     @Before
     public void cleanDb() {
@@ -80,15 +80,19 @@ public abstract class FunctionalTest extends FestAssertFunctionalTest {
      *     new Request("/login").with("username", username).with("password", password).post();
      * </pre>
      *
+     * This method will also verify that you actually are logged in, by checking that the PLAY_SESSION cookie has been returned in the response.
+     *
      * @param username the username
      * @param password the password
      * @return a {@link Response} object
      */
     protected Response login(String username, String password) {
-        return new Request("/login")
+        Response response = new Request("/login")
                 .with("username", username)
                 .with("password", password)
                 .post();
+        assertThat(response.getCookieValue("PLAY_SESSION")).as("play session cookie").isNotEmpty();
+        return response;
     }
 
     /**
