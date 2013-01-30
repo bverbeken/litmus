@@ -50,6 +50,10 @@ public class ResponseAssert extends GenericAssert<ResponseAssert, Response> {
 		return isStatus(FORBIDDEN);
 	}
 
+    public ResponseAssert isBadRequest(){
+        return isStatus(BAD_REQUEST);
+    }
+
 	public ResponseAssert isSuccess() {
 		assertThat(response.isSuccess()).isTrue();
 		return this;
