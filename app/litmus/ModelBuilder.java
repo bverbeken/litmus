@@ -1,9 +1,9 @@
 package litmus;
 
 import play.data.validation.Validation;
-import play.db.jpa.Model;
+import play.db.jpa.GenericModel;
 
-public abstract class ModelBuilder<T extends Model> extends Builder<T> {
+public abstract class ModelBuilder<T extends GenericModel> extends Builder<T> {
 
     public T save() {
         T model = build();
