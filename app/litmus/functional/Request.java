@@ -47,7 +47,9 @@ public class Request {
     }
 
     public Request withJson(String name, Object toSerialize) {
-        return with(name, new Gson().toJson(toSerialize));
+        String json = new Gson().toJson(toSerialize);
+        System.out.println("json = " + json);
+        return with(name, json);
     }
 
 
