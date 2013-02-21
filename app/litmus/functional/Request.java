@@ -19,6 +19,7 @@ package litmus.functional;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import play.mvc.Http;
 import play.mvc.results.Result;
@@ -34,7 +35,7 @@ import static litmus.util.ReflectionUtil.getStaticFieldValue;
 public class Request {
 
     private final Object url;
-    private Map<String, String> params = new HashMap<String, String>();
+    private Map<String, String> params = new HashMap<>();
 
     public Request(Object url) {
         this.url = url;
@@ -43,6 +44,10 @@ public class Request {
     public Request with(String name, String value) {
         this.params.put(name, value);
         return this;
+    }
+
+    public Request withJson(String name, Object toSerialize) {
+        return with(name, new Gson().toJson(toSerialize));
     }
 
 
@@ -83,7 +88,6 @@ public class Request {
         Map<String, Object> renderArgs = getStaticFieldValue("renderArgs", play.test.FunctionalTest.class);
         return new Response(httpMethod, request, fetcher.fetchAndHandleException(), renderArgs);
     }
-
 
     private abstract static class ResponseFetcher {
 
