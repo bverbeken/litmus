@@ -19,6 +19,7 @@ package litmus.functional;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import play.mvc.Http;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static litmus.functional.HttpMethod.GET;
 import static litmus.functional.HttpMethod.POST;
 import static litmus.util.ReflectionUtil.getStaticFieldValue;
@@ -35,7 +37,7 @@ import static litmus.util.ReflectionUtil.getStaticFieldValue;
 public class Request {
 
     private final Object url;
-    private Map<String, String> params = new HashMap<>();
+    private Map<String, String> params = newHashMap();
 
     public Request(Object url) {
         this.url = url;
