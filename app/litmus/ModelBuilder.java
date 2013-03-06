@@ -1,6 +1,5 @@
 package litmus;
 
-import com.google.common.base.Function;
 import play.data.validation.Validation;
 import play.db.jpa.GenericModel;
 
