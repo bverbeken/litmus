@@ -38,7 +38,7 @@ public class Response {
 	private final Object request;
 	private final HttpMethod httpMethod;
 
-	public Response(HttpMethod httpMethod, Object request, Http.Response wrappedResponse, Map<String, Object> renderArgs) {
+    public Response(HttpMethod httpMethod, Object request, Http.Response wrappedResponse, Map<String, Object> renderArgs) {
 		this.httpMethod = httpMethod;
 		this.request = request;
 		this.wrappedResponse = wrappedResponse;
@@ -80,6 +80,10 @@ public class Response {
 			throw new RuntimeException("Failed to read content from response", e);
 		}
 	}
+
+    public byte[] getContentAsBytes() {
+        return wrappedResponse.out.toByteArray();
+    }
 
 	public String getText() {
 		verifyContentTypeIs("text/plain");
