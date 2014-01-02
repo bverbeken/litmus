@@ -17,6 +17,5 @@ public abstract class IntegrationTest extends UnitTest {
         deleteAllModels();
     }
 
-
 }
 
